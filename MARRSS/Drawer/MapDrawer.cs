@@ -69,7 +69,7 @@ namespace MARRSS.Drawer
             Image imgSatellite = Properties.Resources.worldsmaller;
             try
             {
-                One_Sgp4.Sgp4 task = new One_Sgp4.Sgp4(tleData, Properties.Settings.Default.orbit_Wgs);
+                One_Sgp4.Sgp4 task = new One_Sgp4.Sgp4(tleData, One_Sgp4.Sgp4.wgsConstant.WGS_84);
                 One_Sgp4.EpochTime starttime = new One_Sgp4.EpochTime(DateTime.UtcNow);
                 One_Sgp4.EpochTime stoptime = new One_Sgp4.EpochTime(DateTime.UtcNow.AddHours(4));
                 task.setStart(starttime, stoptime, 30.0 / 60.0);
@@ -77,7 +77,7 @@ namespace MARRSS.Drawer
                 thread.Start();
                 Task.WaitAll(thread);
                 List<One_Sgp4.Sgp4Data> calcPposData = null;
-                calcPposData = task.getRestults();
+                calcPposData = task.getResults();
 
                 Pen penRest = new Pen(Color.Red, 1);
                 Pen penSat = new Pen(Color.Red, 10);
@@ -87,9 +87,9 @@ namespace MARRSS.Drawer
                     {
 
                         One_Sgp4.Coordinate oneSubPoint =
-                            One_Sgp4.SatFunctions.calcSatSubPoint(starttime, calcPposData[i]);
+                            One_Sgp4.SatFunctions.calcSatSubPoint(starttime, calcPposData[i], One_Sgp4.Sgp4.wgsConstant.WGS_84);
 
-                        Definition.GeoCoordinate subPoint = new Definition.GeoCoordinate(oneSubPoint.getLatetude(), oneSubPoint.getLongitude(), oneSubPoint.getHeight());
+                        Definition.GeoCoordinate subPoint = new Definition.GeoCoordinate(oneSubPoint.getLatitude(), oneSubPoint.getLongitude(), oneSubPoint.getHeight());
 
                         Point p = subPoint.toPoint(imgSatellite.Width, imgSatellite.Height);
 
