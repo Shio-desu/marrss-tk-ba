@@ -156,7 +156,7 @@ namespace MARRSS.Scheduler
                 {
                     for (int i = 0; i < set1.Count(); i++)
                     {
-                        if (set.getAt(pos).checkConflikt(set1.getAt(i)))
+                        if (set.getAt(pos).checkConflict(set1.getAt(i)))
                         {
                             if (set.getAt(pos).getSatName() == set1.getAt(i).getSatName()
                                 || set.getAt(pos).getStationName() == set1.getAt(i).getStationName())
@@ -248,7 +248,7 @@ namespace MARRSS.Scheduler
                 {
                     for (int i = 0; i < set1.Count(); i++)
                     {
-                        if (set.getAt(pos).checkConflikt(set1.getAt(i)))
+                        if (set.getAt(pos).checkConflict(set1.getAt(i)))
                         {
                             if (set.getAt(pos).getSatName() == set1.getAt(i).getSatName()
                                 || set.getAt(pos).getStationName() == set1.getAt(i).getStationName())

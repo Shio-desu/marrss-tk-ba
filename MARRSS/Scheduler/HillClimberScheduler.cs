@@ -95,7 +95,7 @@ namespace MARRSS.Scheduler
                     iterations++;
                     for (int j = 0; j < result.Count(); j++)
                     {
-                        if (i != j && result.getAt(i).checkConflikt(result.getAt(j)))
+                        if (i != j && result.getAt(i).checkConflict(result.getAt(j)))
                         {
                             if (result.getAt(i).getStationName() == result.getAt(j).getStationName() ||
                                 result.getAt(i).getSatName() == result.getAt(j).getSatName())
@@ -192,7 +192,7 @@ namespace MARRSS.Scheduler
                 {
                     for (int j=0;j<contacts.Count();j++)
                     {
-                        if (contacts.getAt(j).getSheduledInfo() && i != j && contacts.getAt(i).checkConflikt(contacts.getAt(j)))
+                        if (contacts.getAt(j).getSheduledInfo() && i != j && contacts.getAt(i).checkConflict(contacts.getAt(j)))
                         {
                             if (contacts.getAt(i).getStationName() == contacts.getAt(j).getStationName() ||
                                 contacts.getAt(i).getSatName() == contacts.getAt(j).getSatName())

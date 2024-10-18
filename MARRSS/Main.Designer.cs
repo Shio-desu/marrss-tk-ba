@@ -183,6 +183,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.radioTabuSearch = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -360,7 +361,7 @@
             // updateTLEsToolStripMenuItem
             // 
             this.updateTLEsToolStripMenuItem.Name = "updateTLEsToolStripMenuItem";
-            this.updateTLEsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.updateTLEsToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.updateTLEsToolStripMenuItem.Text = "Update TLE\'s";
             this.updateTLEsToolStripMenuItem.Click += new System.EventHandler(this.updateTLEsToolStripMenuItem_Click);
             // 
@@ -389,19 +390,19 @@
             // documentationToolStripMenuItem
             // 
             this.documentationToolStripMenuItem.Name = "documentationToolStripMenuItem";
-            this.documentationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.documentationToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.documentationToolStripMenuItem.Text = "Wiki";
             this.documentationToolStripMenuItem.Click += new System.EventHandler(this.documentationToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(104, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -911,13 +912,14 @@
             // 
             // schedulerGroupBox
             // 
+            this.schedulerGroupBox.Controls.Add(this.radioTabuSearch);
             this.schedulerGroupBox.Controls.Add(this.radioHillClimber);
             this.schedulerGroupBox.Controls.Add(this.radioGreedy);
             this.schedulerGroupBox.Controls.Add(this.radioGenetic);
             this.schedulerGroupBox.Controls.Add(this.radioEFTGreedy);
             this.schedulerGroupBox.Location = new System.Drawing.Point(285, 35);
             this.schedulerGroupBox.Name = "schedulerGroupBox";
-            this.schedulerGroupBox.Size = new System.Drawing.Size(178, 76);
+            this.schedulerGroupBox.Size = new System.Drawing.Size(178, 98);
             this.schedulerGroupBox.TabIndex = 2;
             this.schedulerGroupBox.TabStop = false;
             this.schedulerGroupBox.Text = "Scheduler";
@@ -1698,6 +1700,16 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // radioTabuSearch
+            // 
+            this.radioTabuSearch.AutoSize = true;
+            this.radioTabuSearch.Location = new System.Drawing.Point(10, 71);
+            this.radioTabuSearch.Name = "radioTabuSearch";
+            this.radioTabuSearch.Size = new System.Drawing.Size(87, 17);
+            this.radioTabuSearch.TabIndex = 4;
+            this.radioTabuSearch.Text = "Tabu Search";
+            this.radioTabuSearch.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Application;
@@ -1922,5 +1934,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem11;
         private System.Windows.Forms.ToolStripMenuItem runsToolStripMenuItem;
         private System.Windows.Forms.RadioButton radioHillClimber;
+        private System.Windows.Forms.RadioButton radioTabuSearch;
     }
 }

@@ -201,6 +201,7 @@
     <Compile Include="Satellite\Satellite.cs" />
     <Compile Include="Ground\Station.cs" />
     <Compile Include="SchedulerData\ContactWindow.cs" />
+    <Compile Include="Scheduler\TabuSearchScheduler.cs" />
     <Compile Include="Scheduler\ExampleScheduler.cs" />
     <Compile Include="Scheduler\GreedyScheduler.cs" />
     <Compile Include="Scheduler\GeneticScheduler.cs" />

@@ -155,7 +155,7 @@ namespace MARRSS.Scheduler
                             bool found = false;
                             for (int k = 0; k < set1.Count(); k++)
                             {
-                                if (set.getAt(pos).checkConflikt(set1.getAt(k)))
+                                if (set.getAt(pos).checkConflict(set1.getAt(k)))
                                 {
                                     if (set.getAt(pos).getSatName() == set1.getAt(k).getSatName() )
                                     {
@@ -213,7 +213,7 @@ namespace MARRSS.Scheduler
                         if (schedule.getAt(i).getSheduledInfo() && k != i &&
                             schedule.getAt(k).getSheduledInfo() &&
                             schedule.getAt(k).getStationName() == schedule.getAt(i).getStationName() &&
-                            schedule.getAt(i).checkConflikt(schedule.getAt(k)))
+                            schedule.getAt(i).checkConflict(schedule.getAt(k)))
                         {
                             if ((int)schedule.getAt(k).getPriority() < maxPriority)
                             {
