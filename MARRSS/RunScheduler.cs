@@ -49,7 +49,7 @@ namespace MARRSS
                     tm.activate();
                     greedy.BruteForceSchedule(problem, iteration);
                     mainform.updateCalculationTime(tm.getValueAndDeactivate());
-                    ObjectiveFunction obj = problem.getObjectiveFunction();
+                    ObjectiveFunctionInterface obj = problem.getObjectiveFunction();
                     obj.calculateValues(greedy.getFinischedSchedule());
                     mainform.updateCalculationTime(tm.getValueAndDeactivate());
                     mainform.setNumberOfGeneration(iteration);
@@ -158,7 +158,7 @@ namespace MARRSS
             /param ContactWindowsVector contacts to schedule
             /param ObjectiveFunction obective to solve problems
         */
-        public static SchedulingProblem setSchedulingProblem(ContactWindowsVector contacts, ObjectiveFunction objective)
+        public static SchedulingProblem setSchedulingProblem(ContactWindowsVector contacts, ObjectiveFunctionInterface objective)
         {
             SchedulingProblem problem = new SchedulingProblem();
             problem.setContactWindows(contacts);
@@ -185,7 +185,7 @@ namespace MARRSS
         {
             if (scheduler != null)
             {
-                ObjectiveFunction objfunc = scheduler.getObjectiveFunction();
+                ObjectiveFunctionInterface objfunc = scheduler.getObjectiveFunction();
                 if (objfunc == null)
                     objfunc = new ObjectiveFunction();
                 objfunc.calculateValues(scheduler.getFinischedSchedule());

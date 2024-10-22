@@ -194,6 +194,8 @@
     </Compile>
     <Compile Include="MainFunctions.cs" />
     <Compile Include="MainFunctions2.cs" />
+    <Compile Include="ObjectiveFuntion\EpsilonConstraint.cs" />
+    <Compile Include="ObjectiveFuntion\ObjectiveFunctionInterface.cs" />
     <Compile Include="Performance\GeneralMeasurments.cs" />
     <Compile Include="Performance\Log.cs" />
     <Compile Include="Performance\TimeMeasurement.cs" />
@@ -208,7 +210,7 @@
     <Compile Include="Scheduler\EftGreedyScheduler.cs" />
     <Compile Include="SchedulerData\Request.cs" />
     <Compile Include="Scheduler\HillClimberScheduler.cs" />
-    <Compile Include="Scheduler\ObjectiveFunction.cs" />
+    <Compile Include="ObjectiveFuntion\ObjectiveFunction.cs" />
     <Compile Include="Scheduler\Request2Contact.cs" />
     <Compile Include="SchedulerData\TrackingData.cs" />
     <Compile Include="Scheduler\SchedulingProblem.cs" />

@@ -63,7 +63,7 @@ namespace MARRSS.Scheduler
         private List<string> satelliteList; //!< list<string> satellite names
         private List<string> stationList; //!< list<string> station names
 
-        private ObjectiveFunction objective;
+        private ObjectiveFunctionInterface objective;
 
         private bool cancel = false;
 
@@ -134,7 +134,7 @@ namespace MARRSS.Scheduler
         /*!
             \rreturn ObjectiveFunction problem set to solve
         */
-        public ObjectiveFunction getObjectiveFunction()
+        public ObjectiveFunctionInterface getObjectiveFunction()
         {
             return objective;
         }

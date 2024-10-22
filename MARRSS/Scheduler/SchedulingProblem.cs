@@ -33,7 +33,7 @@ namespace MARRSS.Scheduler
     {
         private ContactWindowsVector schedulerContacts; //!< ContactWindowsVector all contact windows
         private List<RequestInterface> schedulerRequests; //!< List<RequestInterface> list of all Requests
-        private ObjectiveFunction objectives; //!< Objectives to solve Problem with
+        private ObjectiveFunctionInterface objectives; //!< Objectives to solve Problem with
 
         //! SchedulingProblem constructor.
         /*!
@@ -48,7 +48,7 @@ namespace MARRSS.Scheduler
         /*!
             \return ObjectiveFunction
         */
-        public ObjectiveFunction getObjectiveFunction()
+        public ObjectiveFunctionInterface getObjectiveFunction()
         {
             return objectives;
         }
@@ -57,7 +57,7 @@ namespace MARRSS.Scheduler
         /*!
             \pram ObjectiveFunction objectives for the problem
         */
-        public void setObjectiveFunction(ObjectiveFunction objectiveFunction)
+        public void setObjectiveFunction(ObjectiveFunctionInterface objectiveFunction)
         {
             objectives = objectiveFunction;
         }

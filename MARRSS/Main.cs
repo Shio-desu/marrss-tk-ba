@@ -40,7 +40,7 @@ namespace MARRSS
 
         private DataBase.DataBase _MainDataBase; //!< Database connection
 
-        private ObjectiveFunction objectivefunct; //!< Objective function to schedule against
+        private ObjectiveFunctionInterface objectivefunct; //!< Objective function to schedule against
 
         private Interface2.SchedulerInterface scheduler = null; //!< Scheduler Interface current used scheduler
 

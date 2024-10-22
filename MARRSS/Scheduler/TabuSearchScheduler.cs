@@ -44,7 +44,7 @@ namespace MARRSS.Scheduler
         private Main mainform = null;
 
         private int iterations = 0;
-        private int maxNumberOfIteration = 2000;
+        private int maxNumberOfIteration = 20;
         private int tabuListSize = 100;
         bool adaptiveMaxIterations = false;
 
@@ -108,8 +108,10 @@ namespace MARRSS.Scheduler
 
             if (adaptiveMaxIterations)
             {
-                maxNumberOfIteration = result.Count() * 4;
-                
+                //maxNumberOfIteration = result.Count() * 4;
+                // adaptive number of iterations might not make sense here because one iteration is already including a comparions of all of the avaliable contactwindows
+                // you could make an argument that more contact windows mean more iterations to get out of local optima
+                // might make sense in that case to also increase tabuListSize 
             }
      
             if (mainform != null)
@@ -118,6 +120,7 @@ namespace MARRSS.Scheduler
             ContactWindowsVector currentSolution = new ContactWindowsVector(result);
             List<ContactWindowsVector> tabuList = new List<ContactWindowsVector>();
 
+            fillContacts(result);
             currentFitness = getFitness(result);
 
             while (!isComplete())
@@ -125,9 +128,9 @@ namespace MARRSS.Scheduler
                 List<ContactWindowsVector> neighbors = GetNeightbors(currentSolution);
                 ContactWindowsVector bestNeighbor = new ContactWindowsVector();
                 double bestNeighborFitness = 0;
-                fillContacts(result);
 
 
+                iterations++;
                 // finding the best neighbor
                 foreach (ContactWindowsVector neighbor in neighbors)
                 {
@@ -154,7 +157,6 @@ namespace MARRSS.Scheduler
                     tabuList.RemoveAt(0);
                 }
 
-                Console.WriteLine($"best neighbor: {bestNeighborFitness} | currentFitness: {currentFitness} | actual fitness: {getFitness(result)}");
                 if (bestNeighborFitness > currentFitness)
                 {
                     
@@ -177,7 +179,6 @@ namespace MARRSS.Scheduler
             // Create all possible neighbors of the current solution by making one change in the schedule
             for (int i = 0; i < solution.Count(); i++)
             {
-                iterations++;
                 for (int j = i + 1; j < solution.Count(); j++)
                 {
 
