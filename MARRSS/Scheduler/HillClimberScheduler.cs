@@ -17,7 +17,7 @@ namespace MARRSS.Scheduler
     class HillClimberScheduler : SchedulerInterface, SchedulerSolutionInterface
     {
 
-        private ObjectiveFunction objective;
+        private ObjectiveFunctionInterface objective;
         private ContactWindowsVector result;
         private bool cancel = false;
         private double currentFitness = 0.0;
@@ -48,7 +48,7 @@ namespace MARRSS.Scheduler
         /*!
             \param ObjectiveFunction problem set to solve
         */
-        public void setObjectiveFunktion(ObjectiveFunction objectiveFunction)
+        public void setObjectiveFunktion(ObjectiveFunctionInterface objectiveFunction)
         {
             objective = objectiveFunction;
         }
@@ -56,7 +56,7 @@ namespace MARRSS.Scheduler
         /*!
             \rreturn ObjectiveFunction problem set to solve
         */
-        public ObjectiveFunction getObjectiveFunction()
+        public ObjectiveFunctionInterface getObjectiveFunction()
         {
             return objective;
         }

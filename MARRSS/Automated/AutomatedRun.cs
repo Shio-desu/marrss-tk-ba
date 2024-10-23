@@ -11,11 +11,8 @@ namespace MARRSS.Automated
 {
     class AutomatedRun
     {
+        private ContactWindowsVector contacts;
         private string schedulerName;
-        private EpochTime startTime;
-        private EpochTime stopTime;
-        private List<string> satelliteList;
-        private List<string> stationList;
         private int scenario;
         private string humanReadableSettings;
         private string settings;
@@ -33,15 +30,40 @@ namespace MARRSS.Automated
             List<string> stations, int selectedScenario, string objective, string settingsString = null, string human2settings = null)
         {
             schedulerName = name;
-            startTime = start;
-            stopTime = stop;
-            satelliteList = satellites;
-            stationList = stations;
             scenario = selectedScenario;
             settings = settingsString;
             objectiveFunction = objective;
             humanReadableSettings = human2settings;
             scheduler = null;
+
+            DataBase.DataBase db = new DataBase.DataBase();
+            List<Ground.Station> stationData = new List<Ground.Station>();
+            for (int i = 0; i < stations.Count; i++)
+            {
+                Ground.Station station = db.getStationFromDB(stations[i]);
+                stationData.Add(station);
+                //updateLog(logfile, "Adding Station: " + station.getName());
+            }
+            System.Windows.Forms.Application.DoEvents();
+            List<One_Sgp4.Tle> tleData = new List<Tle>();
+            for (int i = 0; i < satellites.Count; i++)
+            {
+                One_Sgp4.Tle sattle = db.getTleDataFromDB(satellites[i]);
+                tleData.Add(sattle);
+                //updateLog(logfile, "Adding Satellite: " + sattle.getName());
+            }
+            contacts = MainFunctions2.calculateContactWindows(tleData, stationData, start, stop);
+        }
+
+        public AutomatedRun(string name, ContactWindowsVector contacts, int selectedScenario, string objective, string settingsString = null, string human2settings = null)
+        {
+            schedulerName = name;
+            scenario = selectedScenario;
+            settings = settingsString;
+            objectiveFunction = objective;
+            humanReadableSettings = human2settings;
+            scheduler = null;
+            this.contacts = contacts;
         }
 
         public void cancelRun()
@@ -56,25 +78,7 @@ namespace MARRSS.Automated
         public bool runThisRun()
         {
             results = new List<string>();
-            DataBase.DataBase db = new DataBase.DataBase();
             bool status = true;
-            List<Ground.Station> stationData = new List<Ground.Station>();
-            for (int i = 0; i < stationList.Count; i++)
-            {
-                Ground.Station station = db.getStationFromDB(stationList[i]);
-                stationData.Add(station);
-                //updateLog(logfile, "Adding Station: " + station.getName());
-            }
-            System.Windows.Forms.Application.DoEvents();
-            List<One_Sgp4.Tle> tleData = new List<Tle>();
-            for (int i = 0; i < satelliteList.Count; i++)
-            {
-                One_Sgp4.Tle sattle = db.getTleDataFromDB(satelliteList[i]);
-                tleData.Add(sattle);
-                //updateLog(logfile, "Adding Satellite: " + sattle.getName());
-            }
-            System.Windows.Forms.Application.DoEvents();
-            ContactWindowsVector contactsVector = MainFunctions2.calculateContactWindows(tleData, stationData, startTime, stopTime);
             System.Windows.Forms.Application.DoEvents();
             scheduler = null;
             switch (schedulerName)
@@ -100,7 +104,7 @@ namespace MARRSS.Automated
             ObjectiveFunction objective = new ObjectiveFunction(Forms.ObjectiveBuilderForm.getObjectiveEnumsByName(objectiveFunction));
             System.Windows.Forms.Application.DoEvents();
             SchedulingProblem problem = new SchedulingProblem();
-            problem.setContactWindows(contactsVector);
+            problem.setContactWindows(contacts);
             problem.removeUnwantedContacts(Properties.Settings.Default.orbit_Minimum_Contact_Duration_sec);
             problem.setObjectiveFunction(objective);
             problem.getContactWindows().randomize(Properties.Settings.Default.global_Random_Seed);
@@ -111,13 +115,13 @@ namespace MARRSS.Automated
             scheduler.CalculateSchedule(problem);
             string time = tm.getValueAndDeactivate();
             System.Windows.Forms.Application.DoEvents();
-            contactsVector = scheduler.getFinischedSchedule();
+            contacts = scheduler.getFinischedSchedule();
             System.Windows.Forms.Application.DoEvents();
 
 
             if (scheduler != null)
             {
-                ObjectiveFunction objfunc = scheduler.getObjectiveFunction();
+                ObjectiveFunctionInterface objfunc = scheduler.getObjectiveFunction();
                 if (objfunc == null)
                     objfunc = new ObjectiveFunction();
                 objfunc.calculateValues(scheduler.getFinischedSchedule());
@@ -133,7 +137,7 @@ namespace MARRSS.Automated
 
                 results.Add("Run: " + schedulerName);
                 results.Add("Fitness Value:" + objfunc.getObjectiveResults().ToString());
-                results.Add("Scheduled Contacts: " + scheduler.getFinischedSchedule().getNrOfScheduled().ToString() + " / " + contactsVector.Count().ToString());
+                results.Add("Scheduled Contacts: " + scheduler.getFinischedSchedule().getNrOfScheduled().ToString() + " / " + contacts.Count().ToString());
                 results.Add("Collisions: " + GeneralMeasurments.getNrOfConflicts(scheduler.getFinischedSchedule()).ToString());
                 results.Add("Fairnes Stations: " + objfunc.getStationFairnessValue().ToString());
                 results.Add("Fairnes Satellites: " + objfunc.getSatelliteFairnessValue().ToString());
@@ -215,22 +219,22 @@ namespace MARRSS.Automated
 
         public EpochTime getStartTime()
         {
-            return startTime;
+            return contacts.getStartTime();
         }
 
         public EpochTime getStopTime()
         {
-            return stopTime;
+            return contacts.getStopTime();
         }
 
         public List<string> getSatellites()
         {
-            return satelliteList;
+            return contacts.getSatelliteNames();
         }
 
         public List<string> getStation()
         {
-            return stationList;
+            return contacts.getStationNames();
         }
 
         public String getHumanReadableSettings()

@@ -126,7 +126,7 @@ namespace MARRSS.Scheduler
         /*!
             \param ObjectiveFunction problem set to solve
         */
-        public void setObjectiveFunktion(ObjectiveFunction objectiveFunction)
+        public void setObjectiveFunktion(ObjectiveFunctionInterface objectiveFunction)
         {
             objective = objectiveFunction;
         }
