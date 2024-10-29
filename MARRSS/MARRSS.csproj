@@ -119,6 +119,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Automated\SingleGroundStationRuns.cs" />
     <Compile Include="Automated\AutomatedRun.cs" />
     <Compile Include="DataBase\Constants.cs" />
     <Compile Include="DataBase\DataBase.cs" />

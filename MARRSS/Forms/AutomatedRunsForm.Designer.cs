@@ -38,12 +38,19 @@
             this.SettingsRichTextBox = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ObjectiveBuilderButton = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.comboScenarioBox = new System.Windows.Forms.ComboBox();
             this.checkedSatellites = new System.Windows.Forms.CheckedListBox();
+            this.contextMenuSatellites = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkedStations = new System.Windows.Forms.CheckedListBox();
+            this.contextMenuStations = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.stopTimePicker = new System.Windows.Forms.DateTimePicker();
             this.startTimePicker = new System.Windows.Forms.DateTimePicker();
             this.stopTimeLabel = new System.Windows.Forms.Label();
@@ -51,6 +58,8 @@
             this.stopDatePicker = new System.Windows.Forms.DateTimePicker();
             this.startDatePicker = new System.Windows.Forms.DateTimePicker();
             this.runsListBox = new System.Windows.Forms.ListBox();
+            this.contextMenuRuns = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addRunButton = new System.Windows.Forms.Button();
             this.revoveRunButton = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -65,23 +74,14 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.contextMenuStations = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuSatellites = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.selectAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clearSelectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuRuns = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.clearAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ObjectiveBuilderButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuSatellites.SuspendLayout();
+            this.contextMenuStations.SuspendLayout();
+            this.contextMenuRuns.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStations.SuspendLayout();
-            this.contextMenuSatellites.SuspendLayout();
-            this.contextMenuRuns.SuspendLayout();
             this.SuspendLayout();
             // 
             // startButton
@@ -102,7 +102,8 @@
             "EFT-Greedy",
             "Greedy",
             "Genetic",
-            "Hill-Climber"});
+            "Hill-Climber",
+            "Tabu-Search"});
             this.schedulerComboBox.Location = new System.Drawing.Point(12, 27);
             this.schedulerComboBox.Name = "schedulerComboBox";
             this.schedulerComboBox.Size = new System.Drawing.Size(190, 21);
@@ -167,6 +168,16 @@
             this.panel1.Size = new System.Drawing.Size(270, 372);
             this.panel1.TabIndex = 9;
             // 
+            // ObjectiveBuilderButton
+            // 
+            this.ObjectiveBuilderButton.Location = new System.Drawing.Point(208, 72);
+            this.ObjectiveBuilderButton.Name = "ObjectiveBuilderButton";
+            this.ObjectiveBuilderButton.Size = new System.Drawing.Size(25, 21);
+            this.ObjectiveBuilderButton.TabIndex = 8;
+            this.ObjectiveBuilderButton.Text = "..";
+            this.ObjectiveBuilderButton.UseVisualStyleBackColor = true;
+            this.ObjectiveBuilderButton.Click += new System.EventHandler(this.ObjectiveBuilderButton_Click);
+            // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
@@ -227,6 +238,28 @@
             this.checkedSatellites.Size = new System.Drawing.Size(151, 214);
             this.checkedSatellites.TabIndex = 25;
             // 
+            // contextMenuSatellites
+            // 
+            this.contextMenuSatellites.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectAllToolStripMenuItem,
+            this.clearSelectionToolStripMenuItem});
+            this.contextMenuSatellites.Name = "contextMenuSatellites";
+            this.contextMenuSatellites.Size = new System.Drawing.Size(152, 48);
+            // 
+            // selectAllToolStripMenuItem
+            // 
+            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
+            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.selectAllToolStripMenuItem.Text = "Select all";
+            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
+            // 
+            // clearSelectionToolStripMenuItem
+            // 
+            this.clearSelectionToolStripMenuItem.Name = "clearSelectionToolStripMenuItem";
+            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.clearSelectionToolStripMenuItem.Text = "Clear selection";
+            this.clearSelectionToolStripMenuItem.Click += new System.EventHandler(this.clearSelectionToolStripMenuItem_Click);
+            // 
             // checkedStations
             // 
             this.checkedStations.CheckOnClick = true;
@@ -236,6 +269,28 @@
             this.checkedStations.Name = "checkedStations";
             this.checkedStations.Size = new System.Drawing.Size(151, 214);
             this.checkedStations.TabIndex = 24;
+            // 
+            // contextMenuStations
+            // 
+            this.contextMenuStations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.contextMenuStations.Name = "contextMenuStations";
+            this.contextMenuStations.Size = new System.Drawing.Size(153, 48);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem2.Text = "Select All";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem3.Text = "Clear Selection";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // stopTimePicker
             // 
@@ -305,6 +360,20 @@
             this.runsListBox.Size = new System.Drawing.Size(165, 329);
             this.runsListBox.TabIndex = 12;
             this.runsListBox.SelectedIndexChanged += new System.EventHandler(this.runsListBox_SelectedIndexChanged);
+            // 
+            // contextMenuRuns
+            // 
+            this.contextMenuRuns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearAllToolStripMenuItem});
+            this.contextMenuRuns.Name = "contextMenuRuns";
+            this.contextMenuRuns.Size = new System.Drawing.Size(119, 26);
+            // 
+            // clearAllToolStripMenuItem
+            // 
+            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
+            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.clearAllToolStripMenuItem.Text = "Clear All";
+            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
             // 
             // addRunButton
             // 
@@ -390,100 +459,32 @@
             // createNewRunToolStripMenuItem
             // 
             this.createNewRunToolStripMenuItem.Name = "createNewRunToolStripMenuItem";
-            this.createNewRunToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.createNewRunToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.createNewRunToolStripMenuItem.Text = "New";
             this.createNewRunToolStripMenuItem.Click += new System.EventHandler(this.createNewRunToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(100, 6);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // contextMenuStations
-            // 
-            this.contextMenuStations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.contextMenuStations.Name = "contextMenuStations";
-            this.contextMenuStations.Size = new System.Drawing.Size(153, 48);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem2.Text = "Select All";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem3.Text = "Clear Selection";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // contextMenuSatellites
-            // 
-            this.contextMenuSatellites.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.selectAllToolStripMenuItem,
-            this.clearSelectionToolStripMenuItem});
-            this.contextMenuSatellites.Name = "contextMenuSatellites";
-            this.contextMenuSatellites.Size = new System.Drawing.Size(152, 48);
-            // 
-            // selectAllToolStripMenuItem
-            // 
-            this.selectAllToolStripMenuItem.Name = "selectAllToolStripMenuItem";
-            this.selectAllToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.selectAllToolStripMenuItem.Text = "Select all";
-            this.selectAllToolStripMenuItem.Click += new System.EventHandler(this.selectAllToolStripMenuItem_Click);
-            // 
-            // clearSelectionToolStripMenuItem
-            // 
-            this.clearSelectionToolStripMenuItem.Name = "clearSelectionToolStripMenuItem";
-            this.clearSelectionToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.clearSelectionToolStripMenuItem.Text = "Clear selection";
-            this.clearSelectionToolStripMenuItem.Click += new System.EventHandler(this.clearSelectionToolStripMenuItem_Click);
-            // 
-            // contextMenuRuns
-            // 
-            this.contextMenuRuns.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearAllToolStripMenuItem});
-            this.contextMenuRuns.Name = "contextMenuRuns";
-            this.contextMenuRuns.Size = new System.Drawing.Size(119, 26);
-            // 
-            // clearAllToolStripMenuItem
-            // 
-            this.clearAllToolStripMenuItem.Name = "clearAllToolStripMenuItem";
-            this.clearAllToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
-            this.clearAllToolStripMenuItem.Text = "Clear All";
-            this.clearAllToolStripMenuItem.Click += new System.EventHandler(this.clearAllToolStripMenuItem_Click);
-            // 
-            // ObjectiveBuilderButton
-            // 
-            this.ObjectiveBuilderButton.Location = new System.Drawing.Point(208, 72);
-            this.ObjectiveBuilderButton.Name = "ObjectiveBuilderButton";
-            this.ObjectiveBuilderButton.Size = new System.Drawing.Size(25, 21);
-            this.ObjectiveBuilderButton.TabIndex = 8;
-            this.ObjectiveBuilderButton.Text = "..";
-            this.ObjectiveBuilderButton.UseVisualStyleBackColor = true;
-            this.ObjectiveBuilderButton.Click += new System.EventHandler(this.ObjectiveBuilderButton_Click);
             // 
             // AutomatedRunsForm
             // 
@@ -503,14 +504,14 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.contextMenuSatellites.ResumeLayout(false);
+            this.contextMenuStations.ResumeLayout(false);
+            this.contextMenuRuns.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStations.ResumeLayout(false);
-            this.contextMenuSatellites.ResumeLayout(false);
-            this.contextMenuRuns.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

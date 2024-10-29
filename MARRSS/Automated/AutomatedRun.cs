@@ -100,6 +100,11 @@ namespace MARRSS.Automated
                     scheduler = new HillClimberScheduler(Convert.ToBoolean(settString2[0]), Convert.ToBoolean(settString2[2]),
                         Convert.ToInt32(settString2[1]));
                     break;
+                case "Tabu-Search":
+                    string[] settString3 = settings.Split(';');
+                    scheduler = new TabuSearchScheduler(Convert.ToBoolean(settString3[0]), Convert.ToBoolean(settString3[2]),
+                        Convert.ToInt32(settString3[1]));
+                    break;
             }
             ObjectiveFunction objective = new ObjectiveFunction(Forms.ObjectiveBuilderForm.getObjectiveEnumsByName(objectiveFunction));
             System.Windows.Forms.Application.DoEvents();

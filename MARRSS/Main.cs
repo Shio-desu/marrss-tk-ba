@@ -22,6 +22,7 @@ using MARRSS.Performance;
 using MARRSS.Scheduler;
 using MARRSS.DataBase;
 using System.Collections.Specialized;
+using MARRSS.Automated;
 
 namespace MARRSS
 {
@@ -224,22 +225,38 @@ namespace MARRSS
             //-----------------------------------------------------------------
             //-----------------------------------------------------------------
             updateLog(logFile, "starting " + scheduler.ToString());
-            //start Time Meassurment
-            tm.activate();
-            if (!useBruteForce)
+
+            // if the SiRSRS is checked, run the scheduling for every ground station on their own, and then combine the results
+            if (radioSingleScope.Checked)
             {
-                RunScheduler.startScheduler(scheduler, problem);
+                SingleGroundStationRuns sirsrsRun = new SingleGroundStationRuns(scheduler, objectivefunct, startTime, stopTime, satTleData, stationData,
+                    comboScenarioBox.SelectedIndex, SingleGroundStationRuns.conflictResolutionOptions.Nothing);
+                sirsrsRun.runThisRun();
+                RunScheduler.displayResults(this, sirsrsRun.getResult(), sirsrsRun.getObjectiveFunction());
+                //finisch clean up and write to logs if necesarry
+                finischSchedule(scheduler.ToString(), logFile);
             }
-            else
+            
+            // if MuRSRS is checked do the normal run through with a single scheduler/problem
+            if (radioMultiScope.Checked)
             {
-                RunScheduler.startBruteForce(scheduler, problem, this);
+                //start Time Meassurment
+                tm.activate();
+                if (!useBruteForce)
+                {
+                    RunScheduler.startScheduler(scheduler, problem);
+                }
+                else
+                {
+                    RunScheduler.startBruteForce(scheduler, problem, this);
+                }
+                //get Time Measurment
+                updateCalculationTime(tm.getValueAndDeactivate());
+                //display resulst on main Page
+                RunScheduler.displayResults(this, scheduler);
+                //finisch clean up and write to logs if necesarry
+                finischSchedule(scheduler.ToString(), logFile);
             }
-            //get Time Measurment
-            updateCalculationTime(tm.getValueAndDeactivate());
-            //display resulst on main Page
-            RunScheduler.displayResults(this, scheduler);
-            //finisch clean up and write to logs if necesarry
-            finischSchedule(scheduler.ToString(),logFile);
         }
         
         private void startScheduleButton_Click(object sender, EventArgs e)
