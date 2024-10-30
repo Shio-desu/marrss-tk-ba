@@ -52,7 +52,6 @@ namespace MARRSS.Automated
             // runs a scheduler for each single station and adds the result to the list
             foreach (Ground.Station gs in stations)
             {
-
                 ContactWindowsVector contacts = MainFunctions2.calculateContactWindows(satellites, new List<Ground.Station> {gs}, start, stop);
                 
                 SchedulingProblem problem = new SchedulingProblem();
@@ -81,6 +80,7 @@ namespace MARRSS.Automated
             switch (conflictResolution)
             {
                 case conflictResolutionOptions.Nothing:
+
                     foreach (ContactWindowsVector schedule in resultSchedules)
                     {
                         combined.add(schedule.getAllContacts());
@@ -93,6 +93,7 @@ namespace MARRSS.Automated
                 default:
                     break;
             }
+
             result = new ContactWindowsVector(combined);
             objectiveFunction.calculateValues(result);
         }

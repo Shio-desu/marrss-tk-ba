@@ -29,6 +29,7 @@ namespace MARRSS.Scheduler
         private double val_FairSatellites;
         private double val_Scheduled;
         private double val_Duration;
+        private double val_Collisions;
 
         // arbitrary constraint numbers for testing
         // TODO: make elaborate constraints
@@ -37,6 +38,7 @@ namespace MARRSS.Scheduler
         private double constraint_FairSatellites = 0.8;
         private double constraint_Scheduled = 0.6;
         private double constraint_Duration = 0.6;
+        private double constraint_Collisions = 0.9;
 
         public EpsilonConstraint(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
         {

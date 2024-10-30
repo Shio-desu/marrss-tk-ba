@@ -229,6 +229,10 @@ namespace MARRSS
             // if the SiRSRS is checked, run the scheduling for every ground station on their own, and then combine the results
             if (radioSingleScope.Checked)
             {
+                // gets the satellite and stations data just in case it hasnt already been fetched (when not changing the selection upon rerunning)
+                satTleData = getSatelliteData(logFile);
+                stationData = getStationData(logFile);
+
                 SingleGroundStationRuns sirsrsRun = new SingleGroundStationRuns(scheduler, objectivefunct, startTime, stopTime, satTleData, stationData,
                     comboScenarioBox.SelectedIndex, SingleGroundStationRuns.conflictResolutionOptions.Nothing);
                 sirsrsRun.runThisRun();

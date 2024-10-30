@@ -34,6 +34,7 @@ namespace MARRSS.Scheduler
         private double val_FairSatellites;
         private double val_Scheduled;
         private double val_Duration;
+        private double val_Collisions;
 
         public ObjectiveFunction(params Structs.ObjectiveEnum[] objectivesToSchedule)
         {
