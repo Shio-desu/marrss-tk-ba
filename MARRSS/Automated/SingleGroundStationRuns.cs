@@ -71,22 +71,41 @@ namespace MARRSS.Automated
                 System.Windows.Forms.Application.DoEvents();
 
             }
-
-            // add all the Single Resource schedules to one combined solution, dependent on the selected conflictResolution option
+           
             ContactWindowsVector combined = new ContactWindowsVector();
             combined.setStartTime(start);
             combined.setStopTime(stop);
 
+            // add all the Single Resource schedules to one combined solution, dependent on the selected conflictResolution option
             switch (conflictResolution)
             {
+                // add them all together and dont resolve the collisions
                 case conflictResolutionOptions.Nothing:
 
                     foreach (ContactWindowsVector schedule in resultSchedules)
                     {
                         combined.add(schedule.getAllContacts());
                     }
-                    break;
 
+                    //for (int i = 0; i < combined.Count(); i++)
+                    //{
+                    //    for (int k = 0; k < combined.Count(); k++)
+                    //    {
+                    //        if (i != k && combined.getAt(i).getSheduledInfo() &&
+                    //            combined.getAt(k).getSheduledInfo() &&
+                    //            combined.getAt(i).checkConflict(combined.getAt(k)))
+                    //        {
+                    //            if (combined.getAt(k).getSatName() == combined.getAt(i).getSatName()
+                    //                || combined.getAt(k).getStationName() == combined.getAt(i).getStationName())
+                    //            {
+                    //                combined.getAt(k).unShedule();
+                    //            }
+                    //        }
+                    //    }
+                    //}
+
+                    break;
+                   
                 case conflictResolutionOptions.Greedy:
                     break;
 

@@ -51,7 +51,7 @@ namespace MARRSS.Performance
                             if (contacts.getAt(k).getSatName() == contacts.getAt(i).getSatName()
                                 || contacts.getAt(k).getStationName() == contacts.getAt(i).getStationName())
                             {
-                                if (!hashConflict.Contains(contacts.getAt(k).getID()))
+                                if (!hashConflict.Contains(contacts.getAt(i).getID()))
                                 {
                                     nrOfConflicts++;
                                     hashConflict.Add(contacts.getAt(i).getID());

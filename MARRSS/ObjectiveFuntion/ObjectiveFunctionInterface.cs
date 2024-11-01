@@ -32,5 +32,6 @@ namespace MARRSS.Scheduler
         double getStationFairnessValue();
         double getScheduledContactsValue();
         double getPriorityValue();
+        double getCollisionsValue();
     }
 }

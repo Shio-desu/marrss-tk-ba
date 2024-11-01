@@ -30,14 +30,15 @@ namespace MARRSS.Forms
             2: Station Fairness
             3: Scheduled Duration
             4: Scheduled Contacts
+            5: Collisions
         */
-        private int[] wheight = { 0, 0, 0, 0, 0 };
+        private int[] wheight = { 0, 0, 0, 0, 0, 0 };
         private int lastSelected = 0;
 
         public ObjectiveBuilderForm()
         {
             InitializeComponent();
-            wheight = new int[5] { 0, 0, 0, 0, 0, };
+            wheight = new int[6] { 0, 0, 0, 0, 0, 0 };
             lastSelected = 0;
             ObjectivesPresetSelection.SelectedItem = 0;
         }
@@ -73,6 +74,9 @@ namespace MARRSS.Forms
                             break;
                         case 4:
                             listObject = listObject + " Scheduled Contacts";
+                            break;
+                        case 5:
+                            listObject = listObject + " Collisions";
                             break;
                     }
                     selectedObjectiveListBox.Items.Add(listObject);
@@ -117,7 +121,7 @@ namespace MARRSS.Forms
 
         private void loadSavedObjective(string name)
         {
-            wheight = new int[5] { 0, 0, 0, 0, 0, };
+            wheight = new int[6] { 0, 0, 0, 0, 0, 0 };
             //StringCollection objective = (StringCollection)Properties.Objective.Default[name];
             int[] wh = getObjectiveValuesByName(name);
             for (int w = 0; w < wh.Count(); w++)
@@ -146,7 +150,7 @@ namespace MARRSS.Forms
         {
             int[] w = getObjectiveValuesByName(name);
             List<int> items = new List<int>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < w.Length; i++)
             {
                 for (int j = 0; j < w[i]; j++)
                     items.Add((i+1));
@@ -176,6 +180,7 @@ namespace MARRSS.Forms
                     writer.WriteElementString("Station", w[2].ToString());
                     writer.WriteElementString("Duration", w[3].ToString());
                     writer.WriteElementString("Scheduled", w[4].ToString());
+                    writer.WriteElementString("Collisions", w[5].ToString());
                     writer.WriteEndElement();
                     writer.WriteEndElement();
                     writer.WriteEndDocument();
@@ -225,6 +230,10 @@ namespace MARRSS.Forms
                 sch.InnerText = w[4].ToString();
                 elem.AppendChild(sch);
 
+                XmlElement col = xmlDoc.CreateElement("Collisions");
+                sch.InnerText = w[5].ToString();
+                elem.AppendChild(col);
+
                 if (nodeExists && oldNode != null)
                 {
                     root.ReplaceChild(elem, oldNode);
@@ -251,7 +260,7 @@ namespace MARRSS.Forms
 
         private static int[] getObjectiveValuesByName(string name)
         {
-            int[] res = new int[5] { 0, 0, 0, 0, 0, };
+            int[] res = new int[6] { 0, 0, 0, 0, 0, 0 };
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load("objectives.set");
             XmlNode root = xmlDoc.DocumentElement;
@@ -280,6 +289,9 @@ namespace MARRSS.Forms
                                 break;
                             case "Scheduled":
                                 res[4] = Convert.ToInt32(child.InnerText);
+                                break;
+                            case "Collisions":
+                                res[5] = Convert.ToInt32(child.InnerText);
                                 break;
                         }
                     }

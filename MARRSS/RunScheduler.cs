@@ -13,7 +13,7 @@ using MARRSS.Interface2;
 using MARRSS.Scheduler;
 using MARRSS.Definition;
 using MARRSS.Performance;
-
+using System;
 
 namespace MARRSS
 {
@@ -235,7 +235,7 @@ namespace MARRSS
             main.setDuration(_H5);
             main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(result));
             main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(result));
-            
+            Console.WriteLine(objective.getCollisionsValue());
         }
     }
 }
