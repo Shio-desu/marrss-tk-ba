@@ -6,6 +6,7 @@
     <Station>1</Station>
     <Duration>1</Duration>
     <Scheduled>1</Scheduled>
+	<Collisions>1</Collisions>
   </All>
   <Duration>
     <Priority>0</Priority>
@@ -13,6 +14,7 @@
     <Station>0</Station>
     <Duration>1</Duration>
     <Scheduled>1</Scheduled>
+	<Collisions>0</Collisions>
   </Duration>
   <Fairness>
     <Priority>0</Priority>
@@ -20,6 +22,7 @@
     <Station>1</Station>
     <Duration>0</Duration>
     <Scheduled>1</Scheduled>
+	<Collisions>0</Collisions>
   </Fairness>
   <Priority>
     <Priority>1</Priority>
@@ -27,12 +30,22 @@
     <Station>0</Station>
     <Duration>0</Duration>
     <Scheduled>1</Scheduled>
+	<Collisions>0</Collisions>
   </Priority>
+  <Collisions>
+	<Priority>0</Priority>
+    <Satellite>0</Satellite>
+    <Station>0</Station>
+    <Duration>0</Duration>
+    <Scheduled>1</Scheduled>
+	<Collisions>1</Collisions>
+  </Collisions>
   <test>
     <Priority>4</Priority>
     <Satellite>1</Satellite>
     <Station>1</Station>
     <Duration>1</Duration>
     <Scheduled>1</Scheduled>
+	<Collisions>1</Collisions>
   </test>
 </Objectives>

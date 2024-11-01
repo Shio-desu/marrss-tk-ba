@@ -9,6 +9,7 @@ using System.Linq;
 using MARRSS.Global;
 
 using MARRSS.Definition;
+using MARRSS.Performance;
 
 namespace MARRSS.Scheduler
 {
@@ -29,6 +30,7 @@ namespace MARRSS.Scheduler
         private double val_FairSatellites;
         private double val_Scheduled;
         private double val_Duration;
+        private double val_Collisions;
 
         // arbitrary constraint numbers for testing
         // TODO: make elaborate constraints
@@ -37,6 +39,7 @@ namespace MARRSS.Scheduler
         private double constraint_FairSatellites = 0.8;
         private double constraint_Scheduled = 0.6;
         private double constraint_Duration = 0.6;
+        private double constraint_Collisions = 0.8;
 
         public EpsilonConstraint(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
         {
@@ -47,6 +50,7 @@ namespace MARRSS.Scheduler
             val_FairStations = 0;
             val_Scheduled = 0;
             val_Duration = 0;
+            val_Collisions = 0;
         }
 
         public EpsilonConstraint()
@@ -60,6 +64,7 @@ namespace MARRSS.Scheduler
             val_FairStations = 0;
             val_Scheduled = 0;
             val_Duration = 0;
+            val_Collisions = 0;
         }
 
         public void setObjectives(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
@@ -71,6 +76,7 @@ namespace MARRSS.Scheduler
             val_FairStations = 0;
             val_Scheduled = 0;
             val_Duration = 0;
+            val_Collisions = 0;
         }
 
         //! calculate the fitness value of the given contactvectors if a contact is added
@@ -215,6 +221,8 @@ namespace MARRSS.Scheduler
 
             val_Priority = (double)prio / (double)priorityMax;
 
+            val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
+
         }
 
         private int calcualteMaxPrioValue(ContactWindowsVector contacts, int[] population = null)
@@ -270,6 +278,9 @@ namespace MARRSS.Scheduler
                 case 5:
                     fitness = val_Scheduled;
                     break;
+                case 6:
+                    fitness = val_Collisions;
+                    break;
                 default:
                     //Do Nothing
                     //
@@ -302,7 +313,13 @@ namespace MARRSS.Scheduler
                 if (val_Priority < constraint_Priority)
                     fitness = 0;
             }
-
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.COLLISIONS))
+            {
+                if (val_Collisions < constraint_Collisions)
+                {
+                    fitness = 0;
+                }
+            }
             return fitness;
         }
 
@@ -363,6 +380,13 @@ namespace MARRSS.Scheduler
         {
             return val_Priority;
         }
-
+        //! get Colission Value
+        /*!
+           \return double value to indicate the percentage of scheduled contacts that have collisions
+        */
+        public double getCollisionsValue()
+        {
+            return val_Collisions;
+        }
     }
 }

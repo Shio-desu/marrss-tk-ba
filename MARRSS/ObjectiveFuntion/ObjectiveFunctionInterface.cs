@@ -20,6 +20,7 @@ namespace MARRSS.Scheduler
     */
     interface ObjectiveFunctionInterface
     {
+
         void calculateValues(ContactWindowsVector currentSolution, ContactWindowsVector completeContacts, int numberOfAllContacts,
             ContactWindow contactToAdd);
         void calculateValues(ContactWindowsVector contactWindows);
@@ -31,5 +32,6 @@ namespace MARRSS.Scheduler
         double getStationFairnessValue();
         double getScheduledContactsValue();
         double getPriorityValue();
+        double getCollisionsValue();
     }
 }

@@ -101,6 +101,7 @@
             this.stationFairLabel = new System.Windows.Forms.Label();
             this.fairSatLabel = new System.Windows.Forms.Label();
             this.schedulerGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioTabuSearch = new System.Windows.Forms.RadioButton();
             this.radioHillClimber = new System.Windows.Forms.RadioButton();
             this.radioGreedy = new System.Windows.Forms.RadioButton();
             this.radioGenetic = new System.Windows.Forms.RadioButton();
@@ -183,7 +184,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.radioTabuSearch = new System.Windows.Forms.RadioButton();
+            this.scopeGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioSingleScope = new System.Windows.Forms.RadioButton();
+            this.radioMultiScope = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -217,6 +220,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).BeginInit();
             this.contextStationDB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.scopeGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -630,6 +634,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.scopeGroupBox);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.logPanel);
             this.tabPage2.Controls.Add(this.panel8);
@@ -658,9 +663,9 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.objectiveComboBox);
-            this.groupBox1.Location = new System.Drawing.Point(480, 35);
+            this.groupBox1.Location = new System.Drawing.Point(626, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(178, 76);
+            this.groupBox1.Size = new System.Drawing.Size(286, 76);
             this.groupBox1.TabIndex = 49;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Objective";
@@ -668,9 +673,9 @@
             // objectiveComboBox
             // 
             this.objectiveComboBox.FormattingEnabled = true;
-            this.objectiveComboBox.Location = new System.Drawing.Point(21, 32);
+            this.objectiveComboBox.Location = new System.Drawing.Point(24, 32);
             this.objectiveComboBox.Name = "objectiveComboBox";
-            this.objectiveComboBox.Size = new System.Drawing.Size(148, 21);
+            this.objectiveComboBox.Size = new System.Drawing.Size(254, 21);
             this.objectiveComboBox.TabIndex = 0;
             // 
             // logPanel
@@ -924,6 +929,16 @@
             this.schedulerGroupBox.TabStop = false;
             this.schedulerGroupBox.Text = "Scheduler";
             // 
+            // radioTabuSearch
+            // 
+            this.radioTabuSearch.AutoSize = true;
+            this.radioTabuSearch.Location = new System.Drawing.Point(10, 71);
+            this.radioTabuSearch.Name = "radioTabuSearch";
+            this.radioTabuSearch.Size = new System.Drawing.Size(87, 17);
+            this.radioTabuSearch.TabIndex = 4;
+            this.radioTabuSearch.Text = "Tabu Search";
+            this.radioTabuSearch.UseVisualStyleBackColor = true;
+            // 
             // radioHillClimber
             // 
             this.radioHillClimber.AutoSize = true;
@@ -969,7 +984,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.comboScenarioBox);
-            this.groupBox6.Location = new System.Drawing.Point(674, 35);
+            this.groupBox6.Location = new System.Drawing.Point(626, 91);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(286, 75);
             this.groupBox6.TabIndex = 44;
@@ -1102,7 +1117,7 @@
             this.startScheduleButton.BackColor = System.Drawing.Color.LightSkyBlue;
             this.startScheduleButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.startScheduleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startScheduleButton.Location = new System.Drawing.Point(728, 152);
+            this.startScheduleButton.Location = new System.Drawing.Point(710, 172);
             this.startScheduleButton.Name = "startScheduleButton";
             this.startScheduleButton.Size = new System.Drawing.Size(129, 23);
             this.startScheduleButton.TabIndex = 8;
@@ -1700,15 +1715,38 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // radioTabuSearch
+            // scopeGroupBox
             // 
-            this.radioTabuSearch.AutoSize = true;
-            this.radioTabuSearch.Location = new System.Drawing.Point(10, 71);
-            this.radioTabuSearch.Name = "radioTabuSearch";
-            this.radioTabuSearch.Size = new System.Drawing.Size(87, 17);
-            this.radioTabuSearch.TabIndex = 4;
-            this.radioTabuSearch.Text = "Tabu Search";
-            this.radioTabuSearch.UseVisualStyleBackColor = true;
+            this.scopeGroupBox.Controls.Add(this.radioSingleScope);
+            this.scopeGroupBox.Controls.Add(this.radioMultiScope);
+            this.scopeGroupBox.Location = new System.Drawing.Point(489, 35);
+            this.scopeGroupBox.Name = "scopeGroupBox";
+            this.scopeGroupBox.Size = new System.Drawing.Size(82, 70);
+            this.scopeGroupBox.TabIndex = 5;
+            this.scopeGroupBox.TabStop = false;
+            this.scopeGroupBox.Text = "Scope";
+            // 
+            // radioSingleScope
+            // 
+            this.radioSingleScope.AutoSize = true;
+            this.radioSingleScope.Location = new System.Drawing.Point(10, 23);
+            this.radioSingleScope.Name = "radioSingleScope";
+            this.radioSingleScope.Size = new System.Drawing.Size(54, 17);
+            this.radioSingleScope.TabIndex = 2;
+            this.radioSingleScope.Text = "Single";
+            this.radioSingleScope.UseVisualStyleBackColor = true;
+            // 
+            // radioMultiScope
+            // 
+            this.radioMultiScope.AutoSize = true;
+            this.radioMultiScope.Checked = true;
+            this.radioMultiScope.Location = new System.Drawing.Point(10, 47);
+            this.radioMultiScope.Name = "radioMultiScope";
+            this.radioMultiScope.Size = new System.Drawing.Size(47, 17);
+            this.radioMultiScope.TabIndex = 1;
+            this.radioMultiScope.TabStop = true;
+            this.radioMultiScope.Text = "Multi";
+            this.radioMultiScope.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -1774,6 +1812,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).EndInit();
             this.contextStationDB.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.scopeGroupBox.ResumeLayout(false);
+            this.scopeGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1935,5 +1975,8 @@
         private System.Windows.Forms.ToolStripMenuItem runsToolStripMenuItem;
         private System.Windows.Forms.RadioButton radioHillClimber;
         private System.Windows.Forms.RadioButton radioTabuSearch;
+        private System.Windows.Forms.GroupBox scopeGroupBox;
+        private System.Windows.Forms.RadioButton radioSingleScope;
+        private System.Windows.Forms.RadioButton radioMultiScope;
     }
 }

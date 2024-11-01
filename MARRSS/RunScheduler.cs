@@ -13,7 +13,7 @@ using MARRSS.Interface2;
 using MARRSS.Scheduler;
 using MARRSS.Definition;
 using MARRSS.Performance;
-
+using System;
 
 namespace MARRSS
 {
@@ -210,6 +210,32 @@ namespace MARRSS
                 main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(scheduler.getFinischedSchedule()));
                 main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(scheduler.getFinischedSchedule()));
             }
+        }
+
+        // copy of displayResults function for when the result wasn't created by one singular instance of a schedular (SiRSRS, where the scheduler was run for every ground station and the results where combined)
+        public static void displayResults(Main main, ContactWindowsVector result, ObjectiveFunctionInterface objective)
+        {
+      
+            if (objective == null)
+                objective = new ObjectiveFunction();
+            objective.calculateValues(result);
+
+            int _H = result.getNrOfScheduled();
+            double _H1 = objective.getScheduledContactsValue();
+            int _H2 = GeneralMeasurments.getNrOfConflicts(result);
+            double _H3 = objective.getStationFairnessValue();
+            double _H4 = objective.getSatelliteFairnessValue();
+            double _H5 = GeneralMeasurments.getDurationOfScheduledContacts(result);
+
+            main.setFitnessValue(objective.getObjectiveResults());
+            main.setContactsNumber(_H);
+            main.setCollisons(_H2);
+            main.setFairnessStation(_H3);
+            main.setFairnessSatellite(_H4);
+            main.setDuration(_H5);
+            main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(result));
+            main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(result));
+            Console.WriteLine(objective.getCollisionsValue());
         }
     }
 }
