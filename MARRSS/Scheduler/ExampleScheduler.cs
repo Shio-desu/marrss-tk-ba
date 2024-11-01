@@ -44,7 +44,7 @@ namespace MARRSS.Scheduler
         /*!
             \param ObjectiveFunction problem set to solve
         */
-        public void setObjectiveFunktion(ObjectiveFunction objectiveFunction)
+        public void setObjectiveFunktion(ObjectiveFunctionInterface objectiveFunction)
         {
             //objective = objectiveFunction;
         }
@@ -52,7 +52,7 @@ namespace MARRSS.Scheduler
         /*!
             \rreturn ObjectiveFunction problem set to solve
         */
-        public ObjectiveFunction getObjectiveFunction()
+        public ObjectiveFunctionInterface getObjectiveFunction()
         {
             return null;
         }

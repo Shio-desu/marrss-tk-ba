@@ -30,7 +30,7 @@ namespace MARRSS.Scheduler
         private ContactWindowsVector set; //!< ContactWindowsVector to start with
         private Main f = null;
         private bool cancel = false;
-        ObjectiveFunction objective = null;
+        ObjectiveFunctionInterface objective = null;
 
         //!GreedyScheduler constructor.
         /*!
@@ -46,7 +46,7 @@ namespace MARRSS.Scheduler
             \param ObjectiveFunction problem set to solve
             Not Implemented in This Scheduler
         */
-        public void setObjectiveFunktion(ObjectiveFunction objectiveFunction)
+        public void setObjectiveFunktion(ObjectiveFunctionInterface objectiveFunction)
         {
             objective = objectiveFunction;
         }
@@ -54,7 +54,7 @@ namespace MARRSS.Scheduler
         /*!
             \rreturns NULL
         */
-        public ObjectiveFunction getObjectiveFunction()
+        public ObjectiveFunctionInterface getObjectiveFunction()
         {
             return objective;
         }

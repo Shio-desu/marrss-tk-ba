@@ -1,13 +1,7 @@
 ﻿/**
 * ----------------------------------------------------------------
-* Nikolai Jonathan Reed 
+* Theo Kaminsky
 *
-* 
-* Copyright (c) 2017, Nikolai Reed, 1manprojects.de
-* All rights reserved.
-*
-* Licensed under
-* Creative Commons Attribution NonCommercial (CC-BY-NC)
 */
 using System;
 using System.Collections.Generic;
@@ -19,25 +13,35 @@ using MARRSS.Definition;
 namespace MARRSS.Scheduler
 {
     /**
-    * \brief Objective Function Class
+    * \brief Epsilon Constraint Class
     *
-    * This class contains all the calculations of the objective function
+    * This class contains all the calculations of the objective function in form of the epsilon constraint method
     * to asssess the overall fitness of each solution. Changing requirements
     * for the scheduling algorithms can be defined here globaly for every 
-    * algroithm using the objective function for calculations.
+    * algroithm using the epsilon constraint for calculations.
     */
-    class ObjectiveFunction
+    class EpsilonConstraint : ObjectiveFunctionInterface
     {
-        private Structs.ObjectiveEnum[] objectives;
+        private Structs.ObjectiveEnum mainObjective;
+        private Structs.ObjectiveEnum[] sideObjectives;
         private double val_Priority;
         private double val_FairStations;
         private double val_FairSatellites;
         private double val_Scheduled;
         private double val_Duration;
 
-        public ObjectiveFunction(params Structs.ObjectiveEnum[] objectivesToSchedule)
+        // arbitrary constraint numbers for testing
+        // TODO: make elaborate constraints
+        private double constraint_Priority = 0.7;
+        private double constraint_FairStations = 0.8;
+        private double constraint_FairSatellites = 0.8;
+        private double constraint_Scheduled = 0.6;
+        private double constraint_Duration = 0.6;
+
+        public EpsilonConstraint(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
         {
-            objectives = objectivesToSchedule;
+            mainObjective = objectiveToSchedule;
+            sideObjectives = objectivesToConstraint;
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -45,12 +49,12 @@ namespace MARRSS.Scheduler
             val_Duration = 0;
         }
 
-        public ObjectiveFunction()
+        public EpsilonConstraint()
         {
-            objectives = new Structs.ObjectiveEnum[]
-                {Structs.ObjectiveEnum.PRIORITY,
-                Structs.ObjectiveEnum.SCHEDULEDCONTACTS, Structs.ObjectiveEnum.DURATION,
-                Structs.ObjectiveEnum.FAIRNESSATELITE, Structs.ObjectiveEnum.FAIRNESSTATION };
+            mainObjective = Structs.ObjectiveEnum.SCHEDULEDCONTACTS;
+            sideObjectives = new Structs.ObjectiveEnum[]
+                {Structs.ObjectiveEnum.PRIORITY, Structs.ObjectiveEnum.DURATION,
+                Structs.ObjectiveEnum.FAIRNESSATELITE, Structs.ObjectiveEnum.FAIRNESSTATION};
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -58,9 +62,10 @@ namespace MARRSS.Scheduler
             val_Duration = 0;
         }
 
-        public void setObjectives(params Structs.ObjectiveEnum[] objectivesToSchedule)
+        public void setObjectives(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
         {
-            objectives = objectivesToSchedule;
+            mainObjective = objectiveToSchedule;
+            sideObjectives = objectivesToConstraint;
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -247,33 +252,57 @@ namespace MARRSS.Scheduler
         {
             double fitness = 0.0;
 
-            foreach (Structs.ObjectiveEnum obj in objectives)
+            // calculates fitness of main objective first
+            switch (Convert.ToInt32(mainObjective))
             {
-                switch (Convert.ToInt32(obj))
-                {
-                    case 1:
-                        fitness += val_Priority;
-                        break;
-                    case 2:
-                        fitness += val_FairSatellites;
-                        break;
-                    case 3:
-                        fitness += val_FairStations;
-                        break;
-                    case 4:
-                        fitness += val_Duration;
-                        break;
-                    case 5:
-                        fitness += val_Scheduled;
-                        break;
-                    default:
-                        //Do Nothing
-                        //
-                        break;
-                }
+                case 1:
+                    fitness = val_Priority;
+                    break;
+                case 2:
+                    fitness = val_FairSatellites;
+                    break;
+                case 3:
+                    fitness = val_FairStations;
+                    break;
+                case 4:
+                    fitness = val_Duration;
+                    break;
+                case 5:
+                    fitness = val_Scheduled;
+                    break;
+                default:
+                    //Do Nothing
+                    //
+                    break;
             }
 
-            fitness = fitness / Convert.ToDouble(objectives.Count());
+            // checks if sideObjectives are inside (above) their constraints
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.SCHEDULEDCONTACTS))
+            {
+                if (val_Scheduled < constraint_Scheduled)
+                    fitness = 0;
+            }
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.DURATION))
+            {
+                if (val_Duration < constraint_Duration)
+                    fitness = 0;
+            }
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSATELITE))
+            {
+                if (val_FairSatellites < constraint_FairSatellites)
+                    fitness = 0;
+            }
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSTATION))
+            {
+                if (val_FairStations < constraint_FairStations)
+                    fitness = 0;
+            }
+            if (sideObjectives.Contains(Structs.ObjectiveEnum.PRIORITY))
+            {
+                if (val_Priority < constraint_Priority)
+                    fitness = 0;
+            }
+
             return fitness;
         }
 
@@ -284,8 +313,8 @@ namespace MARRSS.Scheduler
         */
         public override string ToString()
         {
-            string res = "Objectives Scheduled To:";
-            foreach (Structs.ObjectiveEnum obj in objectives)
+            string res = "Objective Scheduled To: " + mainObjective.ToString() + ". Constraints: ";
+            foreach (Structs.ObjectiveEnum obj in sideObjectives)
             {
                 res = res + " - " + obj.ToString();
             }
