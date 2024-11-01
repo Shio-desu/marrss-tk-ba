@@ -108,6 +108,15 @@ namespace MARRSS
                 greedy.setFormToUpdate(UpdateForm);
                 scheduler = greedy;
             }
+            if (scheduler.GetType() == typeof(TabuSearchScheduler))
+            {
+                TabuSearchScheduler tabuSearch = (TabuSearchScheduler)scheduler;
+                tabuSearch.setFormToUpdate(UpdateForm);
+                tabuSearch.setAdaptiveMaxIterationbs(Properties.Settings.Default.hill_adaptiveMaxIterations);
+                tabuSearch.setMaxNumberOfIterations(Properties.Settings.Default.hill_maxNumberIterations);
+                tabuSearch.setRandomStart(Properties.Settings.Default.hill_randomStart);
+                scheduler = tabuSearch;
+            }
             /*
              * if (schduler.GetType() == typeof(ExampleScheduler))
              * {

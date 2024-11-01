@@ -207,6 +207,10 @@ namespace MARRSS
             {
                 scheduler = RunScheduler.setScheduler(new HillClimberScheduler(), this);
             }
+            if (radioTabuSearch.Checked)
+            {
+                scheduler = RunScheduler.setScheduler(new TabuSearchScheduler(), this);
+            }
             //-----------------------------------------------------------------
             //---------------------------Add New SCHEDULER HERE-----------------
             //-----------------------------------------------------------------

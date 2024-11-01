@@ -250,7 +250,13 @@ namespace MARRSS.Definition
         */
         public List<ContactWindow> getAllContacts()
         {
-            return contactsList;
+            // addition from Theo Kaminsky: make a deep copy of it instead of just returning contactsList
+            List<ContactWindow> returnList = new List<ContactWindow>();
+            foreach (ContactWindow window in contactsList)
+            {
+                returnList.Add(new ContactWindow(window));
+            }
+            return returnList;
         }
 
         //! Count

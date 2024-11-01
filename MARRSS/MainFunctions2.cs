@@ -47,7 +47,7 @@ namespace MARRSS
             Task[] threads = new Task[tleData.Count()];
             for (int i = 0; i < tleData.Count(); i++)
             {
-                tasks[i] = new One_Sgp4.Sgp4(tleData[i], Properties.Settings.Default.orbit_Wgs);
+                tasks[i] = new One_Sgp4.Sgp4(tleData[i], One_Sgp4.Sgp4.wgsConstant.WGS_84);
                 tasks[i].setStart(start, stop, accuracy / 60.0);
                 threads[i] = new Task(tasks[i].starThread);
             }
@@ -77,7 +77,7 @@ namespace MARRSS
                 Task[] inThreads = new Task[stations.Count()];
                 for (int k = 0; k < stations.Count(); k++)
                 {
-                    inViews[k] = new Ground.InView(stations[k], start, tasks[i].getRestults(), tleData[i].getName(), accuracy);
+                    inViews[k] = new Ground.InView(stations[k], start, tasks[i].getResults(), tleData[i].getName(), accuracy);
                     inThreads[k] = new Task(inViews[k].calcContactWindows);
                 }
                 for (int k = 0; k < stations.Count(); k++)

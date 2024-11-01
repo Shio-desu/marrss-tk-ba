@@ -492,7 +492,7 @@ namespace MARRSS.Scheduler
                     for (int k = startItem; k < stopItem; k++)
                     {
                         if (pop[k] == 1 && k != i
-                            && set.getAt(i).checkConflikt(set.getAt(k)))
+                            && set.getAt(i).checkConflict(set.getAt(k)))
                         {
                             if (set.getAt(i).getSatName() == set.getAt(k).getSatName()
                                || set.getAt(i).getStationName() == set.getAt(k).getStationName())
@@ -547,7 +547,7 @@ namespace MARRSS.Scheduler
                     bool found = false;
                     for (int k = 0; k < result.Count(); k++)
                     {
-                        if (set.getAt(i).checkConflikt(set.getAt(k))
+                        if (set.getAt(i).checkConflict(set.getAt(k))
                             && result.getAt(k).getSheduledInfo()
                             && i != k)
                         {

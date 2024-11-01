@@ -46,7 +46,7 @@ namespace MARRSS.Performance
                     {
                         if (i != k && contacts.getAt(i).getSheduledInfo() &&
                             contacts.getAt(k).getSheduledInfo() &&
-                            contacts.getAt(i).checkConflikt(contacts.getAt(k)))
+                            contacts.getAt(i).checkConflict(contacts.getAt(k)))
                         {
                             if (contacts.getAt(k).getSatName() == contacts.getAt(i).getSatName()
                                 || contacts.getAt(k).getStationName() == contacts.getAt(i).getStationName())

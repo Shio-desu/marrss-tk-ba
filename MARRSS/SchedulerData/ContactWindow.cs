@@ -41,8 +41,8 @@ namespace MARRSS.Scheduler
 
         List<TrackingData> trackingData = new List<TrackingData>(); /*!< trackingData */
 
-        bool sheduled; /*!< boolean if contact has been scheduled */
-        bool exluded; /*!< boolean if contact is to be excluded */
+        private bool sheduled; /*!< boolean if contact has been scheduled */
+        private bool exluded; /*!< boolean if contact is to be excluded */
 
         private Guid id; /*!< Guid - ID of ContactWindow */
         private Guid requestID; /*!< Guid - ID of Request */
@@ -88,6 +88,29 @@ namespace MARRSS.Scheduler
 
             id = System.Guid.NewGuid();
             List<TrackingData> trackingData = new List<TrackingData>();
+        }
+
+        // Theo Kaminsky addition: create a new object from a contact window (deep copy)
+        //! ContactWindow constructor
+        /*!
+        \param ContactWindow contact
+        */
+        public ContactWindow(ContactWindow contact)
+        {
+            satName = contact.satName;
+            stationName = contact.stationName;
+
+            startTime = new One_Sgp4.EpochTime(contact.startTime);
+            stopTime = new One_Sgp4.EpochTime(contact.stopTime);
+            duration = contact.duration;
+
+            trackingData = new List<TrackingData>();
+
+            sheduled = contact.sheduled;
+            exluded = contact.exluded;
+
+            id = contact.id;
+            requestID = contact.requestID;
         }
 
         //! calcDuration
@@ -329,7 +352,7 @@ namespace MARRSS.Scheduler
         \param ContactWindow
         \return bool true if the contacttime of both object collide
         */
-        public bool checkConflikt(ContactWindow window)
+        public bool checkConflict(ContactWindow window)
         {
             bool startyear = startTime.getYear() == window.getStartTime().getYear();
             bool stopyear = stopTime.getYear() == window.getStopTime().getYear();
