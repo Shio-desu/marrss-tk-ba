@@ -117,6 +117,15 @@ namespace MARRSS
                 tabuSearch.setRandomStart(Properties.Settings.Default.hill_randomStart);
                 scheduler = tabuSearch;
             }
+            if (scheduler.GetType() == typeof(SimulatedAnnealingScheduler))
+            {
+                SimulatedAnnealingScheduler simAn = (SimulatedAnnealingScheduler)scheduler;
+                simAn.setFormToUpdate(UpdateForm);
+                simAn.setAdaptiveMaxIterationbs(Properties.Settings.Default.hill_adaptiveMaxIterations);
+                simAn.setMaxNumberOfIterations(Properties.Settings.Default.hill_maxNumberIterations);
+                simAn.setRandomStart(Properties.Settings.Default.hill_randomStart);
+                scheduler = simAn;
+            }
             /*
              * if (schduler.GetType() == typeof(ExampleScheduler))
              * {

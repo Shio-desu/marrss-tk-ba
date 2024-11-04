@@ -40,6 +40,7 @@ namespace MARRSS.Scheduler
         private double duration; /*!< double duration of contact */
 
         List<TrackingData> trackingData = new List<TrackingData>(); /*!< trackingData */
+        private List<ContactWindow> conflictWindows = new List<ContactWindow>(); // list tracking all contactwindows that collide with this
 
         private bool sheduled; /*!< boolean if contact has been scheduled */
         private bool exluded; /*!< boolean if contact is to be excluded */
@@ -105,6 +106,7 @@ namespace MARRSS.Scheduler
             duration = contact.duration;
 
             trackingData = new List<TrackingData>();
+            conflictWindows = contact.conflictWindows;
 
             sheduled = contact.sheduled;
             exluded = contact.exluded;
@@ -336,6 +338,26 @@ namespace MARRSS.Scheduler
         public int getHash()
         {
             return satName.GetHashCode();
+        }
+
+        public void clearConflictWindows()
+        {
+            conflictWindows.Clear();
+        }
+
+        public void addConflictWindow(ContactWindow contact)
+        {
+            conflictWindows.Add(contact);
+        }
+
+        public void setConflictWindows(List<ContactWindow> contacts)
+        {
+            conflictWindows = contacts;
+        }
+
+        public List<ContactWindow> getConflictWindows()
+        {
+            return conflictWindows;
         }
 
         //! Retruns the tracking data for this Object

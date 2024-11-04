@@ -38,29 +38,26 @@ namespace MARRSS.Performance
         public static int getNrOfConflicts(ContactWindowsVector contacts)
         {
             int nrOfConflicts = 0;
-            HashSet<Guid> hashConflict = new HashSet<Guid>();
 
+            // goes over each contactwindow and checks their colliding windows if they are scheduled as well
             for (int i = 0; i < contacts.Count(); i++)
+            {
+                ContactWindow window = contacts.getAt(i);
+                if (!window.getSheduledInfo())
+                    continue;
+
+                bool conflictFound = false;
+                List<ContactWindow> conflictList = window.getConflictWindows();
+                for (int j = 0; j < conflictList.Count; j++)
                 {
-                    for (int k = 0; k < contacts.Count(); k++)
-                    {
-                        if (i != k && contacts.getAt(i).getSheduledInfo() &&
-                            contacts.getAt(k).getSheduledInfo() &&
-                            contacts.getAt(i).checkConflict(contacts.getAt(k)))
-                        {
-                            if (contacts.getAt(k).getSatName() == contacts.getAt(i).getSatName()
-                                || contacts.getAt(k).getStationName() == contacts.getAt(i).getStationName())
-                            {
-                                if (!hashConflict.Contains(contacts.getAt(i).getID()))
-                                {
-                                    nrOfConflicts++;
-                                    hashConflict.Add(contacts.getAt(i).getID());
-                                }
-                            }
-                        }
-                    }
+                    if (conflictList[j].getSheduledInfo())
+                        conflictFound = true;
                 }
-            hashConflict.Clear();
+
+                if (conflictFound)
+                    nrOfConflicts++;
+            }
+
             return nrOfConflicts;
         }
 

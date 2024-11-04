@@ -75,6 +75,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.scopeGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioSingleScope = new System.Windows.Forms.RadioButton();
+            this.radioMultiScope = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.objectiveComboBox = new System.Windows.Forms.ComboBox();
             this.logPanel = new System.Windows.Forms.Panel();
@@ -184,9 +187,7 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.scopeGroupBox = new System.Windows.Forms.GroupBox();
-            this.radioSingleScope = new System.Windows.Forms.RadioButton();
-            this.radioMultiScope = new System.Windows.Forms.RadioButton();
+            this.radioSimulatedAnnealing = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -196,6 +197,7 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.scopeGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.logPanel.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -220,7 +222,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).BeginInit();
             this.contextStationDB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.scopeGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -660,6 +661,39 @@
             this.tabPage2.Text = "Schedule";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // scopeGroupBox
+            // 
+            this.scopeGroupBox.Controls.Add(this.radioSingleScope);
+            this.scopeGroupBox.Controls.Add(this.radioMultiScope);
+            this.scopeGroupBox.Location = new System.Drawing.Point(505, 35);
+            this.scopeGroupBox.Name = "scopeGroupBox";
+            this.scopeGroupBox.Size = new System.Drawing.Size(82, 70);
+            this.scopeGroupBox.TabIndex = 5;
+            this.scopeGroupBox.TabStop = false;
+            this.scopeGroupBox.Text = "Scope";
+            // 
+            // radioSingleScope
+            // 
+            this.radioSingleScope.AutoSize = true;
+            this.radioSingleScope.Location = new System.Drawing.Point(10, 23);
+            this.radioSingleScope.Name = "radioSingleScope";
+            this.radioSingleScope.Size = new System.Drawing.Size(54, 17);
+            this.radioSingleScope.TabIndex = 2;
+            this.radioSingleScope.Text = "Single";
+            this.radioSingleScope.UseVisualStyleBackColor = true;
+            // 
+            // radioMultiScope
+            // 
+            this.radioMultiScope.AutoSize = true;
+            this.radioMultiScope.Checked = true;
+            this.radioMultiScope.Location = new System.Drawing.Point(10, 47);
+            this.radioMultiScope.Name = "radioMultiScope";
+            this.radioMultiScope.Size = new System.Drawing.Size(47, 17);
+            this.radioMultiScope.TabIndex = 1;
+            this.radioMultiScope.TabStop = true;
+            this.radioMultiScope.Text = "Multi";
+            this.radioMultiScope.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.objectiveComboBox);
@@ -917,14 +951,15 @@
             // 
             // schedulerGroupBox
             // 
+            this.schedulerGroupBox.Controls.Add(this.radioSimulatedAnnealing);
             this.schedulerGroupBox.Controls.Add(this.radioTabuSearch);
             this.schedulerGroupBox.Controls.Add(this.radioHillClimber);
             this.schedulerGroupBox.Controls.Add(this.radioGreedy);
             this.schedulerGroupBox.Controls.Add(this.radioGenetic);
             this.schedulerGroupBox.Controls.Add(this.radioEFTGreedy);
-            this.schedulerGroupBox.Location = new System.Drawing.Point(285, 35);
+            this.schedulerGroupBox.Location = new System.Drawing.Point(266, 35);
             this.schedulerGroupBox.Name = "schedulerGroupBox";
-            this.schedulerGroupBox.Size = new System.Drawing.Size(178, 98);
+            this.schedulerGroupBox.Size = new System.Drawing.Size(233, 98);
             this.schedulerGroupBox.TabIndex = 2;
             this.schedulerGroupBox.TabStop = false;
             this.schedulerGroupBox.Text = "Scheduler";
@@ -942,7 +977,7 @@
             // radioHillClimber
             // 
             this.radioHillClimber.AutoSize = true;
-            this.radioHillClimber.Location = new System.Drawing.Point(90, 47);
+            this.radioHillClimber.Location = new System.Drawing.Point(96, 48);
             this.radioHillClimber.Name = "radioHillClimber";
             this.radioHillClimber.Size = new System.Drawing.Size(76, 17);
             this.radioHillClimber.TabIndex = 3;
@@ -974,7 +1009,7 @@
             // radioEFTGreedy
             // 
             this.radioEFTGreedy.AutoSize = true;
-            this.radioEFTGreedy.Location = new System.Drawing.Point(90, 23);
+            this.radioEFTGreedy.Location = new System.Drawing.Point(96, 23);
             this.radioEFTGreedy.Name = "radioEFTGreedy";
             this.radioEFTGreedy.Size = new System.Drawing.Size(82, 17);
             this.radioEFTGreedy.TabIndex = 0;
@@ -1715,38 +1750,15 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // scopeGroupBox
+            // radioSimulatedAnnealing
             // 
-            this.scopeGroupBox.Controls.Add(this.radioSingleScope);
-            this.scopeGroupBox.Controls.Add(this.radioMultiScope);
-            this.scopeGroupBox.Location = new System.Drawing.Point(489, 35);
-            this.scopeGroupBox.Name = "scopeGroupBox";
-            this.scopeGroupBox.Size = new System.Drawing.Size(82, 70);
-            this.scopeGroupBox.TabIndex = 5;
-            this.scopeGroupBox.TabStop = false;
-            this.scopeGroupBox.Text = "Scope";
-            // 
-            // radioSingleScope
-            // 
-            this.radioSingleScope.AutoSize = true;
-            this.radioSingleScope.Location = new System.Drawing.Point(10, 23);
-            this.radioSingleScope.Name = "radioSingleScope";
-            this.radioSingleScope.Size = new System.Drawing.Size(54, 17);
-            this.radioSingleScope.TabIndex = 2;
-            this.radioSingleScope.Text = "Single";
-            this.radioSingleScope.UseVisualStyleBackColor = true;
-            // 
-            // radioMultiScope
-            // 
-            this.radioMultiScope.AutoSize = true;
-            this.radioMultiScope.Checked = true;
-            this.radioMultiScope.Location = new System.Drawing.Point(10, 47);
-            this.radioMultiScope.Name = "radioMultiScope";
-            this.radioMultiScope.Size = new System.Drawing.Size(47, 17);
-            this.radioMultiScope.TabIndex = 1;
-            this.radioMultiScope.TabStop = true;
-            this.radioMultiScope.Text = "Multi";
-            this.radioMultiScope.UseVisualStyleBackColor = true;
+            this.radioSimulatedAnnealing.AutoSize = true;
+            this.radioSimulatedAnnealing.Location = new System.Drawing.Point(96, 71);
+            this.radioSimulatedAnnealing.Name = "radioSimulatedAnnealing";
+            this.radioSimulatedAnnealing.Size = new System.Drawing.Size(121, 17);
+            this.radioSimulatedAnnealing.TabIndex = 5;
+            this.radioSimulatedAnnealing.Text = "Simulated Annealing";
+            this.radioSimulatedAnnealing.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -1781,6 +1793,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.scopeGroupBox.ResumeLayout(false);
+            this.scopeGroupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.logPanel.ResumeLayout(false);
             this.logPanel.PerformLayout();
@@ -1812,8 +1826,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).EndInit();
             this.contextStationDB.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.scopeGroupBox.ResumeLayout(false);
-            this.scopeGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1978,5 +1990,6 @@
         private System.Windows.Forms.GroupBox scopeGroupBox;
         private System.Windows.Forms.RadioButton radioSingleScope;
         private System.Windows.Forms.RadioButton radioMultiScope;
+        private System.Windows.Forms.RadioButton radioSimulatedAnnealing;
     }
 }

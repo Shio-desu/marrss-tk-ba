@@ -86,7 +86,6 @@ namespace MARRSS.Automated
                     {
                         combined.add(schedule.getAllContacts());
                     }
-
                     //for (int i = 0; i < combined.Count(); i++)
                     //{
                     //    for (int k = 0; k < combined.Count(); k++)
@@ -114,6 +113,7 @@ namespace MARRSS.Automated
             }
 
             result = new ContactWindowsVector(combined);
+            result.calculateConflicts();
             objectiveFunction.calculateValues(result);
         }
 

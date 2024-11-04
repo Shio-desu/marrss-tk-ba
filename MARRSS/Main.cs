@@ -212,6 +212,10 @@ namespace MARRSS
             {
                 scheduler = RunScheduler.setScheduler(new TabuSearchScheduler(), this);
             }
+            if (radioSimulatedAnnealing.Checked)
+            {
+                scheduler = RunScheduler.setScheduler(new SimulatedAnnealingScheduler(), this);
+            }
             //-----------------------------------------------------------------
             //---------------------------Add New SCHEDULER HERE-----------------
             //-----------------------------------------------------------------

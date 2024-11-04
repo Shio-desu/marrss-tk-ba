@@ -11,6 +11,8 @@
 */
 using MARRSS.Interface2;
 using MARRSS.Definition;
+using System;
+using System.Collections.Generic;
 
 namespace MARRSS.Scheduler
 {
@@ -93,6 +95,9 @@ namespace MARRSS.Scheduler
                 for (int i = 0; i < result.Count(); i++)
                 {
                     iterations++;
+                    Console.WriteLine(iterations);
+                    Console.WriteLine(currentFitness);
+
                     for (int j = 0; j < result.Count(); j++)
                     {
                         if (i != j && result.getAt(i).checkConflict(result.getAt(j)))
@@ -185,25 +190,22 @@ namespace MARRSS.Scheduler
 
         private void fillContacts(ContactWindowsVector contacts)
         {
-            for (int i=0; i < contacts.Count();i++)
+            for (int i = 0; i < contacts.Count(); i++)
             {
-                bool confilcts = false;
+                bool conflicts = false;
                 if (!contacts.getAt(i).getSheduledInfo())
                 {
-                    for (int j=0;j<contacts.Count();j++)
+                    List<ContactWindow> conflictList = contacts.getAt(i).getConflictWindows();
+                    for (int j = 0; j < conflictList.Count; j++)
                     {
-                        if (contacts.getAt(j).getSheduledInfo() && i != j && contacts.getAt(i).checkConflict(contacts.getAt(j)))
+                        if (conflictList[j].getSheduledInfo())
                         {
-                            if (contacts.getAt(i).getStationName() == contacts.getAt(j).getStationName() ||
-                                contacts.getAt(i).getSatName() == contacts.getAt(j).getSatName())
-                            {
-                                confilcts = true;
-                                break;
-                            }
+                            conflicts = true;
+                            break;
                         }
                     }
                 }
-                if (!confilcts)
+                if (!conflicts)
                 {
                     contacts.getAt(i).setSheduled();
                 }
