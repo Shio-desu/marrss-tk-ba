@@ -69,7 +69,6 @@ namespace MARRSS.Scheduler
         public void setContactWindows(ContactWindowsVector contacts)
         {
             schedulerContacts = contacts;
-            schedulerContacts.calculateConflicts();
         }
 
         //! Sets the Request List

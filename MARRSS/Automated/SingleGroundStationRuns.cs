@@ -18,7 +18,6 @@ namespace MARRSS.Automated
             Greedy
         }
 
-        private string schedulerName;
         private int scenario;
         private ObjectiveFunctionInterface objectiveFunction;
         private List<Ground.Station> stations;
@@ -113,7 +112,6 @@ namespace MARRSS.Automated
             }
 
             result = new ContactWindowsVector(combined);
-            result.calculateConflicts();
             objectiveFunction.calculateValues(result);
         }
 
@@ -149,16 +147,6 @@ namespace MARRSS.Automated
             {
                 problem.GenerateSzenarioD(Properties.Settings.Default.global_Random_Seed);
             }
-        }
-
-        public override string ToString()
-        {
-            return schedulerName;
-        }
-
-        public string getNameOfScheduler()
-        {
-            return schedulerName;
         }
 
         public ObjectiveFunctionInterface getObjectiveFunction()

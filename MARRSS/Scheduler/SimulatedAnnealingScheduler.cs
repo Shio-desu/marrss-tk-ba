@@ -27,10 +27,10 @@ namespace MARRSS.Scheduler
     class SimulatedAnnealingScheduler : SchedulerInterface, SchedulerSolutionInterface
     {
 
-        const double DEFAULT_START_TEMP = 50.0;
+        const double DEFAULT_START_TEMP = 100.0;
         const double DEFAULT_COOLDOWN = 0.08;
         const double DEFAULT_EPSILON = 0.001;
-        const int DEFAULT_STEP_SIZE = 2;
+        const int DEFAULT_STEP_SIZE = 3;
 
         private ObjectiveFunctionInterface objective;
         private ContactWindowsVector result;
@@ -184,8 +184,8 @@ namespace MARRSS.Scheduler
         // generates one neighbor by making a defined number of changes
         private ContactWindowsVector GenerateNeighbor(ContactWindowsVector solution)
         {
-            Console.WriteLine("start");
             ContactWindowsVector neighbor = new ContactWindowsVector(solution);
+
             Random rndNeighbor = new Random();
             for (int i = 0; i < stepSize; i++)
             {
@@ -200,56 +200,45 @@ namespace MARRSS.Scheduler
                     int windowIndex = rndNeighbor.Next(0, neighbor.Count());
                     if (checkedIndex.Contains(windowIndex))
                     {
-
+                        // breaks infinite cycle if nothing CAN be changed here (should realistically never happen, for that every single contact window should be scheduled?)
+                        if (checkedIndex.Count >= solution.Count())
+                            nothingChanged = false;
                         continue;
-                    }                        
+                    }
 
                     checkedIndex.Add(windowIndex);
 
-                    if (!neighbor.getAt(windowIndex).getSheduledInfo())
+                    if (neighbor.getAt(windowIndex).getSheduledInfo())
                     {
-                        Console.WriteLine("not scheduled");
-
                         continue;
-                    }                        
+                    }
 
-                    conflictList = neighbor.getAt(windowIndex).getConflictWindows();
+                    for (int j = 0; j < neighbor.Count(); j++)
+                    {
+
+                        if (!neighbor.getAt(windowIndex).checkConflict(solution.getAt(j)) || j == windowIndex)
+                            continue;
+
+                        if (neighbor.getAt(windowIndex).getStationName() != neighbor.getAt(j).getStationName() &&
+                            neighbor.getAt(windowIndex).getSatName() != neighbor.getAt(j).getSatName())
+                            continue;
+                        // collision detected
+
+                        conflictList.Add(neighbor.getAt(j));
+                    }
                     if (conflictList.Count == 0)
                     {
-                        Console.WriteLine("no conflicts");
-
                         continue;
-                    }                        
-
-                    // checks which conflicting windows could be scheduled without creating conflicts on their own, unschedules the current window for that, so it doesnt conflict
-                    List<int> viableIndex = new List<int>();
-                    neighbor.getAt(windowIndex).unShedule();
-                    for (int j = 0; j < conflictList.Count; j++)
-                    {
-                        bool nothingCompeting = true;
-                        foreach(ContactWindow window in conflictList[j].getConflictWindows())
-                        {
-                            if (window.getSheduledInfo())
-                                nothingCompeting = false;
-                        }
-                        if (nothingCompeting)
-                            viableIndex.Add(j);
                     }
-                    neighbor.getAt(windowIndex).setSheduled();
-                    // if there were no viable windows without competing windows, skip this and try another one
-                    if (viableIndex.Count == 0)
-                    {
-                        Console.WriteLine("no viable switch");
 
-                        continue;
+                    // unschedules all conflicting windows, so we can safely schedule this one              
+                    foreach (ContactWindow window in conflictList)
+                    {
+                        window.unShedule();
                     }
 
                     // changes the schedule randomly by unscheduling the already scheduled, and scheduling another window
-                    neighbor.getAt(windowIndex).unShedule();
-
-                    // get a random contact nonconflicting window and schedule it
-                    int newContactIndex = rndNeighbor.Next(0, viableIndex.Count);
-                    conflictList[viableIndex[newContactIndex]].setSheduled();
+                    neighbor.getAt(windowIndex).setSheduled();
                     nothingChanged = false;
                 } while (nothingChanged);
 
@@ -309,20 +298,23 @@ namespace MARRSS.Scheduler
         {
             for (int i = 0; i < contacts.Count(); i++)
             {
-                bool conflicts = false;
+                bool confilcts = false;
                 if (!contacts.getAt(i).getSheduledInfo())
                 {
-                    List<ContactWindow> conflictList = contacts.getAt(i).getConflictWindows();
-                    for (int j = 0; j < conflictList.Count; j++)
+                    for (int j = 0; j < contacts.Count(); j++)
                     {
-                        if (conflictList[j].getSheduledInfo())
+                        if (contacts.getAt(j).getSheduledInfo() && i != j && contacts.getAt(i).checkConflict(contacts.getAt(j)))
                         {
-                            conflicts = true;
-                            break;
+                            if (contacts.getAt(i).getStationName() == contacts.getAt(j).getStationName() ||
+                                contacts.getAt(i).getSatName() == contacts.getAt(j).getSatName())
+                            {
+                                confilcts = true;
+                                break;
+                            }
                         }
                     }
                 }
-                if (!conflicts)
+                if (!confilcts)
                 {
                     contacts.getAt(i).setSheduled();
                 }

@@ -53,7 +53,7 @@ namespace MARRSS.Scheduler
             objectives = new Structs.ObjectiveEnum[]
                 {Structs.ObjectiveEnum.PRIORITY,
                 Structs.ObjectiveEnum.SCHEDULEDCONTACTS, Structs.ObjectiveEnum.DURATION,
-                Structs.ObjectiveEnum.FAIRNESSATELITE, Structs.ObjectiveEnum.FAIRNESSTATION };
+                Structs.ObjectiveEnum.FAIRNESSATELITE, Structs.ObjectiveEnum.FAIRNESSTATION, Structs.ObjectiveEnum.COLLISIONS};
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -215,7 +215,8 @@ namespace MARRSS.Scheduler
 
             val_Priority = (double)prio / (double)priorityMax;
 
-            val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
+            //val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
+            val_Collisions = 1;
         }
 
         private int calcualteMaxPrioValue(ContactWindowsVector contacts, int[] population = null)
@@ -280,7 +281,7 @@ namespace MARRSS.Scheduler
                         //
                         break;
                 }
-            }
+            }      
 
             fitness = fitness / Convert.ToDouble(objectives.Count());
             return fitness;

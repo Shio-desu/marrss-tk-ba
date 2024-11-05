@@ -295,7 +295,7 @@ namespace MARRSS.Definition
             else
             {
                 return false;
-            }
+            }  
         }
 
         //! Is Empty
@@ -461,29 +461,29 @@ namespace MARRSS.Definition
             return contactTime;
         }
 
-        // finds all the colliding contactwindows and puts all windows that collide with each other in a list, and makes a list of all those
-        public void calculateConflicts()
-        {
-            // goes over each contact
-            for (int j = 0; j < contactsList.Count; j++)
-            {
-                contactsList[j].clearConflictWindows();
+        //// finds all the colliding contactwindows and puts all windows that collide with each in a list
+        //public void calculateConflicts()
+        //{
+        //    // goes over each contact
+        //    for (int j = 0; j < contactsList.Count; j++)
+        //    {
+        //        contactsList[j].clearConflictWindows();
 
-                for (int i = 0; i < contactsList.Count; i++)
-                {
-                    if (!contactsList[j].checkConflict(contactsList[i]) || i == j)
-                        continue;
+        //        for (int i = 0; i < contactsList.Count; i++)
+        //        {
+        //            if (!contactsList[j].checkConflict(contactsList[i]) || i == j)
+        //                continue;
 
-                    if (contactsList[i].getStationName() != contactsList[j].getStationName() &&
-                        contactsList[i].getSatName() != contactsList[j].getSatName())
-                        continue;
-                    // collision detected
+        //            if (contactsList[i].getStationName() != contactsList[j].getStationName() &&
+        //                contactsList[i].getSatName() != contactsList[j].getSatName())
+        //                continue;
+        //            // collision detected
 
-                    // adds contactwindow to list of conflicts, and removes it from the list to be checked in the next iterations since all its collisions should have been found
-                    contactsList[j].addConflictWindow(contactsList[i]);
-                }
-            }
-        }
+        //            // adds contactwindow to list of conflicts
+        //            contactsList[j].addConflictWindowIndex(i);
+        //        }
+        //    }
+        //}
 
         //! Randomize ContactWindowsVector
         /*! 

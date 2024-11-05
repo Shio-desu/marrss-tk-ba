@@ -40,7 +40,7 @@ namespace MARRSS.Scheduler
         private double duration; /*!< double duration of contact */
 
         List<TrackingData> trackingData = new List<TrackingData>(); /*!< trackingData */
-        private List<ContactWindow> conflictWindows = new List<ContactWindow>(); // list tracking all contactwindows that collide with this
+        //private List<int> conflictWindowsIndexes = new List<int>(); // list tracking all indexes of contactwindows that collide with this
 
         private bool sheduled; /*!< boolean if contact has been scheduled */
         private bool exluded; /*!< boolean if contact is to be excluded */
@@ -106,7 +106,7 @@ namespace MARRSS.Scheduler
             duration = contact.duration;
 
             trackingData = new List<TrackingData>();
-            conflictWindows = contact.conflictWindows;
+            //conflictWindowsIndexes = contact.conflictWindowsIndexes;
 
             sheduled = contact.sheduled;
             exluded = contact.exluded;
@@ -340,25 +340,25 @@ namespace MARRSS.Scheduler
             return satName.GetHashCode();
         }
 
-        public void clearConflictWindows()
-        {
-            conflictWindows.Clear();
-        }
+        //public void clearConflictWindows()
+        //{
+        //    conflictWindowsIndexes.Clear();
+        //}
 
-        public void addConflictWindow(ContactWindow contact)
-        {
-            conflictWindows.Add(contact);
-        }
+        //public void addConflictWindowIndex(int contactIndex)
+        //{
+        //    conflictWindowsIndexes.Add(contactIndex);
+        //}
 
-        public void setConflictWindows(List<ContactWindow> contacts)
-        {
-            conflictWindows = contacts;
-        }
+        //public void setConflictWindowsIndexes(List<int> contactIndexes)
+        //{
+        //    conflictWindowsIndexes = contactIndexes;
+        //}
 
-        public List<ContactWindow> getConflictWindows()
-        {
-            return conflictWindows;
-        }
+        //public List<int> getConflictWindowsIndexes()
+        //{
+        //    return conflictWindowsIndexes;
+        //}
 
         //! Retruns the tracking data for this Object
         /*!
@@ -368,6 +368,19 @@ namespace MARRSS.Scheduler
         {
             return trackingData;
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    var item = obj as ContactWindow;
+
+        //    if (item == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    return item.satName == satName && item.stationName == stationName && item.startTime == startTime
+        //        && item.stopTime == stopTime && item.duration == duration && item.id == id && item.requestID == requestID;
+        //}
 
         //! Check if this item Conflicts with another
         /*!
