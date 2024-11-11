@@ -409,12 +409,12 @@ namespace MARRSS.Scheduler
                 {
                     return true;
                 }
-                if (startTime.getEpoch() <= window.getStartTime().getEpoch() &&
-                    stopTime.getEpoch() >= window.getStopTime().getEpoch())
+                if (startTime.getEpoch() >= window.getStartTime().getEpoch() &&
+                    startTime.getEpoch() < window.getStopTime().getEpoch())
                 {
                     return true;
                 }
-                if ( stopTime.getEpoch() >= window.getStartTime().getEpoch() &&
+                if ( stopTime.getEpoch() > window.getStartTime().getEpoch() &&
                      stopTime.getEpoch() <= window.getStopTime().getEpoch() )
                 {
                     return true;

@@ -34,17 +34,20 @@ namespace MARRSS.Scheduler
 
         // arbitrary constraint numbers for testing
         // TODO: make elaborate constraints
-        private double constraint_Priority = 0.7;
-        private double constraint_FairStations = 0.8;
-        private double constraint_FairSatellites = 0.8;
-        private double constraint_Scheduled = 0.6;
-        private double constraint_Duration = 0.6;
-        private double constraint_Collisions = 0.8;
+        private double constraint_Priority = 0.5;
+        private double constraint_FairStations = 0.5;
+        private double constraint_FairSatellites = 0.5;
+        private double constraint_Scheduled = 0.5;
+        private double constraint_Duration = 0.1;
+        private double constraint_Collisions = 0.5;
 
-        public EpsilonConstraint(Structs.ObjectiveEnum objectiveToSchedule, params Structs.ObjectiveEnum[] objectivesToConstraint)
+        public EpsilonConstraint(params Structs.ObjectiveEnum[] objectives)
         {
-            mainObjective = objectiveToSchedule;
-            sideObjectives = objectivesToConstraint;
+
+            List<Structs.ObjectiveEnum> objectiveList = objectives.ToList();
+
+            mainObjective = objectiveList[0];
+            sideObjectives = objectiveList.GetRange(1, objectiveList.Count-1).ToArray();
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -221,7 +224,8 @@ namespace MARRSS.Scheduler
 
             val_Priority = (double)prio / (double)priorityMax;
 
-            val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
+            //val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
+            val_Collisions = 1;
 
         }
 
@@ -290,36 +294,45 @@ namespace MARRSS.Scheduler
             // checks if sideObjectives are inside (above) their constraints
             if (sideObjectives.Contains(Structs.ObjectiveEnum.SCHEDULEDCONTACTS))
             {
-                if (val_Scheduled < constraint_Scheduled)
+                if (val_Scheduled <= constraint_Scheduled)
                     fitness = 0;
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.DURATION))
             {
-                if (val_Duration < constraint_Duration)
+                if (val_Duration <= constraint_Duration)
                     fitness = 0;
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSATELITE))
             {
-                if (val_FairSatellites < constraint_FairSatellites)
+                if (val_FairSatellites <= constraint_FairSatellites)
                     fitness = 0;
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSTATION))
             {
-                if (val_FairStations < constraint_FairStations)
+                if (val_FairStations <= constraint_FairStations)
                     fitness = 0;
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.PRIORITY))
             {
-                if (val_Priority < constraint_Priority)
+                if (val_Priority <= constraint_Priority)
                     fitness = 0;
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.COLLISIONS))
             {
-                if (val_Collisions < constraint_Collisions)
+                if (val_Collisions <= constraint_Collisions)
                 {
                     fitness = 0;
                 }
             }
+
+            Console.WriteLine(mainObjective);
+            Console.WriteLine(val_Scheduled);
+            Console.WriteLine(val_Duration + " " + constraint_Duration);
+            Console.WriteLine(val_FairSatellites + " " + constraint_FairSatellites);
+            Console.WriteLine(val_FairStations + " " + constraint_FairStations);
+            Console.WriteLine(val_Priority + " " + constraint_Priority);
+            Console.WriteLine(val_Collisions + " " + constraint_Collisions);
+
             return fitness;
         }
 

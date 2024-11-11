@@ -468,6 +468,7 @@ namespace MARRSS.Definition
         //    for (int j = 0; j < contactsList.Count; j++)
         //    {
         //        contactsList[j].clearConflictWindows();
+        //        contactsList[j].clearConflictWindows();
 
         //        for (int i = 0; i < contactsList.Count; i++)
         //        {
@@ -505,6 +506,29 @@ namespace MARRSS.Definition
                 contactsList[item1] = contactsList[item2];
                 contactsList[item2] = t;
             }
+        }
+
+        public bool Equals(ContactWindowsVector obj)
+        {
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            List<ContactWindow> objContacts = obj.getAllContacts();
+
+            if (objContacts.Count != contactsList.Count)
+                return false;
+
+            for (int i = 0; i < contactsList.Count; i++)
+            {
+                if (contactsList[i].getStartTime() != objContacts[i].getStartTime() || contactsList[i].getStopTime() != objContacts[i].getStopTime() ||
+                    contactsList[i].getStationName() != objContacts[i].getStationName() || contactsList[i].getSatName() != objContacts[i].getSatName() || contactsList[i].getSheduledInfo() != objContacts[i].getSheduledInfo())
+                    return false;
+            }
+
+            return true;
         }
     }
 }

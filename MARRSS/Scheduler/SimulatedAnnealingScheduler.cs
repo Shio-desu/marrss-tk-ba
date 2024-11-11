@@ -27,10 +27,11 @@ namespace MARRSS.Scheduler
     class SimulatedAnnealingScheduler : SchedulerInterface, SchedulerSolutionInterface
     {
 
-        const double DEFAULT_START_TEMP = 100.0;
-        const double DEFAULT_COOLDOWN = 0.08;
+        const double DEFAULT_START_TEMP = 1000.0;
+        const double DEFAULT_COOLDOWN = 0.05;
         const double DEFAULT_EPSILON = 0.001;
-        const int DEFAULT_STEP_SIZE = 3;
+        const int DEFAULT_STEP_SIZE = 4;
+        const int DEFAULT_COOLDOWNINTERVAL = 10;
 
         private ObjectiveFunctionInterface objective;
         private ContactWindowsVector result;
@@ -39,6 +40,7 @@ namespace MARRSS.Scheduler
         private double oldFitness = 0.0;
         private double temperature = DEFAULT_START_TEMP;
         private double cooldown = DEFAULT_COOLDOWN;
+        private double cooldownInterval = DEFAULT_COOLDOWNINTERVAL;
         private double epsilon = DEFAULT_EPSILON;
         private int stepSize = DEFAULT_STEP_SIZE;
         private Random rnd;
@@ -59,12 +61,13 @@ namespace MARRSS.Scheduler
         //!SimulatedAnnealing constructor.
         public SimulatedAnnealingScheduler(bool randomizeOnStart, bool useAdaptiveMaxIterations = false, int setMaxIterations = 1000,
             double setCooldown = DEFAULT_COOLDOWN, double setStartTemperature = DEFAULT_START_TEMP, double setEpsilon = DEFAULT_EPSILON,
-            int setStepSize = DEFAULT_STEP_SIZE, int seed = -1)
+            int setStepSize = DEFAULT_STEP_SIZE, int setCooldownInterval = DEFAULT_COOLDOWNINTERVAL, int seed = -1)
         {
             randomStart = randomizeOnStart;
             adaptiveMaxIterations = useAdaptiveMaxIterations;
             maxNumberOfIteration = setMaxIterations;
             cooldown = setCooldown;
+            cooldownInterval = setCooldownInterval;
             temperature = setStartTemperature;
             epsilon = setEpsilon;
             stepSize = setStepSize;
@@ -156,9 +159,6 @@ namespace MARRSS.Scheduler
                     currentFitness = currentSolutionFitness;
                 }
 
-                iterations++;
-                temperature -= temperature * cooldown;
-
                 if (mainform != null)
                     mainform.updateProgressBar(progressStart - (int)temperature);
 
@@ -174,9 +174,11 @@ namespace MARRSS.Scheduler
                 return true;
 
             // accept neighbor with slight chance influenced by difference and temperature
-            else if (rnd.NextDouble() < Math.Exp(-1 * deltaFit / temperature))
-                return true;
-
+            else {
+                double r = rnd.NextDouble();
+                if (r < Math.Exp(deltaFit / temperature))
+                    return true;
+            }
             // reject solution
             return false;
         }
@@ -216,7 +218,7 @@ namespace MARRSS.Scheduler
                     for (int j = 0; j < neighbor.Count(); j++)
                     {
 
-                        if (!neighbor.getAt(windowIndex).checkConflict(solution.getAt(j)) || j == windowIndex)
+                        if (!neighbor.getAt(windowIndex).checkConflict(neighbor.getAt(j)) || j == windowIndex)
                             continue;
 
                         if (neighbor.getAt(windowIndex).getStationName() != neighbor.getAt(j).getStationName() &&
@@ -331,6 +333,8 @@ namespace MARRSS.Scheduler
         {
             if (cancel)
                 return true;
+
+            // increases iteration / decreases temperature only every few steps without fitness increase
             if (currentFitness > oldFitness)
             {
                 oldFitness = currentFitness;
@@ -338,7 +342,10 @@ namespace MARRSS.Scheduler
             }
             else
             {
-                //iterations++;
+                if (iterations % cooldownInterval == 0)
+                    temperature -= temperature * cooldown;
+
+                iterations++;
                 //Console.WriteLine("iterations: " + iterations);
             }
             if (temperature < epsilon)

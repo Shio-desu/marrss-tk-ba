@@ -75,6 +75,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.objectiveMethodGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioWeightedSum = new System.Windows.Forms.RadioButton();
+            this.radioEpsilonConstraint = new System.Windows.Forms.RadioButton();
             this.scopeGroupBox = new System.Windows.Forms.GroupBox();
             this.radioSingleScope = new System.Windows.Forms.RadioButton();
             this.radioMultiScope = new System.Windows.Forms.RadioButton();
@@ -104,6 +107,7 @@
             this.stationFairLabel = new System.Windows.Forms.Label();
             this.fairSatLabel = new System.Windows.Forms.Label();
             this.schedulerGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioSimulatedAnnealing = new System.Windows.Forms.RadioButton();
             this.radioTabuSearch = new System.Windows.Forms.RadioButton();
             this.radioHillClimber = new System.Windows.Forms.RadioButton();
             this.radioGreedy = new System.Windows.Forms.RadioButton();
@@ -187,7 +191,9 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.radioSimulatedAnnealing = new System.Windows.Forms.RadioButton();
+            this.sirrsResolutionGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioSirrsNothing = new System.Windows.Forms.RadioButton();
+            this.radioSirrsGreedy = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -197,6 +203,7 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.objectiveMethodGroupBox.SuspendLayout();
             this.scopeGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.logPanel.SuspendLayout();
@@ -222,6 +229,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).BeginInit();
             this.contextStationDB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.sirrsResolutionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -418,7 +426,7 @@
             this.toolStripStatusLabel2,
             this.toolStripStatusLabel3,
             this.progressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 660);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 755);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1174, 22);
             this.statusStrip1.TabIndex = 1;
@@ -463,7 +471,7 @@
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(165, 603);
+            this.panel1.Size = new System.Drawing.Size(165, 698);
             this.panel1.TabIndex = 2;
             // 
             // groundPanel
@@ -612,7 +620,7 @@
             this.panel2.Location = new System.Drawing.Point(172, 24);
             this.panel2.Margin = new System.Windows.Forms.Padding(10);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1039, 636);
+            this.panel2.Size = new System.Drawing.Size(1039, 731);
             this.panel2.TabIndex = 3;
             // 
             // tabControl1
@@ -635,6 +643,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.sirrsResolutionGroupBox);
+            this.tabPage2.Controls.Add(this.objectiveMethodGroupBox);
             this.tabPage2.Controls.Add(this.scopeGroupBox);
             this.tabPage2.Controls.Add(this.groupBox1);
             this.tabPage2.Controls.Add(this.logPanel);
@@ -661,11 +671,44 @@
             this.tabPage2.Text = "Schedule";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // objectiveMethodGroupBox
+            // 
+            this.objectiveMethodGroupBox.Controls.Add(this.radioWeightedSum);
+            this.objectiveMethodGroupBox.Controls.Add(this.radioEpsilonConstraint);
+            this.objectiveMethodGroupBox.Location = new System.Drawing.Point(495, 133);
+            this.objectiveMethodGroupBox.Name = "objectiveMethodGroupBox";
+            this.objectiveMethodGroupBox.Size = new System.Drawing.Size(125, 70);
+            this.objectiveMethodGroupBox.TabIndex = 6;
+            this.objectiveMethodGroupBox.TabStop = false;
+            this.objectiveMethodGroupBox.Text = "Objective Method";
+            // 
+            // radioWeightedSum
+            // 
+            this.radioWeightedSum.AutoSize = true;
+            this.radioWeightedSum.Checked = true;
+            this.radioWeightedSum.Location = new System.Drawing.Point(10, 23);
+            this.radioWeightedSum.Name = "radioWeightedSum";
+            this.radioWeightedSum.Size = new System.Drawing.Size(95, 17);
+            this.radioWeightedSum.TabIndex = 2;
+            this.radioWeightedSum.TabStop = true;
+            this.radioWeightedSum.Text = "Weighted-Sum";
+            this.radioWeightedSum.UseVisualStyleBackColor = true;
+            // 
+            // radioEpsilonConstraint
+            // 
+            this.radioEpsilonConstraint.AutoSize = true;
+            this.radioEpsilonConstraint.Location = new System.Drawing.Point(10, 47);
+            this.radioEpsilonConstraint.Name = "radioEpsilonConstraint";
+            this.radioEpsilonConstraint.Size = new System.Drawing.Size(109, 17);
+            this.radioEpsilonConstraint.TabIndex = 1;
+            this.radioEpsilonConstraint.Text = "Epsilon-Constraint";
+            this.radioEpsilonConstraint.UseVisualStyleBackColor = true;
+            // 
             // scopeGroupBox
             // 
             this.scopeGroupBox.Controls.Add(this.radioSingleScope);
             this.scopeGroupBox.Controls.Add(this.radioMultiScope);
-            this.scopeGroupBox.Location = new System.Drawing.Point(505, 35);
+            this.scopeGroupBox.Location = new System.Drawing.Point(260, 133);
             this.scopeGroupBox.Name = "scopeGroupBox";
             this.scopeGroupBox.Size = new System.Drawing.Size(82, 70);
             this.scopeGroupBox.TabIndex = 5;
@@ -677,10 +720,11 @@
             this.radioSingleScope.AutoSize = true;
             this.radioSingleScope.Location = new System.Drawing.Point(10, 23);
             this.radioSingleScope.Name = "radioSingleScope";
-            this.radioSingleScope.Size = new System.Drawing.Size(54, 17);
+            this.radioSingleScope.Size = new System.Drawing.Size(57, 17);
             this.radioSingleScope.TabIndex = 2;
-            this.radioSingleScope.Text = "Single";
+            this.radioSingleScope.Text = "SiRRS";
             this.radioSingleScope.UseVisualStyleBackColor = true;
+            this.radioSingleScope.CheckedChanged += new System.EventHandler(this.radioSingleScope_CheckedChanged);
             // 
             // radioMultiScope
             // 
@@ -688,16 +732,16 @@
             this.radioMultiScope.Checked = true;
             this.radioMultiScope.Location = new System.Drawing.Point(10, 47);
             this.radioMultiScope.Name = "radioMultiScope";
-            this.radioMultiScope.Size = new System.Drawing.Size(47, 17);
+            this.radioMultiScope.Size = new System.Drawing.Size(63, 17);
             this.radioMultiScope.TabIndex = 1;
             this.radioMultiScope.TabStop = true;
-            this.radioMultiScope.Text = "Multi";
+            this.radioMultiScope.Text = "MuRRS";
             this.radioMultiScope.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.objectiveComboBox);
-            this.groupBox1.Location = new System.Drawing.Point(626, 3);
+            this.groupBox1.Location = new System.Drawing.Point(286, 40);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(286, 76);
             this.groupBox1.TabIndex = 49;
@@ -716,7 +760,7 @@
             // 
             this.logPanel.Controls.Add(this.label41);
             this.logPanel.Controls.Add(this.logRichTextBox);
-            this.logPanel.Location = new System.Drawing.Point(556, 462);
+            this.logPanel.Location = new System.Drawing.Point(555, 540);
             this.logPanel.Name = "logPanel";
             this.logPanel.Size = new System.Drawing.Size(430, 106);
             this.logPanel.TabIndex = 48;
@@ -760,7 +804,7 @@
             this.panel8.Controls.Add(this.label38);
             this.panel8.Controls.Add(this.stationFairLabel);
             this.panel8.Controls.Add(this.fairSatLabel);
-            this.panel8.Location = new System.Drawing.Point(556, 206);
+            this.panel8.Location = new System.Drawing.Point(555, 284);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(430, 240);
             this.panel8.TabIndex = 47;
@@ -957,12 +1001,22 @@
             this.schedulerGroupBox.Controls.Add(this.radioGreedy);
             this.schedulerGroupBox.Controls.Add(this.radioGenetic);
             this.schedulerGroupBox.Controls.Add(this.radioEFTGreedy);
-            this.schedulerGroupBox.Location = new System.Drawing.Point(266, 35);
+            this.schedulerGroupBox.Location = new System.Drawing.Point(11, 133);
             this.schedulerGroupBox.Name = "schedulerGroupBox";
             this.schedulerGroupBox.Size = new System.Drawing.Size(233, 98);
             this.schedulerGroupBox.TabIndex = 2;
             this.schedulerGroupBox.TabStop = false;
             this.schedulerGroupBox.Text = "Scheduler";
+            // 
+            // radioSimulatedAnnealing
+            // 
+            this.radioSimulatedAnnealing.AutoSize = true;
+            this.radioSimulatedAnnealing.Location = new System.Drawing.Point(96, 71);
+            this.radioSimulatedAnnealing.Name = "radioSimulatedAnnealing";
+            this.radioSimulatedAnnealing.Size = new System.Drawing.Size(121, 17);
+            this.radioSimulatedAnnealing.TabIndex = 5;
+            this.radioSimulatedAnnealing.Text = "Simulated Annealing";
+            this.radioSimulatedAnnealing.UseVisualStyleBackColor = true;
             // 
             // radioTabuSearch
             // 
@@ -1019,7 +1073,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.comboScenarioBox);
-            this.groupBox6.Location = new System.Drawing.Point(626, 91);
+            this.groupBox6.Location = new System.Drawing.Point(591, 41);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(286, 75);
             this.groupBox6.TabIndex = 44;
@@ -1044,7 +1098,7 @@
             this.checkedSatellites.CheckOnClick = true;
             this.checkedSatellites.ContextMenuStrip = this.contextSatellites;
             this.checkedSatellites.FormattingEnabled = true;
-            this.checkedSatellites.Location = new System.Drawing.Point(285, 152);
+            this.checkedSatellites.Location = new System.Drawing.Point(286, 284);
             this.checkedSatellites.Name = "checkedSatellites";
             this.checkedSatellites.Size = new System.Drawing.Size(250, 409);
             this.checkedSatellites.TabIndex = 22;
@@ -1077,7 +1131,7 @@
             this.checkedStations.CheckOnClick = true;
             this.checkedStations.ContextMenuStrip = this.contextStations;
             this.checkedStations.FormattingEnabled = true;
-            this.checkedStations.Location = new System.Drawing.Point(10, 152);
+            this.checkedStations.Location = new System.Drawing.Point(11, 284);
             this.checkedStations.Name = "checkedStations";
             this.checkedStations.Size = new System.Drawing.Size(250, 409);
             this.checkedStations.TabIndex = 21;
@@ -1132,7 +1186,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(282, 136);
+            this.label10.Location = new System.Drawing.Point(283, 268);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(49, 13);
             this.label10.TabIndex = 13;
@@ -1141,7 +1195,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 136);
+            this.label9.Location = new System.Drawing.Point(8, 268);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(83, 13);
             this.label9.TabIndex = 12;
@@ -1152,7 +1206,7 @@
             this.startScheduleButton.BackColor = System.Drawing.Color.LightSkyBlue;
             this.startScheduleButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.startScheduleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.startScheduleButton.Location = new System.Drawing.Point(710, 172);
+            this.startScheduleButton.Location = new System.Drawing.Point(11, 237);
             this.startScheduleButton.Name = "startScheduleButton";
             this.startScheduleButton.Size = new System.Drawing.Size(129, 23);
             this.startScheduleButton.TabIndex = 8;
@@ -1750,15 +1804,39 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // radioSimulatedAnnealing
+            // sirrsResolutionGroupBox
             // 
-            this.radioSimulatedAnnealing.AutoSize = true;
-            this.radioSimulatedAnnealing.Location = new System.Drawing.Point(96, 71);
-            this.radioSimulatedAnnealing.Name = "radioSimulatedAnnealing";
-            this.radioSimulatedAnnealing.Size = new System.Drawing.Size(121, 17);
-            this.radioSimulatedAnnealing.TabIndex = 5;
-            this.radioSimulatedAnnealing.Text = "Simulated Annealing";
-            this.radioSimulatedAnnealing.UseVisualStyleBackColor = true;
+            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsNothing);
+            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsGreedy);
+            this.sirrsResolutionGroupBox.Location = new System.Drawing.Point(360, 133);
+            this.sirrsResolutionGroupBox.Name = "sirrsResolutionGroupBox";
+            this.sirrsResolutionGroupBox.Size = new System.Drawing.Size(112, 70);
+            this.sirrsResolutionGroupBox.TabIndex = 6;
+            this.sirrsResolutionGroupBox.TabStop = false;
+            this.sirrsResolutionGroupBox.Text = "SiRRS Resolution";
+            this.sirrsResolutionGroupBox.Visible = false;
+            // 
+            // radioSirrsNothing
+            // 
+            this.radioSirrsNothing.AutoSize = true;
+            this.radioSirrsNothing.Checked = true;
+            this.radioSirrsNothing.Location = new System.Drawing.Point(10, 23);
+            this.radioSirrsNothing.Name = "radioSirrsNothing";
+            this.radioSirrsNothing.Size = new System.Drawing.Size(62, 17);
+            this.radioSirrsNothing.TabIndex = 2;
+            this.radioSirrsNothing.TabStop = true;
+            this.radioSirrsNothing.Text = "Nothing";
+            this.radioSirrsNothing.UseVisualStyleBackColor = true;
+            // 
+            // radioSirrsGreedy
+            // 
+            this.radioSirrsGreedy.AutoSize = true;
+            this.radioSirrsGreedy.Location = new System.Drawing.Point(10, 47);
+            this.radioSirrsGreedy.Name = "radioSirrsGreedy";
+            this.radioSirrsGreedy.Size = new System.Drawing.Size(59, 17);
+            this.radioSirrsGreedy.TabIndex = 1;
+            this.radioSirrsGreedy.Text = "Greedy";
+            this.radioSirrsGreedy.UseVisualStyleBackColor = true;
             // 
             // Main
             // 
@@ -1766,7 +1844,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1174, 682);
+            this.ClientSize = new System.Drawing.Size(1174, 777);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
@@ -1793,6 +1871,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.objectiveMethodGroupBox.ResumeLayout(false);
+            this.objectiveMethodGroupBox.PerformLayout();
             this.scopeGroupBox.ResumeLayout(false);
             this.scopeGroupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -1826,6 +1906,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).EndInit();
             this.contextStationDB.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.sirrsResolutionGroupBox.ResumeLayout(false);
+            this.sirrsResolutionGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1991,5 +2073,11 @@
         private System.Windows.Forms.RadioButton radioSingleScope;
         private System.Windows.Forms.RadioButton radioMultiScope;
         private System.Windows.Forms.RadioButton radioSimulatedAnnealing;
+        private System.Windows.Forms.GroupBox objectiveMethodGroupBox;
+        private System.Windows.Forms.RadioButton radioWeightedSum;
+        private System.Windows.Forms.RadioButton radioEpsilonConstraint;
+        private System.Windows.Forms.GroupBox sirrsResolutionGroupBox;
+        private System.Windows.Forms.RadioButton radioSirrsNothing;
+        private System.Windows.Forms.RadioButton radioSirrsGreedy;
     }
 }

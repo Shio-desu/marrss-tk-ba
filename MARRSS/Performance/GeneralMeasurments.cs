@@ -67,6 +67,11 @@ namespace MARRSS.Performance
             {
                 for (int k = 0; k < contacts.Count(); k++)
                 {
+
+                    if (i != k)
+                        if (contacts.getAt(i).checkConflict(contacts.getAt(k)) != contacts.getAt(k).checkConflict(contacts.getAt(i)))
+                            Console.WriteLine("different!!!! wtf");
+
                     if (i != k && contacts.getAt(i).getSheduledInfo() &&
                         contacts.getAt(k).getSheduledInfo() &&
                         contacts.getAt(i).checkConflict(contacts.getAt(k)))
@@ -78,6 +83,7 @@ namespace MARRSS.Performance
                             {
                                 nrOfConflicts++;
                                 hashConflict.Add(contacts.getAt(i).getID());
+                                break;
                             }
                         }
                     }

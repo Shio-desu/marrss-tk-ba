@@ -15,6 +15,7 @@ using MARRSS.Global;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace MARRSS.Scheduler
 {
@@ -122,12 +123,12 @@ namespace MARRSS.Scheduler
                 ContactWindowsVector bestNeighbor = new ContactWindowsVector();
                 double bestNeighborFitness = 0;
 
-
                 iterations++;
                 // finding the best neighbor
                 foreach (ContactWindowsVector neighbor in neighbors)
                 {
-                    if (!tabuList.Contains(neighbor))
+                    // if tabuList doesnt contain neighbor (searches the list for a schedule equaling (own implemented equals function) the neighbor)
+                    if (!tabuList.Any(schedule => (schedule.Equals(neighbor))))
                     {
                         double neighborFitness = getFitness(neighbor);
                         if (neighborFitness > bestNeighborFitness)
@@ -172,10 +173,18 @@ namespace MARRSS.Scheduler
             // Create all possible neighbors of the current solution by making one change in the schedule
             for (int i = 0; i < solution.Count(); i++)
             {
-                for (int j = i + 1; j < solution.Count(); j++)
+                // only changes unscheduled to scheduled, because that is the safer operation (we check every collision for this one, set them unscheduled und schedule this. Other way around could create collisions)
+                if (solution.getAt(i).getSheduledInfo())
+                    continue;
+
+                ContactWindowsVector neighbor = new ContactWindowsVector(solution);
+                for (int j = 0; j < solution.Count(); j++)
                 {
 
-                    if (!solution.getAt(i).checkConflict(solution.getAt(j)))
+                    if (!solution.getAt(j).getSheduledInfo())
+                        continue;
+
+                    if (!solution.getAt(i).checkConflict(solution.getAt(j)) && i != j)
                         continue;
 
                     if (solution.getAt(i).getStationName() != solution.getAt(j).getStationName() &&
@@ -183,27 +192,12 @@ namespace MARRSS.Scheduler
                         continue;
                     // collision detected
 
-                    ContactWindowsVector neighbor = new ContactWindowsVector(solution);
-
-                    // swapping the scheduled windows
-
-                    if (solution.getAt(i).getSheduledInfo())
-                    {
-                        neighbor.getAt(i).unShedule();
-                        neighbor.getAt(j).setSheduled();
-                        neighbors.Add(neighbor);
-                    }
-
-                    if (solution.getAt(j).getSheduledInfo())
-                    {
-                        neighbor.getAt(i).setSheduled();
-                        neighbor.getAt(j).unShedule();
-                        neighbors.Add(neighbor);
-                    }
-
-                    // if none of the contactwindows are scheduled, nothing is happening because there has to be a third (or more) overlapping which should be scheduled and then swapped
+                    // unscheduling every collision                 
+                    neighbor.getAt(j).unShedule();
 
                 }
+                neighbor.getAt(i).setSheduled();
+                neighbors.Add(neighbor);
             }
 
             return neighbors;
