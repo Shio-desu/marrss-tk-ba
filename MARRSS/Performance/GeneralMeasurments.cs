@@ -37,31 +37,61 @@ namespace MARRSS.Performance
         */
         public static int getNrOfConflicts(ContactWindowsVector contacts)
         {
+            //int nrOfConflicts = 0;
+
+            //// goes over each contactwindow and checks their colliding windows if they are scheduled as well
+            //for (int i = 0; i < contacts.Count(); i++)
+            //{
+            //    ContactWindow window = contacts.getAt(i);
+            //    if (!window.getSheduledInfo())
+            //        continue;
+
+            //    bool conflictFound = false;
+            //    List<int> conflictIndexList = window.getConflictWindowsIndexes();
+            //    foreach (int index in conflictIndexList)
+            //    {
+            //        ContactWindow tata = contacts.getAt(index);
+            //        if (tata.getSheduledInfo())
+            //            conflictFound = true;
+            //    }
+
+            //    if (conflictFound)
+            //        nrOfConflicts++;
+            //}
+
+            //return nrOfConflicts;
             int nrOfConflicts = 0;
             HashSet<Guid> hashConflict = new HashSet<Guid>();
 
             for (int i = 0; i < contacts.Count(); i++)
+            {
+                for (int k = 0; k < contacts.Count(); k++)
                 {
-                    for (int k = 0; k < contacts.Count(); k++)
+
+                    if (i != k)
+                        if (contacts.getAt(i).checkConflict(contacts.getAt(k)) != contacts.getAt(k).checkConflict(contacts.getAt(i)))
+                            Console.WriteLine("different!!!! wtf");
+
+                    if (i != k && contacts.getAt(i).getSheduledInfo() &&
+                        contacts.getAt(k).getSheduledInfo() &&
+                        contacts.getAt(i).checkConflict(contacts.getAt(k)))
                     {
-                        if (i != k && contacts.getAt(i).getSheduledInfo() &&
-                            contacts.getAt(k).getSheduledInfo() &&
-                            contacts.getAt(i).checkConflict(contacts.getAt(k)))
+                        if (contacts.getAt(k).getSatName() == contacts.getAt(i).getSatName()
+                            || contacts.getAt(k).getStationName() == contacts.getAt(i).getStationName())
                         {
-                            if (contacts.getAt(k).getSatName() == contacts.getAt(i).getSatName()
-                                || contacts.getAt(k).getStationName() == contacts.getAt(i).getStationName())
+                            if (!hashConflict.Contains(contacts.getAt(i).getID()))
                             {
-                                if (!hashConflict.Contains(contacts.getAt(i).getID()))
-                                {
-                                    nrOfConflicts++;
-                                    hashConflict.Add(contacts.getAt(i).getID());
-                                }
+                                nrOfConflicts++;
+                                hashConflict.Add(contacts.getAt(i).getID());
+                                break;
                             }
                         }
                     }
                 }
+            }
             hashConflict.Clear();
             return nrOfConflicts;
+
         }
 
         public static double getDurationOfScheduledContacts(ContactWindowsVector contacts)

@@ -11,6 +11,8 @@
 */
 using MARRSS.Interface2;
 using MARRSS.Definition;
+using System;
+using System.Collections.Generic;
 
 namespace MARRSS.Scheduler
 {
@@ -72,6 +74,8 @@ namespace MARRSS.Scheduler
             objective = problem.getObjectiveFunction();
             result = problem.getContactWindows();
 
+            Console.WriteLine("test");
+
             if (adaptiveMaxIterations)
             {
                 maxNumberOfIteration = result.Count() * 4;
@@ -93,6 +97,8 @@ namespace MARRSS.Scheduler
                 for (int i = 0; i < result.Count(); i++)
                 {
                     iterations++;
+                    Console.WriteLine(iterations);
+                    Console.WriteLine(currentFitness);
                     for (int j = 0; j < result.Count(); j++)
                     {
                         if (i != j && result.getAt(i).checkConflict(result.getAt(j)))
@@ -185,12 +191,12 @@ namespace MARRSS.Scheduler
 
         private void fillContacts(ContactWindowsVector contacts)
         {
-            for (int i=0; i < contacts.Count();i++)
+            for (int i = 0; i < contacts.Count(); i++)
             {
                 bool confilcts = false;
                 if (!contacts.getAt(i).getSheduledInfo())
                 {
-                    for (int j=0;j<contacts.Count();j++)
+                    for (int j = 0; j < contacts.Count(); j++)
                     {
                         if (contacts.getAt(j).getSheduledInfo() && i != j && contacts.getAt(i).checkConflict(contacts.getAt(j)))
                         {

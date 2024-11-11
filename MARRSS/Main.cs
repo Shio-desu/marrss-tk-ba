@@ -212,6 +212,10 @@ namespace MARRSS
             {
                 scheduler = RunScheduler.setScheduler(new TabuSearchScheduler(), this);
             }
+            if (radioSimulatedAnnealing.Checked)
+            {
+                scheduler = RunScheduler.setScheduler(new SimulatedAnnealingScheduler(), this);
+            }
             //-----------------------------------------------------------------
             //---------------------------Add New SCHEDULER HERE-----------------
             //-----------------------------------------------------------------
@@ -233,9 +237,25 @@ namespace MARRSS
                 satTleData = getSatelliteData(logFile);
                 stationData = getStationData(logFile);
 
+                SingleGroundStationRuns.conflictResolutionOptions resolution = SingleGroundStationRuns.conflictResolutionOptions.Nothing;
+
+                if (radioSirrsNothing.Checked)
+                {
+                    resolution = SingleGroundStationRuns.conflictResolutionOptions.Nothing;
+                }
+
+                if (radioSirrsGreedy.Checked)
+                {
+                    resolution = SingleGroundStationRuns.conflictResolutionOptions.Greedy;
+                }
+
+                //start Time Meassurment
+                tm.activate();
+
                 SingleGroundStationRuns sirsrsRun = new SingleGroundStationRuns(scheduler, objectivefunct, startTime, stopTime, satTleData, stationData,
-                    comboScenarioBox.SelectedIndex, SingleGroundStationRuns.conflictResolutionOptions.Nothing);
+                    comboScenarioBox.SelectedIndex, resolution, this);
                 sirsrsRun.runThisRun();
+                updateCalculationTime(tm.getValueAndDeactivate());
                 RunScheduler.displayResults(this, sirsrsRun.getResult(), sirsrsRun.getObjectiveFunction());
                 //finisch clean up and write to logs if necesarry
                 finischSchedule(scheduler.ToString(), logFile);
@@ -294,7 +314,15 @@ namespace MARRSS
         private void setObjectiveFunction()
         {
             string name = objectiveComboBox.Items[objectiveComboBox.SelectedIndex].ToString();
-            objectivefunct = new ObjectiveFunction( Forms.ObjectiveBuilderForm.getObjectiveEnumsByName(name));
+
+            if (radioWeightedSum.Checked)
+                objectivefunct = new ObjectiveFunction( Forms.ObjectiveBuilderForm.getObjectiveEnumsByName(name));
+
+            if (radioEpsilonConstraint.Checked)
+            {
+                objectivefunct = new EpsilonConstraint();
+            }
+                
         }
 
         //! Prepares Start of Schedule
@@ -1350,6 +1378,11 @@ namespace MARRSS
         private void stopTimePicker_ValueChanged(object sender, EventArgs e)
         {
             changedParameters = true;
+        }
+
+        private void radioSingleScope_CheckedChanged(object sender, EventArgs e)
+        {
+            sirrsResolutionGroupBox.Visible = radioSingleScope.Checked;
         }
     }
 }

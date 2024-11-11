@@ -40,6 +40,7 @@ namespace MARRSS.Scheduler
         private double duration; /*!< double duration of contact */
 
         List<TrackingData> trackingData = new List<TrackingData>(); /*!< trackingData */
+        //private List<int> conflictWindowsIndexes = new List<int>(); // list tracking all indexes of contactwindows that collide with this
 
         private bool sheduled; /*!< boolean if contact has been scheduled */
         private bool exluded; /*!< boolean if contact is to be excluded */
@@ -105,6 +106,7 @@ namespace MARRSS.Scheduler
             duration = contact.duration;
 
             trackingData = new List<TrackingData>();
+            //conflictWindowsIndexes = contact.conflictWindowsIndexes;
 
             sheduled = contact.sheduled;
             exluded = contact.exluded;
@@ -338,6 +340,26 @@ namespace MARRSS.Scheduler
             return satName.GetHashCode();
         }
 
+        //public void clearConflictWindows()
+        //{
+        //    conflictWindowsIndexes.Clear();
+        //}
+
+        //public void addConflictWindowIndex(int contactIndex)
+        //{
+        //    conflictWindowsIndexes.Add(contactIndex);
+        //}
+
+        //public void setConflictWindowsIndexes(List<int> contactIndexes)
+        //{
+        //    conflictWindowsIndexes = contactIndexes;
+        //}
+
+        //public List<int> getConflictWindowsIndexes()
+        //{
+        //    return conflictWindowsIndexes;
+        //}
+
         //! Retruns the tracking data for this Object
         /*!
         \return List<TrackingData> tracking data
@@ -346,6 +368,19 @@ namespace MARRSS.Scheduler
         {
             return trackingData;
         }
+
+        //public override bool Equals(object obj)
+        //{
+        //    var item = obj as ContactWindow;
+
+        //    if (item == null)
+        //    {
+        //        return false;
+        //    }
+
+        //    return item.satName == satName && item.stationName == stationName && item.startTime == startTime
+        //        && item.stopTime == stopTime && item.duration == duration && item.id == id && item.requestID == requestID;
+        //}
 
         //! Check if this item Conflicts with another
         /*!
@@ -374,12 +409,12 @@ namespace MARRSS.Scheduler
                 {
                     return true;
                 }
-                if (startTime.getEpoch() <= window.getStartTime().getEpoch() &&
-                    stopTime.getEpoch() >= window.getStopTime().getEpoch())
+                if (startTime.getEpoch() >= window.getStartTime().getEpoch() &&
+                    startTime.getEpoch() < window.getStopTime().getEpoch())
                 {
                     return true;
                 }
-                if ( stopTime.getEpoch() >= window.getStartTime().getEpoch() &&
+                if ( stopTime.getEpoch() > window.getStartTime().getEpoch() &&
                      stopTime.getEpoch() <= window.getStopTime().getEpoch() )
                 {
                     return true;

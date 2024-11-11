@@ -15,46 +15,66 @@ using MARRSS.Global;
 using System.Windows.Documents;
 using System.Collections.Generic;
 using System;
-using System.Linq;
+using MARRSS.Performance;
 
 namespace MARRSS.Scheduler
 {
     /**
-    * \brief Tabu Search Scheduler
+    * \brief Simulated Annealing
     *
-    * This class defines the tabu search scheduler to find a solution to the problem.
-    * This is done by finding the best neighbor (solutions with one change from the current solution) each iteration and go from there,
-    * but allowing a step down in fitness and preventing going back to already visited solutions for a few steps
+    * This class defines the simulated annealing scheduler to find a solution to the problem.
     */
-    class TabuSearchScheduler : SchedulerInterface, SchedulerSolutionInterface
+    class SimulatedAnnealingScheduler : SchedulerInterface, SchedulerSolutionInterface
     {
+
+        const double DEFAULT_START_TEMP = 1000.0;
+        const double DEFAULT_COOLDOWN = 0.05;
+        const double DEFAULT_EPSILON = 0.001;
+        const int DEFAULT_STEP_SIZE = 4;
+        const int DEFAULT_COOLDOWNINTERVAL = 10;
 
         private ObjectiveFunctionInterface objective;
         private ContactWindowsVector result;
         private bool cancel = false;
         private double currentFitness = 0.0;
         private double oldFitness = 0.0;
+        private double temperature = DEFAULT_START_TEMP;
+        private double cooldown = DEFAULT_COOLDOWN;
+        private double cooldownInterval = DEFAULT_COOLDOWNINTERVAL;
+        private double epsilon = DEFAULT_EPSILON;
+        private int stepSize = DEFAULT_STEP_SIZE;
+        private Random rnd;
 
         private Main mainform = null;
 
         private int iterations = 0;
-        private int maxNumberOfIteration = 20;
-        private int tabuListSize = 100;
+        private int maxNumberOfIteration = 1000;
         bool adaptiveMaxIterations = false;
 
         bool randomStart = false;
 
-        public TabuSearchScheduler()
+        public SimulatedAnnealingScheduler()
         {
-
+            rnd = new Random();
         }
 
-        //!TabuSearch constructor.
-        public TabuSearchScheduler(bool randomizeOnStart, bool useAdaptiveMaxIterations = false, int setMaxIterations = 20)
+        //!SimulatedAnnealing constructor.
+        public SimulatedAnnealingScheduler(bool randomizeOnStart, bool useAdaptiveMaxIterations = false, int setMaxIterations = 1000,
+            double setCooldown = DEFAULT_COOLDOWN, double setStartTemperature = DEFAULT_START_TEMP, double setEpsilon = DEFAULT_EPSILON,
+            int setStepSize = DEFAULT_STEP_SIZE, int setCooldownInterval = DEFAULT_COOLDOWNINTERVAL, int seed = -1)
         {
             randomStart = randomizeOnStart;
             adaptiveMaxIterations = useAdaptiveMaxIterations;
             maxNumberOfIteration = setMaxIterations;
+            cooldown = setCooldown;
+            cooldownInterval = setCooldownInterval;
+            temperature = setStartTemperature;
+            epsilon = setEpsilon;
+            stepSize = setStepSize;
+            if (seed == -1)
+                rnd = new Random();
+            else
+                rnd = new Random(seed);
         }
 
         //! get The Objective Funktion to solve the scheduling problem
@@ -107,63 +127,128 @@ namespace MARRSS.Scheduler
                 // you could make an argument that more contact windows mean more iterations to get out of local optima
                 // might make sense in that case to also increase tabuListSize 
             }
-     
+
+            int progressStart = (int)temperature;
             if (mainform != null)
-                mainform.setProgressBar(maxNumberOfIteration);
+                mainform.setProgressBar(progressStart);
 
             fillContacts(result);
             currentFitness = getFitness(result);
 
             ContactWindowsVector currentSolution = new ContactWindowsVector(result);
-            List<ContactWindowsVector> tabuList = new List<ContactWindowsVector>();
+            double currentSolutionFitness = currentFitness;
 
             while (!isComplete())
             {
-                List<ContactWindowsVector> neighbors = GetNeightbors(currentSolution);
-                ContactWindowsVector bestNeighbor = new ContactWindowsVector();
-                double bestNeighborFitness = 0;
+                ContactWindowsVector neighbor = GenerateNeighbor(currentSolution);
+                double neighborFitness = getFitness(neighbor);
 
-                iterations++;
-                // finding the best neighbor
-                foreach (ContactWindowsVector neighbor in neighbors)
+                double deltaFitness = neighborFitness - currentSolutionFitness;
+
+                // check if neighbor is accepted as current solution
+                if (AcceptNeighbor(deltaFitness))
                 {
-                    // if tabuList doesnt contain neighbor (searches the list for a schedule equaling (own implemented equals function) the neighbor)
-                    if (!tabuList.Any(schedule => (schedule.Equals(neighbor))))
-                    {
-                        double neighborFitness = getFitness(neighbor);
-                        if (neighborFitness > bestNeighborFitness)
-                        {
-                            bestNeighbor = new ContactWindowsVector(neighbor);
-                            bestNeighborFitness = neighborFitness;
-                        }
-                    }
+                    currentSolution = neighbor;
+                    currentSolutionFitness = neighborFitness;
+                }
+              
+                // check if currentSolution is the best solution
+                if (currentFitness < currentSolutionFitness)
+                {
+                    result = currentSolution;
+                    currentFitness = currentSolutionFitness;
                 }
 
-                if (bestNeighbor.getNumberOfScheduledContacts() == 0)
-                    // no non-tabu neighbor found
-                    break;
-
-                currentSolution = new ContactWindowsVector(bestNeighbor);
-                tabuList.Add(bestNeighbor);
-
-                if (tabuList.Count > tabuListSize)
-                {
-                    tabuList.RemoveAt(0);
-                }
-
-                if (bestNeighborFitness > currentFitness)
-                {
-                    
-                    result = new ContactWindowsVector(bestNeighbor);
-                    currentFitness = bestNeighborFitness;
-                }
+                if (mainform != null)
+                    mainform.updateProgressBar(progressStart - (int)temperature);
 
                 if (Properties.Settings.Default.global_MaxPerf == false)
                     System.Windows.Forms.Application.DoEvents();
-
-                if (mainform != null)
-                    mainform.updateProgressBar(iterations);
             }
+        }
+
+        private bool AcceptNeighbor(double deltaFit)
+        {
+            // accept neighbor if better
+            if (deltaFit > 0)
+                return true;
+
+            // accept neighbor with slight chance influenced by difference and temperature
+            else {
+                double r = rnd.NextDouble();
+                if (r < Math.Exp(deltaFit / temperature))
+                    return true;
+            }
+            // reject solution
+            return false;
+        }
+
+        // generates one neighbor by making a defined number of changes
+        private ContactWindowsVector GenerateNeighbor(ContactWindowsVector solution)
+        {
+            ContactWindowsVector neighbor = new ContactWindowsVector(solution);
+
+            Random rndNeighbor = new Random();
+            for (int i = 0; i < stepSize; i++)
+            {
+                List<ContactWindow> conflictList = new List<ContactWindow>();
+
+                bool nothingChanged = true;
+                List<int> checkedIndex = new List<int>();
+                do
+                {
+
+                    // get a non-repeating index for the conflict where a random reschedule happens
+                    int windowIndex = rndNeighbor.Next(0, neighbor.Count());
+                    if (checkedIndex.Contains(windowIndex))
+                    {
+                        // breaks infinite cycle if nothing CAN be changed here (should realistically never happen, for that every single contact window should be scheduled?)
+                        if (checkedIndex.Count >= solution.Count())
+                            nothingChanged = false;
+                        continue;
+                    }
+
+                    checkedIndex.Add(windowIndex);
+
+                    if (neighbor.getAt(windowIndex).getSheduledInfo())
+                    {
+                        continue;
+                    }
+
+                    for (int j = 0; j < neighbor.Count(); j++)
+                    {
+
+                        if (!neighbor.getAt(windowIndex).checkConflict(neighbor.getAt(j)) || j == windowIndex)
+                            continue;
+
+                        if (neighbor.getAt(windowIndex).getStationName() != neighbor.getAt(j).getStationName() &&
+                            neighbor.getAt(windowIndex).getSatName() != neighbor.getAt(j).getSatName())
+                            continue;
+                        // collision detected
+
+                        conflictList.Add(neighbor.getAt(j));
+                    }
+                    if (conflictList.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    // unschedules all conflicting windows, so we can safely schedule this one              
+                    foreach (ContactWindow window in conflictList)
+                    {
+                        window.unShedule();
+                    }
+
+                    // changes the schedule randomly by unscheduling the already scheduled, and scheduling another window
+                    neighbor.getAt(windowIndex).setSheduled();
+                    nothingChanged = false;
+                } while (nothingChanged);
+
+            }
+
+            // try to fill neighbor if some space has free'd up by randomly changing a collision
+            fillContacts(neighbor);
+            return neighbor;
         }
 
         private List<ContactWindowsVector> GetNeightbors(ContactWindowsVector solution)
@@ -173,18 +258,10 @@ namespace MARRSS.Scheduler
             // Create all possible neighbors of the current solution by making one change in the schedule
             for (int i = 0; i < solution.Count(); i++)
             {
-                // only changes unscheduled to scheduled, because that is the safer operation (we check every collision for this one, set them unscheduled und schedule this. Other way around could create collisions)
-                if (solution.getAt(i).getSheduledInfo())
-                    continue;
-
-                ContactWindowsVector neighbor = new ContactWindowsVector(solution);
-                for (int j = 0; j < solution.Count(); j++)
+                for (int j = i + 1; j < solution.Count(); j++)
                 {
 
-                    if (!solution.getAt(j).getSheduledInfo())
-                        continue;
-
-                    if (!solution.getAt(i).checkConflict(solution.getAt(j)) && i != j)
+                    if (!solution.getAt(i).checkConflict(solution.getAt(j)))
                         continue;
 
                     if (solution.getAt(i).getStationName() != solution.getAt(j).getStationName() &&
@@ -192,12 +269,27 @@ namespace MARRSS.Scheduler
                         continue;
                     // collision detected
 
-                    // unscheduling every collision                 
-                    neighbor.getAt(j).unShedule();
+                    ContactWindowsVector neighbor = new ContactWindowsVector(solution);
+
+                    // swapping the scheduled windows
+
+                    if (solution.getAt(i).getSheduledInfo())
+                    {
+                        neighbor.getAt(i).unShedule();
+                        neighbor.getAt(j).setSheduled();
+                        neighbors.Add(neighbor);
+                    }
+
+                    if (solution.getAt(j).getSheduledInfo())
+                    {
+                        neighbor.getAt(i).setSheduled();
+                        neighbor.getAt(j).unShedule();
+                        neighbors.Add(neighbor);
+                    }
+
+                    // if none of the contactwindows are scheduled, nothing is happening because there has to be a third (or more) overlapping which should be scheduled and then swapped
 
                 }
-                neighbor.getAt(i).setSheduled();
-                neighbors.Add(neighbor);
             }
 
             return neighbors;
@@ -241,6 +333,8 @@ namespace MARRSS.Scheduler
         {
             if (cancel)
                 return true;
+
+            // increases iteration / decreases temperature only every few steps without fitness increase
             if (currentFitness > oldFitness)
             {
                 oldFitness = currentFitness;
@@ -248,10 +342,13 @@ namespace MARRSS.Scheduler
             }
             else
             {
-                //iterations++;
+                if (iterations % cooldownInterval == 0)
+                    temperature -= temperature * cooldown;
+
+                iterations++;
                 //Console.WriteLine("iterations: " + iterations);
             }
-            if (iterations > maxNumberOfIteration)
+            if (temperature < epsilon)
             {
                 return true;
             }

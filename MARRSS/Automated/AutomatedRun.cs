@@ -105,6 +105,11 @@ namespace MARRSS.Automated
                     scheduler = new TabuSearchScheduler(Convert.ToBoolean(settString3[0]), Convert.ToBoolean(settString3[2]),
                         Convert.ToInt32(settString3[1]));
                     break;
+                case "Simulated-Annealing":
+                    string[] settString4 = settings.Split(';');
+                    scheduler = new SimulatedAnnealingScheduler(Convert.ToBoolean(settString4[0]), Convert.ToBoolean(settString4[2]),
+                        Convert.ToInt32(settString4[1]));
+                    break;
             }
             ObjectiveFunction objective = new ObjectiveFunction(Forms.ObjectiveBuilderForm.getObjectiveEnumsByName(objectiveFunction));
             System.Windows.Forms.Application.DoEvents();

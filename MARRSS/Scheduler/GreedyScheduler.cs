@@ -197,7 +197,6 @@ namespace MARRSS.Scheduler
             if (Properties.Settings.Default.global_MaxPerf == false)
                 System.Windows.Forms.Application.DoEvents();
             schedule = set;
-
         }
 
 

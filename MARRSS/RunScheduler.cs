@@ -113,9 +113,15 @@ namespace MARRSS
                 TabuSearchScheduler tabuSearch = (TabuSearchScheduler)scheduler;
                 tabuSearch.setFormToUpdate(UpdateForm);
                 tabuSearch.setAdaptiveMaxIterationbs(Properties.Settings.Default.hill_adaptiveMaxIterations);
-                tabuSearch.setMaxNumberOfIterations(Properties.Settings.Default.hill_maxNumberIterations);
                 tabuSearch.setRandomStart(Properties.Settings.Default.hill_randomStart);
                 scheduler = tabuSearch;
+            }
+            if (scheduler.GetType() == typeof(SimulatedAnnealingScheduler))
+            {
+                SimulatedAnnealingScheduler simAn = (SimulatedAnnealingScheduler)scheduler;
+                simAn.setFormToUpdate(UpdateForm);
+                simAn.setRandomStart(Properties.Settings.Default.hill_randomStart);
+                scheduler = simAn;
             }
             /*
              * if (schduler.GetType() == typeof(ExampleScheduler))
@@ -235,7 +241,6 @@ namespace MARRSS
             main.setDuration(_H5);
             main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(result));
             main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(result));
-            Console.WriteLine(objective.getCollisionsValue());
         }
     }
 }

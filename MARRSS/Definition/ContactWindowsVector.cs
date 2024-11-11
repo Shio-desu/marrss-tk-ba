@@ -290,13 +290,12 @@ namespace MARRSS.Definition
                 contactTime -= contactsList[pos].getDuration();
                 contactsList.RemoveAt(pos);
                 updateNamesList();
-                
                 return true;
             }
             else
             {
                 return false;
-            }
+            }  
         }
 
         //! Is Empty
@@ -462,6 +461,31 @@ namespace MARRSS.Definition
             return contactTime;
         }
 
+        //// finds all the colliding contactwindows and puts all windows that collide with each in a list
+        //public void calculateConflicts()
+        //{
+        //    // goes over each contact
+        //    for (int j = 0; j < contactsList.Count; j++)
+        //    {
+        //        contactsList[j].clearConflictWindows();
+        //        contactsList[j].clearConflictWindows();
+
+        //        for (int i = 0; i < contactsList.Count; i++)
+        //        {
+        //            if (!contactsList[j].checkConflict(contactsList[i]) || i == j)
+        //                continue;
+
+        //            if (contactsList[i].getStationName() != contactsList[j].getStationName() &&
+        //                contactsList[i].getSatName() != contactsList[j].getSatName())
+        //                continue;
+        //            // collision detected
+
+        //            // adds contactwindow to list of conflicts
+        //            contactsList[j].addConflictWindowIndex(i);
+        //        }
+        //    }
+        //}
+
         //! Randomize ContactWindowsVector
         /*! 
             \param int random seed to randomize set
@@ -482,6 +506,29 @@ namespace MARRSS.Definition
                 contactsList[item1] = contactsList[item2];
                 contactsList[item2] = t;
             }
+        }
+
+        public bool Equals(ContactWindowsVector obj)
+        {
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            List<ContactWindow> objContacts = obj.getAllContacts();
+
+            if (objContacts.Count != contactsList.Count)
+                return false;
+
+            for (int i = 0; i < contactsList.Count; i++)
+            {
+                if (contactsList[i].getStartTime() != objContacts[i].getStartTime() || contactsList[i].getStopTime() != objContacts[i].getStopTime() ||
+                    contactsList[i].getStationName() != objContacts[i].getStationName() || contactsList[i].getSatName() != objContacts[i].getSatName() || contactsList[i].getSheduledInfo() != objContacts[i].getSheduledInfo())
+                    return false;
+            }
+
+            return true;
         }
     }
 }

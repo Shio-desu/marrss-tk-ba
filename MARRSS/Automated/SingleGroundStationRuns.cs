@@ -18,7 +18,6 @@ namespace MARRSS.Automated
             Greedy
         }
 
-        private string schedulerName;
         private int scenario;
         private ObjectiveFunctionInterface objectiveFunction;
         private List<Ground.Station> stations;
@@ -27,10 +26,12 @@ namespace MARRSS.Automated
         private EpochTime start;
         private EpochTime stop;
         private conflictResolutionOptions conflictResolution;
-        SchedulerInterface scheduler = null;
+        private SchedulerInterface scheduler = null;
+        private Main updateForm;
+
 
         public SingleGroundStationRuns(SchedulerInterface scheduler, ObjectiveFunctionInterface objective, EpochTime start, EpochTime stop, List<One_Sgp4.Tle> satellites,
-            List<Ground.Station> stations, int selectedScenario, conflictResolutionOptions conflictResolution)
+            List<Ground.Station> stations, int selectedScenario, conflictResolutionOptions conflictResolution, Main updateForm = null)
         {
             this.scheduler = scheduler;
             scenario = selectedScenario;
@@ -41,13 +42,18 @@ namespace MARRSS.Automated
             this.conflictResolution = conflictResolution;
             this.stations = stations;
             this.satellites = satellites;
+            this.updateForm = updateForm;
         }
 
         public void runThisRun()
         {
             List<ContactWindowsVector> resultSchedules = new List<ContactWindowsVector>();
 
-            System.Windows.Forms.Application.DoEvents();
+            if (updateForm != null)
+                updateForm.setProgressBar(stations.Count + 1);
+            if (Properties.Settings.Default.global_MaxPerf == false)
+                System.Windows.Forms.Application.DoEvents();
+            int iterations = 0;
 
             // runs a scheduler for each single station and adds the result to the list
             foreach (Ground.Station gs in stations)
@@ -60,16 +66,16 @@ namespace MARRSS.Automated
                 problem.setObjectiveFunction(objectiveFunction);
                 problem.getContactWindows().randomize(Properties.Settings.Default.global_Random_Seed);
                 getScenario(problem, scenario);
-                System.Windows.Forms.Application.DoEvents();
-                TimeMeasurement tm = new TimeMeasurement();
-                tm.activate();
+                System.Windows.Forms.Application.DoEvents();      
                 RunScheduler.setScheduler(scheduler);
                 RunScheduler.startScheduler(scheduler, problem);
-                string time = tm.getValueAndDeactivate();
-                System.Windows.Forms.Application.DoEvents();
                 resultSchedules.Add(scheduler.getFinischedSchedule());
-                System.Windows.Forms.Application.DoEvents();
 
+                iterations++;
+                if (updateForm != null)
+                    updateForm.updateProgressBar(iterations);
+                if (Properties.Settings.Default.global_MaxPerf == false)
+                    System.Windows.Forms.Application.DoEvents();
             }
            
             ContactWindowsVector combined = new ContactWindowsVector();
@@ -86,7 +92,6 @@ namespace MARRSS.Automated
                     {
                         combined.add(schedule.getAllContacts());
                     }
-
                     //for (int i = 0; i < combined.Count(); i++)
                     //{
                     //    for (int k = 0; k < combined.Count(); k++)
@@ -107,11 +112,21 @@ namespace MARRSS.Automated
                     break;
                    
                 case conflictResolutionOptions.Greedy:
+
+                    foreach (ContactWindowsVector schedule in resultSchedules)
+                    {
+                        combined.add(schedule.getAllContacts());
+                    }
+                    combined.sort(Global.Structs.sortByField.TIME);
+                    combined = fillContacts(GreedyConflictResolution(combined));
                     break;
 
                 default:
                     break;
             }
+
+            if (updateForm != null)
+                updateForm.updateProgressBar(iterations + 1);
 
             result = new ContactWindowsVector(combined);
             objectiveFunction.calculateValues(result);
@@ -151,14 +166,98 @@ namespace MARRSS.Automated
             }
         }
 
-        public override string ToString()
+        private ContactWindowsVector GreedyConflictResolution(ContactWindowsVector contacts)
         {
-            return schedulerName;
+            ContactWindowsVector solution = new ContactWindowsVector();
+            solution.setStartTime(start);
+            solution.setStopTime(stop);
+
+            // goes over each contact from the sirrs solution, to check if we should add it to the final solution
+            for (int i = 0; i < contacts.Count(); i++)
+            {
+
+                ContactWindow contactToCheck = contacts.getAt(i);
+
+                // if it wasnt scheduled in the sirrs solution, skip over the checks, just add it so we might schedule it later if the collisions free themselves up
+                if (!contactToCheck.getSheduledInfo())
+                {
+                    solution.add(contactToCheck);
+                    continue;
+                }
+                    
+
+                bool conflictFound = false;
+
+                // goes over each contact already in the solution, if it would raise a collision
+                for (int j = 0; j < solution.Count(); j++)
+                {
+                    if (solution.getAt(j).checkConflict(contactToCheck) && solution.getAt(j).getSheduledInfo())
+                    {
+                        if (solution.getAt(j).getSatName() == contactToCheck.getSatName()
+                            || solution.getAt(j).getStationName() == contactToCheck.getStationName())
+                        {
+
+                            conflictFound = true;
+
+                            // check if the contactToCheck would improve the current solution
+                            objectiveFunction.calculateValues(solution);
+                            double curFitness = objectiveFunction.getObjectiveResults();
+
+                            solution.getAt(j).unShedule();
+                            solution.add(contactToCheck);
+
+                            objectiveFunction.calculateValues(solution);
+                            double newFitness = objectiveFunction.getObjectiveResults();
+
+                            // if the new contact would improve the fitness, revert the change
+                            if (curFitness > newFitness)
+                            {
+                                solution.getAt(j).setSheduled();
+                                solution.getLast().unShedule();
+                            }
+                        }
+                    }
+                }
+
+                // if there was no conflict with this contact, add it
+                if (!conflictFound)
+                {
+                    solution.add(contactToCheck);
+                }
+            }
+
+            return solution;
         }
 
-        public string getNameOfScheduler()
+        // fill some free contacts
+        private ContactWindowsVector fillContacts(ContactWindowsVector contacts)
         {
-            return schedulerName;
+            ContactWindowsVector change = new ContactWindowsVector(contacts);
+
+            for (int i = 0; i < change.Count(); i++)
+            {
+                bool conflicts = false;
+                if (!change.getAt(i).getSheduledInfo())
+                {
+                    for (int j = 0; j < change.Count(); j++)
+                    {
+                        if (change.getAt(j).getSheduledInfo() && i != j && change.getAt(i).checkConflict(change.getAt(j)))
+                        {
+                            if (change.getAt(i).getStationName() == change.getAt(j).getStationName() ||
+                                change.getAt(i).getSatName() == change.getAt(j).getSatName())
+                            {
+                                conflicts = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!conflicts)
+                    {
+                        change.getAt(i).setSheduled();
+                    }
+                }
+            }
+            return change;
         }
 
         public ObjectiveFunctionInterface getObjectiveFunction()
