@@ -113,6 +113,8 @@ namespace MARRSS.Scheduler
 
             id = contact.id;
             requestID = contact.requestID;
+
+            priority = contact.priority;
         }
 
         //! calcDuration

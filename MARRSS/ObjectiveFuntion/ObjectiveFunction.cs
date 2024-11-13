@@ -16,6 +16,7 @@ using MARRSS.Global;
 
 using MARRSS.Definition;
 using MARRSS.Performance;
+using System.Linq;
 
 namespace MARRSS.Scheduler
 {
@@ -114,7 +115,7 @@ namespace MARRSS.Scheduler
            \param int max number of Contacts of the Scheduling problem
            \param int[] population representation of the Genetic scheduler default NULL
         */
-        private void calculate(ContactWindowsVector contactWindows, int priorityValue, int nrOfAllContacts = 0, int[] population = null, ContactWindowsVector allcontactWindows = null)
+        private void calculate(ContactWindowsVector contactWindows, int[] priorityValue, int nrOfAllContacts = 0, int[] population = null, ContactWindowsVector allcontactWindows = null)
         {
             //list of stations and Satellites
             List<string> stationList = contactWindows.getStationNames();
@@ -136,8 +137,8 @@ namespace MARRSS.Scheduler
             //Complete Time of ALL contacts
             double allDuaration = 0.0;
             //Priority counts
-            int priorityMax = priorityValue;
-            int prio = calcualteMaxPrioValue(contactWindows);
+            int[] priorityMax = priorityValue;
+            int[] prio = calculatePrioValue(contactWindows);
 
             for (int i = 0; i < contactWindows.Count(); i++)
             {
@@ -155,26 +156,16 @@ namespace MARRSS.Scheduler
                 }
                 else
                 {
-                    if (nrOfAllContacts == 0)
-                    {
-                        if (contactWindows.getAt(i).getSheduledInfo())
-                        {
-                            stapo = stationList.IndexOf(contactWindows.getAt(i).getStationName());
-                            satpo = satelliteList.IndexOf(contactWindows.getAt(i).getSatName());
-                            scheduledDuration += contactWindows.getAt(i).getDuration();
-                            nrOfScheduledContacts++;
-                        }
-                    }
-                    else
+                    if (contactWindows.getAt(i).getSheduledInfo())
                     {
                         stapo = stationList.IndexOf(contactWindows.getAt(i).getStationName());
                         satpo = satelliteList.IndexOf(contactWindows.getAt(i).getSatName());
                         scheduledDuration += contactWindows.getAt(i).getDuration();
                         nrOfScheduledContacts++;
-                    }
+                    }                    
                 }
-                if (allcontactWindows == null)
-                    allDuaration += contactWindows.getAt(i).getDuration();
+
+                allDuaration += contactWindows.getAt(i).getDuration();
 
                 if (stapo > -1)
                 {
@@ -213,13 +204,35 @@ namespace MARRSS.Scheduler
 
             val_Duration = scheduledDuration / allDuaration;
 
-            val_Priority = (double)prio / (double)priorityMax;
+            // adjust max prio list to number of scheduled contacts in the current solution (too compare how many of the possible priorities are scheduled)
+            int amountOfPrios = 0;
+            for (int i = 0; i < priorityMax.Count(); i++)
+            {
+                amountOfPrios += priorityMax[i];
+
+                if (amountOfPrios > nrOfScheduledContacts)
+                {
+                    priorityMax[i] -= (amountOfPrios - nrOfScheduledContacts);
+                }
+
+                if (priorityMax[i] < 0)
+                    priorityMax[i] = 0;
+            }
+
+            int fractSumMax = 0;
+            int fractSumCur = 0;
+            for (int i = 0; i < priorityMax.Count(); i++)
+            {
+                fractSumMax += priorityMax[i] * (priorityMax.Count() - i);
+                fractSumCur += prio[i] * (prio.Count() - i);
+            }
+
+            val_Priority = fractSumCur / (double)fractSumMax;
 
             //val_Collisions = 1 - (GeneralMeasurments.getNrOfConflicts(contactWindows) / (double)nrOfScheduledContacts);
-            val_Collisions = 1;
         }
 
-        private int calcualteMaxPrioValue(ContactWindowsVector contacts, int[] population = null)
+        private int[] calcualteMaxPrioValue(ContactWindowsVector contacts, int[] population = null)
         {
             int[] priorityCounts = new int[5] { 0, 0, 0, 0, 0, };
             int res = 0;
@@ -237,11 +250,43 @@ namespace MARRSS.Scheduler
                 }
                 priorityCounts[p]++;
             }
+
             for (int i = 0; i < priorityCounts.Count(); i++)
             {
                 res += priorityCounts[i] * (5 - i);
             }
-            return res;
+
+            return priorityCounts;
+        }
+
+        // calculates the current prio value by only adding the value of currently scheduled contacts (not the best way i think)
+        private int[] calculatePrioValue(ContactWindowsVector contacts, int[] population = null)
+        {
+            int[] priorityCounts = new int[5] { 0, 0, 0, 0, 0, };
+            int res = 0;
+            for (int i = 0; i < contacts.Count(); i++)
+            {
+                //
+                if (!contacts.getAt(i).getSheduledInfo())
+                    continue;
+
+                int p = 0;
+                if (population != null)
+                {
+                    if (population[i] == 1)
+                        p = (int)contacts.getAt(i).getPriority();
+                }
+                else
+                {
+                    p = (int)contacts.getAt(i).getPriority();
+                }
+                priorityCounts[p]++;
+            }
+            for (int i = 0; i < priorityCounts.Count(); i++)
+            {
+                res += priorityCounts[i] * (5 - i);
+            }
+            return priorityCounts;
         }
 
         //! get Objective results
@@ -254,6 +299,8 @@ namespace MARRSS.Scheduler
         {
             double fitness = 0.0;
 
+            // remove collisions and scheduledcontacts from objectives (collisions was too ineffecient to implement (n*n), and scheduledcontacts is similar to duration)
+            objectives = objectives.Where(obj => obj != Structs.ObjectiveEnum.SCHEDULEDCONTACTS && obj != Structs.ObjectiveEnum.COLLISIONS).ToArray();
             foreach (Structs.ObjectiveEnum obj in objectives)
             {
                 switch (Convert.ToInt32(obj))
@@ -281,9 +328,16 @@ namespace MARRSS.Scheduler
                         //
                         break;
                 }
-            }      
-
+            }
             fitness = fitness / Convert.ToDouble(objectives.Count());
+
+            Console.WriteLine("Prio:" + val_Priority);
+            Console.WriteLine("FairSat:" + val_FairSatellites);
+            Console.WriteLine("FairGS:" + val_FairStations);
+            Console.WriteLine("Duration:" + val_Duration);
+            Console.WriteLine("Scheduled:" + val_Scheduled);
+            Console.WriteLine("Col:" + val_Collisions);
+
             return fitness;
         }
 

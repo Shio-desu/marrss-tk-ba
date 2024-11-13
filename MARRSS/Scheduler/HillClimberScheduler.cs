@@ -13,6 +13,7 @@ using MARRSS.Interface2;
 using MARRSS.Definition;
 using System;
 using System.Collections.Generic;
+using MARRSS.Performance;
 
 namespace MARRSS.Scheduler
 {
@@ -74,8 +75,6 @@ namespace MARRSS.Scheduler
             objective = problem.getObjectiveFunction();
             result = problem.getContactWindows();
 
-            Console.WriteLine("test");
-
             if (adaptiveMaxIterations)
             {
                 maxNumberOfIteration = result.Count() * 4;
@@ -84,21 +83,23 @@ namespace MARRSS.Scheduler
             if (randomStart)
             {
                 result.randomize();
-                fillContacts(result);
+               
+                Console.WriteLine("start here?");
             }
-
+            
             if (mainform != null)
                 mainform.setProgressBar(maxNumberOfIteration);
 
-            currentFitness = 0.0;
-            result.getAt(0).setSheduled();
+            fillContacts(result);
+            currentFitness = getFitness(result);
             while (!isComplete())
             {
                 for (int i = 0; i < result.Count(); i++)
                 {
                     iterations++;
-                    Console.WriteLine(iterations);
-                    Console.WriteLine(currentFitness);
+
+                    ContactWindowsVector currenSolution = new ContactWindowsVector(result);
+                    currenSolution.getAt(i).setSheduled();
                     for (int j = 0; j < result.Count(); j++)
                     {
                         if (i != j && result.getAt(i).checkConflict(result.getAt(j)))
@@ -106,22 +107,34 @@ namespace MARRSS.Scheduler
                             if (result.getAt(i).getStationName() == result.getAt(j).getStationName() ||
                                 result.getAt(i).getSatName() == result.getAt(j).getSatName())
                             {
+
+                                currenSolution.getAt(j).unShedule();
+
                                 //collision detected
-                                result.getAt(i).unShedule();
-                                result.getAt(j).setSheduled();
-                                double newFitness = getFitness(result);
-                                if (newFitness < currentFitness)
-                                {
-                                    result.getAt(j).unShedule();
-                                    result.getAt(i).setSheduled();
-                                }
-                                else
-                                {
-                                    currentFitness = newFitness;
-                                    break;
-                                }
+                                //result.getAt(i).unShedule();
+                                //result.getAt(j).setSheduled();
+
+                                //double newFitness = getFitness(result);
+                                //if (newFitness > currentFitness)
+                                //{
+                                //    currentFitness = newFitness;
+                                //    break;
+                                //}
+                                //else
+                                //{
+                                //    result.getAt(i).setSheduled();
+                                //    result.getAt(j).unShedule();
+                                //}
+
                             }
                         }
+                    }
+
+                    double newFitness = getFitness(currenSolution);
+                    if (newFitness > currentFitness)
+                    {
+                        result = new ContactWindowsVector(currenSolution);
+                        currentFitness = newFitness;
                     }
                 }
                 if (Properties.Settings.Default.global_MaxPerf == false)
@@ -129,8 +142,8 @@ namespace MARRSS.Scheduler
                 if (mainform != null)
                     mainform.updateProgressBar(iterations);
 
-                currentFitness = getFitness(result);
                 fillContacts(result);
+                currentFitness = getFitness(result);
             }
 
         }

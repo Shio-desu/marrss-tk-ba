@@ -118,6 +118,7 @@ namespace MARRSS.Scheduler
         {
             objective = problem.getObjectiveFunction();
             set = problem.getContactWindows();
+            ContactWindowsVector allContacts = new ContactWindowsVector(set);
             int nrOfAllContacts = set.Count();
 
             ContactWindowsVector set1 = new ContactWindowsVector();
@@ -138,7 +139,7 @@ namespace MARRSS.Scheduler
                 double maxFitness = 0.0;
                 for (int i = 0; i < set.Count(); i++)
                 {
-                    objective.calculateValues(set1, set, nrOfAllContacts, set.getAt(i));
+                    objective.calculateValues(set1, allContacts, nrOfAllContacts, set.getAt(i));
                     double fitness = objective.getObjectiveResults();
                     if (fitness > maxFitness)
                     {
@@ -212,6 +213,7 @@ namespace MARRSS.Scheduler
         {
             objective = problem.getObjectiveFunction();
             set = problem.getContactWindows();
+            ContactWindowsVector allContacts = new ContactWindowsVector(set);
             int nrOfAllContacts = set.Count();
 
             ContactWindowsVector set1 = new ContactWindowsVector();
@@ -229,7 +231,7 @@ namespace MARRSS.Scheduler
                 double maxFitness = 0.0;
                 for (int i = 0; i < set.Count(); i++)
                 {
-                    objective.calculateValues(set1, set, nrOfAllContacts, set.getAt(i));
+                    objective.calculateValues(set1, allContacts, nrOfAllContacts, set.getAt(i));
                     double fitness = objective.getObjectiveResults();
                     if (fitness > maxFitness)
                     {
