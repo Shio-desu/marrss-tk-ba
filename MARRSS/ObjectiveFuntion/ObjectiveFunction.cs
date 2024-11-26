@@ -156,13 +156,24 @@ namespace MARRSS.Scheduler
                 }
                 else
                 {
-                    if (contactWindows.getAt(i).getSheduledInfo())
+                    if (allcontactWindows == null)
+                    {
+                        if (contactWindows.getAt(i).getSheduledInfo())
+                        {
+                            stapo = stationList.IndexOf(contactWindows.getAt(i).getStationName());
+                            satpo = satelliteList.IndexOf(contactWindows.getAt(i).getSatName());
+                            scheduledDuration += contactWindows.getAt(i).getDuration();
+                            nrOfScheduledContacts++;
+                        }
+                    } 
+                    else
                     {
                         stapo = stationList.IndexOf(contactWindows.getAt(i).getStationName());
                         satpo = satelliteList.IndexOf(contactWindows.getAt(i).getSatName());
                         scheduledDuration += contactWindows.getAt(i).getDuration();
                         nrOfScheduledContacts++;
-                    }                    
+                    }
+                
                 }
 
                 allDuaration += contactWindows.getAt(i).getDuration();

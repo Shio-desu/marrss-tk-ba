@@ -103,7 +103,8 @@
             "Greedy",
             "Genetic",
             "Hill-Climber",
-            "Tabu-Search"});
+            "Tabu-Search",
+            "Simulated Annealing"});
             this.schedulerComboBox.Location = new System.Drawing.Point(12, 27);
             this.schedulerComboBox.Name = "schedulerComboBox";
             this.schedulerComboBox.Size = new System.Drawing.Size(190, 21);

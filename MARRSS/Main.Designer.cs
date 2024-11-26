@@ -75,6 +75,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.sirrsResolutionGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioSirrsNothing = new System.Windows.Forms.RadioButton();
+            this.radioSirrsGreedy = new System.Windows.Forms.RadioButton();
             this.objectiveMethodGroupBox = new System.Windows.Forms.GroupBox();
             this.radioWeightedSum = new System.Windows.Forms.RadioButton();
             this.radioEpsilonConstraint = new System.Windows.Forms.RadioButton();
@@ -191,9 +194,6 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.sirrsResolutionGroupBox = new System.Windows.Forms.GroupBox();
-            this.radioSirrsNothing = new System.Windows.Forms.RadioButton();
-            this.radioSirrsGreedy = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -203,6 +203,7 @@
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.sirrsResolutionGroupBox.SuspendLayout();
             this.objectiveMethodGroupBox.SuspendLayout();
             this.scopeGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -229,7 +230,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).BeginInit();
             this.contextStationDB.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.sirrsResolutionGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -638,7 +638,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1002, 616);
+            this.tabControl1.Size = new System.Drawing.Size(1002, 688);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage2
@@ -666,10 +666,44 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(994, 587);
+            this.tabPage2.Size = new System.Drawing.Size(994, 659);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Schedule";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // sirrsResolutionGroupBox
+            // 
+            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsNothing);
+            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsGreedy);
+            this.sirrsResolutionGroupBox.Location = new System.Drawing.Point(360, 133);
+            this.sirrsResolutionGroupBox.Name = "sirrsResolutionGroupBox";
+            this.sirrsResolutionGroupBox.Size = new System.Drawing.Size(112, 70);
+            this.sirrsResolutionGroupBox.TabIndex = 6;
+            this.sirrsResolutionGroupBox.TabStop = false;
+            this.sirrsResolutionGroupBox.Text = "SiRRS Resolution";
+            this.sirrsResolutionGroupBox.Visible = false;
+            // 
+            // radioSirrsNothing
+            // 
+            this.radioSirrsNothing.AutoSize = true;
+            this.radioSirrsNothing.Checked = true;
+            this.radioSirrsNothing.Location = new System.Drawing.Point(10, 23);
+            this.radioSirrsNothing.Name = "radioSirrsNothing";
+            this.radioSirrsNothing.Size = new System.Drawing.Size(62, 17);
+            this.radioSirrsNothing.TabIndex = 2;
+            this.radioSirrsNothing.TabStop = true;
+            this.radioSirrsNothing.Text = "Nothing";
+            this.radioSirrsNothing.UseVisualStyleBackColor = true;
+            // 
+            // radioSirrsGreedy
+            // 
+            this.radioSirrsGreedy.AutoSize = true;
+            this.radioSirrsGreedy.Location = new System.Drawing.Point(10, 47);
+            this.radioSirrsGreedy.Name = "radioSirrsGreedy";
+            this.radioSirrsGreedy.Size = new System.Drawing.Size(59, 17);
+            this.radioSirrsGreedy.TabIndex = 1;
+            this.radioSirrsGreedy.Text = "Greedy";
+            this.radioSirrsGreedy.UseVisualStyleBackColor = true;
             // 
             // objectiveMethodGroupBox
             // 
@@ -1100,7 +1134,7 @@
             this.checkedSatellites.FormattingEnabled = true;
             this.checkedSatellites.Location = new System.Drawing.Point(286, 284);
             this.checkedSatellites.Name = "checkedSatellites";
-            this.checkedSatellites.Size = new System.Drawing.Size(250, 409);
+            this.checkedSatellites.Size = new System.Drawing.Size(250, 364);
             this.checkedSatellites.TabIndex = 22;
             this.checkedSatellites.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedSatellites_ItemCheck);
             // 
@@ -1133,7 +1167,7 @@
             this.checkedStations.FormattingEnabled = true;
             this.checkedStations.Location = new System.Drawing.Point(11, 284);
             this.checkedStations.Name = "checkedStations";
-            this.checkedStations.Size = new System.Drawing.Size(250, 409);
+            this.checkedStations.Size = new System.Drawing.Size(250, 364);
             this.checkedStations.TabIndex = 21;
             this.checkedStations.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedStations_ItemCheck);
             // 
@@ -1804,40 +1838,6 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // sirrsResolutionGroupBox
-            // 
-            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsNothing);
-            this.sirrsResolutionGroupBox.Controls.Add(this.radioSirrsGreedy);
-            this.sirrsResolutionGroupBox.Location = new System.Drawing.Point(360, 133);
-            this.sirrsResolutionGroupBox.Name = "sirrsResolutionGroupBox";
-            this.sirrsResolutionGroupBox.Size = new System.Drawing.Size(112, 70);
-            this.sirrsResolutionGroupBox.TabIndex = 6;
-            this.sirrsResolutionGroupBox.TabStop = false;
-            this.sirrsResolutionGroupBox.Text = "SiRRS Resolution";
-            this.sirrsResolutionGroupBox.Visible = false;
-            // 
-            // radioSirrsNothing
-            // 
-            this.radioSirrsNothing.AutoSize = true;
-            this.radioSirrsNothing.Checked = true;
-            this.radioSirrsNothing.Location = new System.Drawing.Point(10, 23);
-            this.radioSirrsNothing.Name = "radioSirrsNothing";
-            this.radioSirrsNothing.Size = new System.Drawing.Size(62, 17);
-            this.radioSirrsNothing.TabIndex = 2;
-            this.radioSirrsNothing.TabStop = true;
-            this.radioSirrsNothing.Text = "Nothing";
-            this.radioSirrsNothing.UseVisualStyleBackColor = true;
-            // 
-            // radioSirrsGreedy
-            // 
-            this.radioSirrsGreedy.AutoSize = true;
-            this.radioSirrsGreedy.Location = new System.Drawing.Point(10, 47);
-            this.radioSirrsGreedy.Name = "radioSirrsGreedy";
-            this.radioSirrsGreedy.Size = new System.Drawing.Size(59, 17);
-            this.radioSirrsGreedy.TabIndex = 1;
-            this.radioSirrsGreedy.Text = "Greedy";
-            this.radioSirrsGreedy.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             this.AccessibleRole = System.Windows.Forms.AccessibleRole.Application;
@@ -1871,6 +1871,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.sirrsResolutionGroupBox.ResumeLayout(false);
+            this.sirrsResolutionGroupBox.PerformLayout();
             this.objectiveMethodGroupBox.ResumeLayout(false);
             this.objectiveMethodGroupBox.PerformLayout();
             this.scopeGroupBox.ResumeLayout(false);
@@ -1906,8 +1908,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.staDataGridView)).EndInit();
             this.contextStationDB.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.sirrsResolutionGroupBox.ResumeLayout(false);
-            this.sirrsResolutionGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
