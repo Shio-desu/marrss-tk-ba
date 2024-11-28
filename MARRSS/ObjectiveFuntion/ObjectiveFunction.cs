@@ -342,13 +342,6 @@ namespace MARRSS.Scheduler
             }
             fitness = fitness / Convert.ToDouble(objectives.Count());
 
-            Console.WriteLine("Prio:" + val_Priority);
-            Console.WriteLine("FairSat:" + val_FairSatellites);
-            Console.WriteLine("FairGS:" + val_FairStations);
-            Console.WriteLine("Duration:" + val_Duration);
-            Console.WriteLine("Scheduled:" + val_Scheduled);
-            Console.WriteLine("Col:" + val_Collisions);
-
             return fitness;
         }
 

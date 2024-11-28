@@ -180,57 +180,81 @@ namespace MARRSS.Scheduler
             {
                 bool found = false;
                 //------------1
-                if (schedulerContacts.getAt(i).getSatName() == "UWE-3"
+                if (schedulerContacts.getAt(i).getSatName() == "QUBE"
                     && schedulerContacts.getAt(i).getStationName() == 
-                    "Würzburg (Computer Science Institute)")
+                    "Würzburg (Zentrum für Telematik)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------2
-                if (schedulerContacts.getAt(i).getSatName() == "AAUSAT3"
+                if (schedulerContacts.getAt(i).getSatName().StartsWith("CloudCT_Sat")
                     && schedulerContacts.getAt(i).getStationName() ==
-                    "Aalborg (Aalborg University)")
+                    "Würzburg (Zentrum für Telematik)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------3
-                if (schedulerContacts.getAt(i).getSatName() == "ITUPSAT 1"
+                if (schedulerContacts.getAt(i).getSatName() == "Random 2 (KAFASAT)"
                    && schedulerContacts.getAt(i).getStationName() ==
-                   "Istanbul (Istanbul Technical University)")
+                   "Santa Maria (INPE)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------4
-                if (schedulerContacts.getAt(i).getSatName() == "LITUANICASAT 1"
+                if (schedulerContacts.getAt(i).getSatName() == "Random 1 (MCUBED-2)"
                    && schedulerContacts.getAt(i).getStationName() ==
-                   "Lithuania(Vilnius University)")
+                   "Shandong (SISET 2)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------5
-                if (schedulerContacts.getAt(i).getSatName() == "TIGRISAT"
+                if (schedulerContacts.getAt(i).getSatName() == "Random 3 (Iridium 113)"
                    && schedulerContacts.getAt(i).getStationName() ==
-                   "Roma (La Sapienza University of Rome)")
+                   "Montreal (Polytechnique Montreal)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------6
-                if (schedulerContacts.getAt(i).getSatName() == "CUBESAT XI-IV"
+                if (schedulerContacts.getAt(i).getSatName() == "Random 4 (PIXL-1)"
                    && schedulerContacts.getAt(i).getStationName() ==
-                   "Tokyo University")
+                   "Natal (INPE)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;
                 }
                 //------------7
-                if (schedulerContacts.getAt(i).getSatName() == "CUBESAT XI-V"
+                if (schedulerContacts.getAt(i).getSatName() == "Random 5 (UNISAT-7)"
                   && schedulerContacts.getAt(i).getStationName() ==
-                  "Sapporo (Hokkaido Institute of Technology)")
+                  "Athens (University of Georgia)")
+                {
+                    schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
+                    found = true;
+                }
+                //------------8
+                if (schedulerContacts.getAt(i).getSatName() == "Random 6 (TIGRISAT)"
+                  && schedulerContacts.getAt(i).getStationName() ==
+                  "Stellenbosch (Stellenbosch University)")
+                {
+                    schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
+                    found = true;
+                }
+                //------------9
+                if (schedulerContacts.getAt(i).getSatName() == "Random 7 (Taurus-1)"
+                  && schedulerContacts.getAt(i).getStationName() ==
+                  "München (TUM 1)")
+                {
+                    schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
+                    found = true;
+                }
+                //------------10
+                if (schedulerContacts.getAt(i).getSatName() == "Random 8 (KSM1-B)"
+                  && schedulerContacts.getAt(i).getStationName() ==
+                  "Würzburg (Computer Science Institute)")
                 {
                     schedulerContacts.getAt(i).setPriority(Structs.priority.CRITICAL);
                     found = true;

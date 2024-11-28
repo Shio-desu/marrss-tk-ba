@@ -224,7 +224,6 @@ namespace MARRSS.Scheduler
 
             set1.add(set.getAt(step));
             set.deleteAt(step);
-
             while (!isComplete())
             {
                 int pos = -1;
