@@ -55,8 +55,8 @@ namespace MARRSS.Automated
                 System.Windows.Forms.Application.DoEvents();
             int iterations = 0;
 
-            // runs a scheduler for each single station and adds the result to the list
-            foreach (Ground.Station gs in stations)
+                // runs a scheduler for each single station and adds the result to the list
+                foreach (Ground.Station gs in stations)
             {
                 ContactWindowsVector contacts = MainFunctions2.calculateContactWindows(satellites, new List<Ground.Station> {gs}, start, stop);
                 
@@ -68,6 +68,17 @@ namespace MARRSS.Automated
                 getScenario(problem, scenario);
                 System.Windows.Forms.Application.DoEvents();      
                 RunScheduler.setScheduler(scheduler);
+
+
+                if (scheduler.GetType() == typeof(GeneticScheduler))
+                {
+                    GeneticScheduler genetic = (GeneticScheduler)scheduler;
+                    if (Properties.Settings.Default.genetic_Run_For_MaxTime == true)
+                    {
+                        genetic.RunForCertainTime(true, Properties.Settings.Default.genetic_RunTime / stations.Count);
+                    }
+                }
+
                 RunScheduler.startScheduler(scheduler, problem);
                 resultSchedules.Add(scheduler.getFinischedSchedule());
 

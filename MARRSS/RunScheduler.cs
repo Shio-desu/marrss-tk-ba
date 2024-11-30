@@ -202,6 +202,7 @@ namespace MARRSS
                 double _H3 = objfunc.getStationFairnessValue();
                 double _H4 = objfunc.getSatelliteFairnessValue();
                 double _H5 = GeneralMeasurments.getDurationOfScheduledContacts(scheduler.getFinischedSchedule());
+                double _H6 = objfunc.getPriorityValue();
 
                 main.setFitnessValue(objfunc.getObjectiveResults());
                 if (count > -1)
@@ -213,6 +214,7 @@ namespace MARRSS
                 main.setFairnessStation(_H3);
                 main.setFairnessSatellite(_H4);
                 main.setDuration(_H5);
+                main.setPriorityFitness(_H6);
                 main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(scheduler.getFinischedSchedule()));
                 main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(scheduler.getFinischedSchedule()));
             }
@@ -232,6 +234,7 @@ namespace MARRSS
             double _H3 = objective.getStationFairnessValue();
             double _H4 = objective.getSatelliteFairnessValue();
             double _H5 = GeneralMeasurments.getDurationOfScheduledContacts(result);
+            double _H6 = objective.getPriorityValue();
 
             main.setFitnessValue(objective.getObjectiveResults());
             main.setContactsNumber(_H);
@@ -239,6 +242,7 @@ namespace MARRSS
             main.setFairnessStation(_H3);
             main.setFairnessSatellite(_H4);
             main.setDuration(_H5);
+            main.setPriorityFitness(_H6);
             main.setPriority(GeneralMeasurments.getNrOfPrioritysScheduled(result));
             main.setNumberOfUweContact(GeneralMeasurments.getNrOfUweContacts(result));
         }

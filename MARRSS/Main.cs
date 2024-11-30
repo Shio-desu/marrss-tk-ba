@@ -351,6 +351,7 @@ namespace MARRSS
             uweLabel.Text = "--";
             fitnessValueLabel.Text = "--";
             durationLabel.Text = "--";
+            priorityFitnessLabel.Text = "--";
 
             logRichTextBox.Clear();
             startScheduleButton.Text = "Cancel";
@@ -547,6 +548,7 @@ namespace MARRSS
                 results.Add("Fairnes Satellites: " + fairSatLabel.Text);
                 results.Add("Duration: " + durationLabel.Text + " sec.");
                 results.Add("Calculation Time: " + calcTimeLabel.Text);
+                results.Add("Priority Fitness: " + priorityFitnessLabel.Text);
                 results.Add("Scheduled per priority: " + uweLabel.Text );
                 Log.writeResults(logfile, schedulerName, results);
                 updateLog(logfile, "Results have been saved to File");
@@ -1338,6 +1340,11 @@ namespace MARRSS
         public void updateCalculationTime(string val)
         {
             calcTimeLabel.Text = val + " sec.";
+        }
+
+        public void setPriorityFitness(double val)
+        {
+            priorityFitnessLabel.Text = val.ToString();
         }
 
         //! update Logon Main Form

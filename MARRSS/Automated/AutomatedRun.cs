@@ -144,6 +144,7 @@ namespace MARRSS.Automated
                 double _H3 = objfunc.getStationFairnessValue();
                 double _H4 = objfunc.getSatelliteFairnessValue();
                 double _H5 = GeneralMeasurments.getDurationOfScheduledContacts(scheduler.getFinischedSchedule());
+                double _H6 = objfunc.getPriorityValue();
 
                 results.Add("Run: " + schedulerName);
                 results.Add("Fitness Value:" + objfunc.getObjectiveResults().ToString());
@@ -153,6 +154,7 @@ namespace MARRSS.Automated
                 results.Add("Fairnes Satellites: " + objfunc.getSatelliteFairnessValue().ToString());
                 results.Add("Duration: " + GeneralMeasurments.getDurationOfScheduledContacts(scheduler.getFinischedSchedule()).ToString() + " sec.");
                 results.Add("Calculation Time: " + time);
+                results.Add("Priority Fitness: " + objfunc.getPriorityValue());
                 results.Add("Scheduled By Priority: " + GeneralMeasurments.getNrOfPrioritysScheduled(scheduler.getFinischedSchedule()));
                 results.Add("Scheduled UWE-3: " + GeneralMeasurments.getNrOfUweContacts(scheduler.getFinischedSchedule()).ToString());
 

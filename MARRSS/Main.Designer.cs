@@ -194,6 +194,8 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
+            this.label3 = new System.Windows.Forms.Label();
+            this.priorityFitnessLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -819,6 +821,8 @@
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.priorityFitnessLabel);
+            this.panel8.Controls.Add(this.label3);
             this.panel8.Controls.Add(this.durationLabel);
             this.panel8.Controls.Add(this.label2);
             this.panel8.Controls.Add(this.label1);
@@ -1311,7 +1315,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(994, 587);
+            this.tabPage1.Size = new System.Drawing.Size(994, 659);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Contacts";
             // 
@@ -1375,7 +1379,7 @@
             this.tabPage3.Controls.Add(this.pictureBox4);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(994, 587);
+            this.tabPage3.Size = new System.Drawing.Size(994, 659);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Satellites";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1620,7 +1624,7 @@
             this.tabPage4.Controls.Add(this.pictureBox3);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(994, 587);
+            this.tabPage4.Size = new System.Drawing.Size(994, 659);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Stations";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1837,6 +1841,28 @@
             this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(18, 199);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 50;
+            this.label3.Text = "Fitness Priority:";
+            this.toolTip1.SetToolTip(this.label3, "Number of Scheduled contacts in relation to their priority. Ranging from 0 (Criti" +
+        "cyl) to 4 (None)");
+            // 
+            // priorityFitnessLabel
+            // 
+            this.priorityFitnessLabel.AutoSize = true;
+            this.priorityFitnessLabel.Location = new System.Drawing.Point(208, 199);
+            this.priorityFitnessLabel.Name = "priorityFitnessLabel";
+            this.priorityFitnessLabel.Size = new System.Drawing.Size(13, 13);
+            this.priorityFitnessLabel.TabIndex = 51;
+            this.priorityFitnessLabel.Text = "--";
+            this.toolTip1.SetToolTip(this.priorityFitnessLabel, "Calulation time of the scheduler in seconds not including the orbit and contact w" +
+        "indows calculation times.");
             // 
             // Main
             // 
@@ -2079,5 +2105,7 @@
         private System.Windows.Forms.GroupBox sirrsResolutionGroupBox;
         private System.Windows.Forms.RadioButton radioSirrsNothing;
         private System.Windows.Forms.RadioButton radioSirrsGreedy;
+        private System.Windows.Forms.Label priorityFitnessLabel;
+        private System.Windows.Forms.Label label3;
     }
 }

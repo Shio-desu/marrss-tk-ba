@@ -92,6 +92,8 @@ namespace MARRSS.Scheduler
             objective = problem.getObjectiveFunction();
             result = problem.getContactWindows();
 
+            tabuListSize = result.Count() / 100;
+
             currentFitness = 0.0;
 
             if (randomStart)
@@ -124,19 +126,22 @@ namespace MARRSS.Scheduler
                 double bestNeighborFitness = 0;
 
                 iterations++;
+                Console.WriteLine(iterations);
+                Console.WriteLine(currentFitness);
                 // finding the best neighbor
                 foreach (ContactWindowsVector neighbor in neighbors)
-                {
-                    // if tabuList doesnt contain neighbor (searches the list for a schedule equaling (own implemented equals function) the neighbor)
-                    if (!tabuList.Any(schedule => (schedule.Equals(neighbor))))
+                { 
+                    double neighborFitness = getFitness(neighbor);
+                    if (neighborFitness > bestNeighborFitness)
                     {
-                        double neighborFitness = getFitness(neighbor);
-                        if (neighborFitness > bestNeighborFitness)
+                        // if tabuList doesnt contain neighbor (searches the list for a schedule equaling (own implemented equals function) the neighbor)
+                        if (!tabuList.Any(schedule => (schedule.Equals(neighbor))))
                         {
                             bestNeighbor = new ContactWindowsVector(neighbor);
                             bestNeighborFitness = neighborFitness;
                         }
                     }
+                    
                 }
 
                 if (bestNeighbor.getNumberOfScheduledContacts() == 0)
@@ -245,6 +250,7 @@ namespace MARRSS.Scheduler
             {
                 oldFitness = currentFitness;
                 iterations = 0;
+                Console.WriteLine("Fitness reset");
             }
             else
             {
