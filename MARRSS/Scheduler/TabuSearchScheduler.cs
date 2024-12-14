@@ -38,7 +38,7 @@ namespace MARRSS.Scheduler
         private Main mainform = null;
 
         private int iterations = 0;
-        private int maxNumberOfIteration = 20;
+        private int maxNumberOfIteration = 25;
         private int tabuListSize = 100;
         bool adaptiveMaxIterations = false;
 
@@ -92,7 +92,7 @@ namespace MARRSS.Scheduler
             objective = problem.getObjectiveFunction();
             result = problem.getContactWindows();
 
-            tabuListSize = result.Count() / 100;
+            tabuListSize = result.Count() / 10;
 
             currentFitness = 0.0;
 
@@ -126,8 +126,6 @@ namespace MARRSS.Scheduler
                 double bestNeighborFitness = 0;
 
                 iterations++;
-                Console.WriteLine(iterations);
-                Console.WriteLine(currentFitness);
                 // finding the best neighbor
                 foreach (ContactWindowsVector neighbor in neighbors)
                 { 
@@ -144,7 +142,7 @@ namespace MARRSS.Scheduler
                     
                 }
 
-                if (bestNeighbor.getNumberOfScheduledContacts() == 0)
+                if (bestNeighbor.getNrOfScheduled() == 0)
                     // no non-tabu neighbor found
                     break;
 
@@ -250,7 +248,6 @@ namespace MARRSS.Scheduler
             {
                 oldFitness = currentFitness;
                 iterations = 0;
-                Console.WriteLine("Fitness reset");
             }
             else
             {

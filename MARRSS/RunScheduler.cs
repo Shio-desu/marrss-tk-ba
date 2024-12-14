@@ -192,8 +192,9 @@ namespace MARRSS
             if (scheduler != null)
             {
                 ObjectiveFunctionInterface objfunc = scheduler.getObjectiveFunction();
-                if (objfunc == null)
+                if (objfunc == null || objfunc.GetType() == typeof(EpsilonConstraint))
                     objfunc = new ObjectiveFunction();
+
                 objfunc.calculateValues(scheduler.getFinischedSchedule());
 
                 int _H = scheduler.getFinischedSchedule().getNrOfScheduled();

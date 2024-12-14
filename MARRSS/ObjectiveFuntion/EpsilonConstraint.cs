@@ -34,11 +34,11 @@ namespace MARRSS.Scheduler
 
         // arbitrary constraint numbers for testing
         // TODO: make elaborate constraints
-        private double constraint_Priority = 0.5;
-        private double constraint_FairStations = 0.5;
-        private double constraint_FairSatellites = 0.5;
+        private double constraint_Priority = 0.6;
+        private double constraint_FairStations = 0.9;
+        private double constraint_FairSatellites = 0.9;
         private double constraint_Scheduled = 0.5;
-        private double constraint_Duration = 0.1;
+        private double constraint_Duration = 0.2;
         private double constraint_Collisions = 0.5;
 
         public EpsilonConstraint(params Structs.ObjectiveEnum[] objectives)
@@ -58,10 +58,10 @@ namespace MARRSS.Scheduler
 
         public EpsilonConstraint()
         {
-            mainObjective = Structs.ObjectiveEnum.SCHEDULEDCONTACTS;
+            mainObjective = Structs.ObjectiveEnum.DURATION;
             sideObjectives = new Structs.ObjectiveEnum[]
-                {Structs.ObjectiveEnum.PRIORITY, Structs.ObjectiveEnum.DURATION,
-                Structs.ObjectiveEnum.FAIRNESSATELITE, Structs.ObjectiveEnum.FAIRNESSTATION};
+                {Structs.ObjectiveEnum.PRIORITY, Structs.ObjectiveEnum.FAIRNESSATELITE,
+                Structs.ObjectiveEnum.FAIRNESSTATION};
             val_Priority = 0;
             val_FairSatellites = 0;
             val_FairStations = 0;
@@ -295,44 +295,35 @@ namespace MARRSS.Scheduler
             if (sideObjectives.Contains(Structs.ObjectiveEnum.SCHEDULEDCONTACTS))
             {
                 if (val_Scheduled <= constraint_Scheduled)
-                    fitness = 0;
+                    fitness -= Math.Pow(val_Scheduled - constraint_Scheduled, 2);
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.DURATION))
             {
                 if (val_Duration <= constraint_Duration)
-                    fitness = 0;
+                    fitness -= Math.Pow(val_Duration - constraint_Duration, 2);
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSATELITE))
             {
                 if (val_FairSatellites <= constraint_FairSatellites)
-                    fitness = 0;
+                    fitness -= Math.Pow(val_FairSatellites - constraint_FairSatellites, 2);
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.FAIRNESSTATION))
             {
                 if (val_FairStations <= constraint_FairStations)
-                    fitness = 0;
+                    fitness -= Math.Pow(val_FairStations - constraint_FairStations, 2);
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.PRIORITY))
             {
                 if (val_Priority <= constraint_Priority)
-                    fitness = 0;
+                    fitness -= Math.Pow(val_Priority - constraint_Priority, 2);
             }
             if (sideObjectives.Contains(Structs.ObjectiveEnum.COLLISIONS))
             {
                 if (val_Collisions <= constraint_Collisions)
                 {
-                    fitness = 0;
+                    fitness -= Math.Pow(val_Collisions - constraint_Collisions, 2);
                 }
             }
-
-            Console.WriteLine(mainObjective);
-            Console.WriteLine(val_Scheduled);
-            Console.WriteLine(val_Duration + " " + constraint_Duration);
-            Console.WriteLine(val_FairSatellites + " " + constraint_FairSatellites);
-            Console.WriteLine(val_FairStations + " " + constraint_FairStations);
-            Console.WriteLine(val_Priority + " " + constraint_Priority);
-            Console.WriteLine(val_Collisions + " " + constraint_Collisions);
-
             return fitness;
         }
 

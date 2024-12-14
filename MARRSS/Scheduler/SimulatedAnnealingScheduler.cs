@@ -31,7 +31,7 @@ namespace MARRSS.Scheduler
         const double DEFAULT_COOLDOWN = 0.05;
         const double DEFAULT_EPSILON = 0.001;
         const int DEFAULT_STEP_SIZE = 4;
-        const int DEFAULT_COOLDOWNINTERVAL = 10;
+        const int DEFAULT_COOLDOWNINTERVAL = 40;
 
         private ObjectiveFunctionInterface objective;
         private ContactWindowsVector result;
@@ -169,8 +169,9 @@ namespace MARRSS.Scheduler
 
         private bool AcceptNeighbor(double deltaFit)
         {
+
             // accept neighbor if better
-            if (deltaFit > 0)
+            if (deltaFit > 0.00)
                 return true;
 
             // accept neighbor with slight chance influenced by difference and temperature

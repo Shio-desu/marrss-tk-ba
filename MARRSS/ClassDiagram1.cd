@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MARRSS.Automated.AutomatedRun" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAQAIiAoQAEMCAmAARAAAACAAAhAAAAAAggAAAA=</HashCode>
+      <FileName>Automated\AutomatedRun.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Automated.SingleGroundStationRuns" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAEEICAgAAEgDCiAABAAAAAgSABAAAAAAgAAAEA=</HashCode>
+      <FileName>Automated\SingleGroundStationRuns.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.DataBase.Constants" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QgEAAAAIkAEEIAAAAEAAAABIEAQAEUEI4AEAEAAQIKQ=</HashCode>
+      <FileName>DataBase\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.DataBase.DataBase" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QEEQAIBAAJBAECAAAAAARAAAAAAAAAAIAADAEACgCIA=</HashCode>
+      <FileName>DataBase\DataBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.DataBase.SaveLoad" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataBase\SaveLoad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Definition.ContactWindowsVector" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AkgAAAAQIBAiAAgIgIAgDAQgGAACAQALAAACAAAqQAA=</HashCode>
+      <FileName>Definition\ContactWindowsVector.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Definition.GeoCoordinate" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAQAIAAAAAAAQAAgAAFAQAAAAAQAAQgAAAAAAAAAA=</HashCode>
+      <FileName>Definition\GeoCoordinate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Drawer.ContactsDrawer" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Drawer\ContactsDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Drawer.MapDrawer" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Drawer\MapDrawer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.AutomatedRunsForm" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>TRBBIAQQACUAgBJCgDSSwADSDAi4AigEAmBQFYsgQCY=</HashCode>
+      <FileName>Forms\AutomatedRunsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.Info" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/wAAAhgBACAAABAAAHyAAAACAAAsAgAAAEAgAQBAADA=</HashCode>
+      <FileName>Forms\Info.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.Login" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAIAAAAACAAABBAAACIAAACAIAYAAAAEGAAAAkAAAA=</HashCode>
+      <FileName>Forms\Login.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.ObjectiveBuilderForm" Collapsed="true">
+    <Position X="11" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAgCEAAVOAgACCAAgSABAIAAAAAGAAQAACCCA=</HashCode>
+      <FileName>Forms\ObjectiveBuilderForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.ResultsForm" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAACAAAAAAAACJAAACAAAAAAAAAAAQAAAgABA=</HashCode>
+      <FileName>Forms\ResultsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.SatelliteForm" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAACEAQBAAAAGASAIGUAAAAAAI0nAIQwFBpKI=</HashCode>
+      <FileName>Forms\SatelliteForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.SettingsForm" Collapsed="true">
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/wQ0EQQBJiiAgBAoBlea0AxKEQC4gF4AkXgBlaAiABA=</HashCode>
+      <FileName>Forms\SettingsForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Forms.StationForm" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAQAgAACAAABAAAAGASIAiQAAAABBAxCAoAQBBhCI=</HashCode>
+      <FileName>Forms\StationForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Global.CancelException" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Global\CancelException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Global.Constants" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAABAgAAAAIAAAAAAIAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Global\Constants.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Global.Funktions" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAFAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Global\Funktions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Global.Structs" Collapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Global\Structs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Ground.Antenna" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAACAAAAAAAAAAEAAAACAAAAAAAQEAAAAAAAAAACE=</HashCode>
+      <FileName>Ground\Antenna.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Ground.InView" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAACAAAAAAgAAAAAAAAAAABAAAAAAgAAAABEAgAAAA=</HashCode>
+      <FileName>Ground\InView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Ground.Station" Collapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAMAAAAAAAAAAAAAQAJAAAAAAEQRAAAABEAAAgAAA=</HashCode>
+      <FileName>Ground\Station.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Main" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/y+1JhUVtG/l09BXG5qb0o/XHXH6Y//nBnBZD6ZH/nU=</HashCode>
+      <FileName>Main.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.MainFunctions" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAQAAABAAAAAAAACAAAQAAAAAAAAACgQAAAAAAAAgA=</HashCode>
+      <FileName>MainFunctions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.MainFunctions2" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MainFunctions2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Program" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.RunScheduler" Collapsed="true">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAARAAQggAAA=</HashCode>
+      <FileName>RunScheduler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Scheduler.EpsilonConstraint" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAKAICCAgMAAAEAACAJAEAIAABGACAgAQAAAB4AAA=</HashCode>
+      <FileName>ObjectiveFuntion\EpsilonConstraint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.ObjectiveFunction" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAKAACCAAMgAAEAAAAIAAAIAABGACIgAQAAABIAAA=</HashCode>
+      <FileName>ObjectiveFuntion\ObjectiveFunction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.EftGreedyScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgAEAAAAAAAAEGIQAQAAAAAAAAEBQAAAAAAEAAQA=</HashCode>
+      <FileName>Scheduler\EftGreedyScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.ExampleScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAECIAAAAAAAAAAAEAAAAAAAAEAAQA=</HashCode>
+      <FileName>Scheduler\ExampleScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.GeneticScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAL0ghMEIAwAFACGHNQAEAgEEIBIA0AQIkDAMQEAMQA=</HashCode>
+      <FileName>Scheduler\GeneticScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.GreedyScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAgAEEAAAAEAAEGIQABAAAAAAAAkBQAAAAAAEAAQA=</HashCode>
+      <FileName>Scheduler\GreedyScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.HillClimberScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAgAEACAIAABAEHqQAAAAKAAAAAEgAAAAEAAEEAQA=</HashCode>
+      <FileName>Scheduler\HillClimberScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.Request2Contact" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Scheduler\Request2Contact.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.SchedulingProblem" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAQAgEEgAAICACAQAAAAgAAAAAAAAAAABAABAA=</HashCode>
+      <FileName>Scheduler\SchedulingProblem.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.SimulatedAnnealingScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="11" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBEgAEACBIAAJAEHqQEABAKECAAAEgAAAQEAAUEAQE=</HashCode>
+      <FileName>Scheduler\SimulatedAnnealingScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.TabuSearchScheduler" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAgAEACBIAABAEHqQAAAAKAAAAAEgAAAAEABEEAQA=</HashCode>
+      <FileName>Scheduler\TabuSearchScheduler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.ContactWindow" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAQEMQJAQoIECEAAigAAEQhAYSAQAEgAACAAAADgA=</HashCode>
+      <FileName>SchedulerData\ContactWindow.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.Request" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAACgI=</HashCode>
+      <FileName>SchedulerData\Request.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MARRSS.Scheduler.TrackingData" Collapsed="true">
+    <Position X="11" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAAIAAAAAAAERAAAAAAAAAAAgABAAAAIAAAIAAQ=</HashCode>
+      <FileName>SchedulerData\TrackingData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Performance.GeneralMeasurments" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>Performance\GeneralMeasurments.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Performance.Log" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACABBAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance\Log.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Performance.TimeMeasurement" Collapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAIAAAAAAgAAAAQAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Performance\TimeMeasurement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Properties.Resources" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BEACAQAAAAAABAAAAAABECAAAQAAIAAgAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Properties.Settings" Collapsed="true">
+    <Position X="7.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAAGASYIRQgIAhQQUANAAgIYCBcCQABAALCAQAiDE=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MARRSS.Satellite.Satellite" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAEEAAAAAAEEAAAAAA=</HashCode>
+      <FileName>Satellite\Satellite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MARRSS.Interface1.ContactInterface" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAMQIAAgIAAAAACAAAAABAYCAAAAgAACAAAAAAA=</HashCode>
+      <FileName>Interface1\ContactInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Interface1.Reqest2ContactInterface" Collapsed="true">
+    <Position X="4" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface1\Reqest2ContactInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Interface1.RequestInterface" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>Interface1\RequestInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Interface2.ScheduleProblemInterface" Collapsed="true">
+    <Position X="7.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAEAAAAACACAQAAAAAAAAAAAAAAAABAABAA=</HashCode>
+      <FileName>Interface2\ScheduleProblemInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Interface2.SchedulerInterface" Collapsed="true">
+    <Position X="9.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAECIAAAAAAAAAAAEAAAAAAAAAAAQA=</HashCode>
+      <FileName>Interface2\SchedulerInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Interface2.SchedulerSolutionInterface" Collapsed="true">
+    <Position X="11" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Interface2\SchedulerSolutionInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="MARRSS.Scheduler.ObjectiveFunctionInterface" Collapsed="true">
+    <Position X="2.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAACAAEAAAEAAAAAAAAIAAAGAAAAAQAAAAAAAA=</HashCode>
+      <FileName>ObjectiveFuntion\ObjectiveFunctionInterface.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

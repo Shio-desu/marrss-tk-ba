@@ -432,21 +432,6 @@ namespace MARRSS.Definition
             }
         }
 
-        //! get Number of Scheduled contacts in Set
-        /*! 
-            \return int numver of contacts that have their scheduled flag set to true
-        */
-        public int getNumberOfScheduledContacts()
-        {
-            int scheduled = 0;
-            for (int i = 0; i < contactsList.Count; i++)
-            {
-                if (contactsList[i].getSheduledInfo())
-                    scheduled++;
-            }
-            return scheduled;
-        }
-
         private void calcualteTimesOfAllContacst()
         {
             contactTime = 0.0;

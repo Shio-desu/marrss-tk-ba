@@ -80,11 +80,13 @@ namespace MARRSS.Scheduler
                 maxNumberOfIteration = result.Count() * 4;
             }
 
+            // should always be correct to only search through the contactwindwos once without change. The iterations reset once a positive change was found, so if the local optimum was found and every possible change from this
+            // point doesnt change, it stops
+            maxNumberOfIteration = result.Count();
+
             if (randomStart)
             {
                 result.randomize();
-               
-                Console.WriteLine("start here?");
             }
             
             if (mainform != null)
